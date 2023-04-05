@@ -25,6 +25,7 @@ export const listMTATranport = () => async (dispatch) => {
       payload: data
     });
   } catch (error) {
+    console.log(error);
     dispatch({
       type: LIST_MTA_TRANSPORT_FAIL,
       payload: 'error'

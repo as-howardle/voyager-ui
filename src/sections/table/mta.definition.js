@@ -1,20 +1,29 @@
+
 import ReactDataGrid from '@inovua/reactdatagrid-community';
 import '@inovua/reactdatagrid-community/index.css';
 import { Box, Button, FormControl, FormControlLabel, FormGroup, Input, Switch, SvgIcon } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { Stack } from '@mui/system';
 import { useState, useCallback } from 'react';
-import { MTATransportModal } from './../../modals/mta.transport.modal';
+import { MTATransportModal } from '../../modals/mta.transport.modal';
 import DoneIcon from '@mui/icons-material/Done';
 import ClearIcon from '@mui/icons-material/Clear';
 import { red } from '@mui/material/colors';
+import { MTADefinitionModal } from './../../modals/mta.definition.modal';
 
 const gridStyle = { minHeight: 600 };
 
 const columns = [
   { name: 'name', defaultFlex: 1, header: 'Name' },
   { name: 'description', defaultFlex: 1, header: 'Description' },
-  { name: 'type', defaultFlex: 1, header: 'Type' },
+  {
+    name: 'mta_transport',
+    defaultFlex: 1,
+    header: 'MTA Transport',
+    render: ({ value }) => {
+      return value.name;
+    }
+  },
   {
     name: 'is_active',
     defaultWidth: 100,
@@ -23,7 +32,8 @@ const columns = [
       return value ? <DoneIcon color='success' /> : <ClearIcon sx={{ color: red[500] }} />;
     }
   },
-  { name: 'params', defaultFlex: 1, header: 'Params' },
+  { name: 'parameters', defaultFlex: 1, header: 'Params' },
+  { name: 'max_recipients_per_day', defaultFlex: 1, header: 'Max recipients per day' },
 ];
 
 const filterValue = [
@@ -32,11 +42,11 @@ const filterValue = [
   { name: 'type', operator: 'startsWith', type: 'string', value: '' },
 ];
 
-export const MTATransportTable = (props) => {
+export const MTADefinitionTable = (props) => {
   const { data, isLoading } = props;
   const [enableFiltering, setEnableFiltering] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [modalData, setModalData] = useState();
+  // const [modalData, setModalData] = useState();
   const [isUpdate, setIsUpdate] = useState(false);
 
   const handleCloseModal = () => {
@@ -48,17 +58,17 @@ export const MTATransportTable = (props) => {
     setIsOpenModal(true);
   };
 
-  const onRenderRow = useCallback((rowProps) => {
-    const { onClick } = rowProps;
-    rowProps.onClick = (event) => {
-      setModalData(rowProps);
-      setIsUpdate(true);
-      setIsOpenModal(true);
-      if (onClick) {
-        onClick(event);
-      }
-    };
-  }, []);
+  // const onRenderRow = useCallback((rowProps) => {
+  //   const { onClick } = rowProps;
+  //   rowProps.onClick = (event) => {
+  //     setModalData(rowProps);
+  //     setIsUpdate(true);
+  //     setIsOpenModal(true);
+  //     if (onClick) {
+  //       onClick(event);
+  //     }
+  //   };
+  // }, []);
 
   return (
     <Box sx={{ minWidth: 800 }}>
@@ -86,17 +96,17 @@ export const MTATransportTable = (props) => {
           Add
         </Button>
       </Stack>
-      <MTATransportModal isOpen={isOpenModal} handleClose={handleCloseModal} modalData={modalData} isUpdate={isUpdate} />
+      <MTADefinitionModal isOpen={isOpenModal} handleClose={handleCloseModal} isUpdate={isUpdate} />
       <ReactDataGrid
         columns={columns}
         dataSource={data}
         style={gridStyle}
-        defaultFilterValue={filterValue}
+        // defaultFilterValue={filterValue}
         pagination
         loading={isLoading}
         defaultLimit={20}
-        enableFiltering={enableFiltering}
-        onRenderRow={onRenderRow}
+      // enableFiltering={enableFiltering}
+      // onRenderRow={onRenderRow}
       />
     </Box>
   );

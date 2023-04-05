@@ -50,7 +50,6 @@ export const MTATransportModal = (props) => {
     enableReinitialize: true,
     onSubmit: (values) => {
       if (isUpdate) {
-        console.log(modalData.data.id);
         dispatch(updateMTATransport(values, modalData.data.id));
         handleClose();
       }

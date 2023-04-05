@@ -44,11 +44,11 @@ export const MTATransportTypeReducers = (state = {}, action) => {
 export const CreateMTATransportReducers = (state = {}, action) => {
   switch (action.type) {
     case CREATE_MTA_TRANSPORT:
-      return { ...state, isLoading: true };
+      return { ...state, isLoading: true, success: false, error: false };
     case CREATE_MTA_TRANSPORT_DONE:
-      return { ...state, isLoading: false, success: true, message: action.payload };
+      return { ...state, isLoading: false, success: true, error: false, message: action.payload };
     case CREATE_MTA_TRANSPORT_FAIL:
-      return { ...state, isLoading: false, error: true, message: action.payload };
+      return { ...state, isLoading: false, error: true, success: false, message: action.payload };
     case CREATE_MTA_TRANSPORT_RESET:
       return { isLoading: false, success: false, error: false, message: '' };
     default:
@@ -59,11 +59,11 @@ export const CreateMTATransportReducers = (state = {}, action) => {
 export const UpdateMTATransportReducers = (state = {}, action) => {
   switch (action.type) {
     case UPDATE_MTA_TRANSPORT:
-      return { ...state, isLoading: true };
+      return { ...state, isLoading: true, success: false, error: false, };
     case UPDATE_MTA_TRANSPORT_DONE:
-      return { ...state, isLoading: false, success: true, message: action.payload };
+      return { ...state, isLoading: false, success: true, error: false, message: action.payload };
     case UPDATE_MTA_TRANSPORT_FAIL:
-      return { ...state, isLoading: false, error: true, message: action.payload };
+      return { ...state, isLoading: false, error: true, success: false, message: action.payload };
     case UPDATE_MTA_TRANSPORT_RESET:
       return { isLoading: false, success: false, error: false, message: '' };
     default:

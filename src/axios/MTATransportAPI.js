@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from './axios';
 
 const JANUS_API = process.env.JANUS_API;
 const ENDPOINTS = {
@@ -11,44 +11,19 @@ const ENDPOINTS = {
 
 const MTATransportAPI = {
   getList: () => {
-    const token = JSON.parse(window.localStorage.getItem('token'));
-    const config = {
-      headers: {
-        Authorization: `${token.value}`,
-      }
-    };
-    return axios.get(JANUS_API + ENDPOINTS.GET_LIST, config);
+    return axios.get(JANUS_API + ENDPOINTS.GET_LIST);
   },
 
   getTransportType: () => {
-    const token = JSON.parse(window.localStorage.getItem('token'));
-    const config = {
-      headers: {
-        Authorization: `${token.value}`,
-      }
-    };
-    return axios.get(JANUS_API + ENDPOINTS.GET_TRANSPORT_TYPE, config);
+    return axios.get(JANUS_API + ENDPOINTS.GET_TRANSPORT_TYPE);
   },
 
   createTransport: (value) => {
-    const token = JSON.parse(window.localStorage.getItem('token'));
-    const config = {
-      headers: {
-        Authorization: `${token.value}`,
-      }
-    };
-    return axios.post(JANUS_API + ENDPOINTS.CREATE, value, config);
+    return axios.post(JANUS_API + ENDPOINTS.CREATE, value);
   },
 
   updateTransport: (value, id) => {
-    console.log(id);
-    const token = JSON.parse(window.localStorage.getItem('token'));
-    const config = {
-      headers: {
-        Authorization: `${token.value}`,
-      }
-    };
-    return axios.patch(JANUS_API + ENDPOINTS.UPDATE.replace(':id:', id), value, config);
+    return axios.patch(JANUS_API + ENDPOINTS.UPDATE.replace(':id:', id), value);
   }
 };
 
