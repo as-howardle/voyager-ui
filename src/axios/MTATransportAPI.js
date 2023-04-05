@@ -4,7 +4,8 @@ const JANUS_API = process.env.JANUS_API;
 const ENDPOINTS = {
   GET_LIST: '/mta/mta_transport/list',
   GET_TRANSPORT_TYPE: '/mta/mta_transport_type/list',
-  CREATE: '/mta/mta_transport/create'
+  CREATE: '/mta/mta_transport/create',
+  UPDATE: '/mta/mta_transport/update/:id:'
 };
 
 
@@ -37,6 +38,17 @@ const MTATransportAPI = {
       }
     };
     return axios.post(JANUS_API + ENDPOINTS.CREATE, value, config);
+  },
+
+  updateTransport: (value, id) => {
+    console.log(id);
+    const token = JSON.parse(window.localStorage.getItem('token'));
+    const config = {
+      headers: {
+        Authorization: `${token.value}`,
+      }
+    };
+    return axios.patch(JANUS_API + ENDPOINTS.UPDATE.replace(':id:', id), value, config);
   }
 };
 

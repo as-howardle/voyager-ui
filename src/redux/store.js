@@ -1,12 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { CreateMTATransportReducers, MTATransportReducers, MTATransportTypeReducers } from './reducers/mta.transport.reducer';
+import {
+  CreateMTATransportReducers,
+  MTATransportReducers,
+  MTATransportTypeReducers,
+  UpdateMTATransportReducers
+} from './reducers/mta.transport.reducer';
 
 export const store = configureStore(
   {
     reducer: {
       MTATransport: MTATransportReducers,
       MTATransportType: MTATransportTypeReducers,
-      createMTATransport: CreateMTATransportReducers
+      createMTATransport: CreateMTATransportReducers,
+      updateMTATransport: UpdateMTATransportReducers
     },
     preloadedState: {
       MTATransport: {
@@ -18,6 +24,12 @@ export const store = configureStore(
         mtaTransportTypeList: []
       },
       createMTATransport: {
+        isLoading: false,
+        success: false,
+        error: false,
+        message: ''
+      },
+      updateMTATransport: {
         isLoading: false,
         success: false,
         error: false,

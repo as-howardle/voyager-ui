@@ -7,7 +7,10 @@ import {
   LIST_MTA_TRANSPORT_TYPE_FAIL,
   CREATE_MTA_TRANSPORT,
   CREATE_MTA_TRANSPORT_DONE,
-  CREATE_MTA_TRANSPORT_FAIL
+  CREATE_MTA_TRANSPORT_FAIL,
+  UPDATE_MTA_TRANSPORT,
+  UPDATE_MTA_TRANSPORT_DONE,
+  UPDATE_MTA_TRANSPORT_FAIL
 } from './../constant/mta.transport.constant';
 import MTATransportAPI from './../../axios/MTATransportAPI';
 
@@ -60,6 +63,24 @@ export const createMTATransport = (value) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: CREATE_MTA_TRANSPORT_FAIL,
+      payload: 'error'
+    });
+  }
+};
+
+export const updateMTATransport = (value, id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: UPDATE_MTA_TRANSPORT
+    });
+    const { data } = await MTATransportAPI.updateTransport(value, id);
+    dispatch({
+      type: UPDATE_MTA_TRANSPORT_DONE,
+      payload: data
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_MTA_TRANSPORT_FAIL,
       payload: 'error'
     });
   }

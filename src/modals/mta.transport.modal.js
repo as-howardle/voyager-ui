@@ -8,10 +8,10 @@ import {
 import { useFormik } from "formik";
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { listMTATransportType, createMTATransport, listMTATranport } from './../redux/actions/mta.transport.action';
+import { listMTATransportType, createMTATransport, listMTATranport, updateMTATransport } from './../redux/actions/mta.transport.action';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from "react";
-import { CREATE_MTA_TRANSPORT_RESET } from 'src/redux/constant/mta.transport.constant';
+import { CREATE_MTA_TRANSPORT_RESET, UPDATE_MTA_TRANSPORT_RESET } from 'src/redux/constant/mta.transport.constant';
 import Notification from './../components/notification';
 import { toast } from 'react-toastify';
 
@@ -30,45 +30,75 @@ const validationSchema = Yup.object({
     .required('Type is required'),
   params: Yup
     .string()
-    .max(255)
     .required('Params is required'),
   is_active: Yup
     .boolean()
 });
 
 export const MTATransportModal = (props) => {
-  const { isOpen, handleClose } = props;
+  const { isOpen, handleClose, modalData, isUpdate } = props;
   const dispatch = useDispatch();
   const { mtaTransportTypeList } = useSelector((state) => state.MTATransportType);
   const { message, success, error } = useSelector((state) => state.createMTATransport);
+  const { message: updateMessage, success: updateSuccess, error: errorUpdate } = useSelector((state) => state.updateMTATransport);
 
   const formik = useFormik({
     initialValues: {
       name: '', description: '', type: '', params: '', is_active: false
     },
     validationSchema: validationSchema,
+    enableReinitialize: true,
     onSubmit: (values) => {
-      dispatch(createMTATransport(values));
-      handleClose();
+      if (isUpdate) {
+        console.log(modalData.data.id);
+        dispatch(updateMTATransport(values, modalData.data.id));
+        handleClose();
+      }
+      else {
+        dispatch(createMTATransport(values));
+        handleClose();
+      }
     },
   });
 
   useEffect(() => {
+    async function setInitialValues() {
+      if (isUpdate) {
+        await formik.setValues(modalData.data, false);
+      }
+      else {
+        formik.resetForm();
+      }
+    }
+    setInitialValues();
+
     if (mtaTransportTypeList.length === 0) {
       dispatch(listMTATransportType());
     }
-    if (message !== '') {
-      if (success) {
-        toast.success('Create successfully');
-        dispatch({ type: CREATE_MTA_TRANSPORT_RESET });
+    if (message !== '' || updateMessage !== '') {
+      if (success || updateSuccess) {
+        if (success) {
+          toast.success('Create successfully');
+          dispatch({ type: CREATE_MTA_TRANSPORT_RESET });
+
+        }
+        if (updateMessage) {
+          toast.success('Update successfully');
+          dispatch({ type: UPDATE_MTA_TRANSPORT_RESET });
+        }
         dispatch(listMTATranport());
       }
-      if (error) {
-        toast.error('Create failed');
+      if (error || errorUpdate) {
+        if (error) {
+          toast.error('Create failed');
+        }
+        if (errorUpdate) {
+          toast.error('Update failed');
+        }
         dispatch({ type: CREATE_MTA_TRANSPORT_RESET });
       }
     }
-  }, [dispatch, message, success]);
+  }, [dispatch, message, success, isUpdate, modalData, updateMessage, updateSuccess, errorUpdate]);
 
   return (
     <Modal
@@ -172,7 +202,7 @@ export const MTATransportModal = (props) => {
           <Divider />
           <CardActions sx={{ justifyContent: 'flex-end' }}>
             <Button variant="contained" type='submit'>
-              Create
+              {isUpdate ? 'Update' : 'Create'}
             </Button>
           </CardActions>
         </Card>

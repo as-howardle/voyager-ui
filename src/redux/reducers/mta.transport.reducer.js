@@ -8,7 +8,11 @@ import {
   CREATE_MTA_TRANSPORT,
   CREATE_MTA_TRANSPORT_DONE,
   CREATE_MTA_TRANSPORT_FAIL,
-  CREATE_MTA_TRANSPORT_RESET
+  CREATE_MTA_TRANSPORT_RESET,
+  UPDATE_MTA_TRANSPORT,
+  UPDATE_MTA_TRANSPORT_DONE,
+  UPDATE_MTA_TRANSPORT_FAIL,
+  UPDATE_MTA_TRANSPORT_RESET
 } from './../constant/mta.transport.constant';
 
 export const MTATransportReducers = (state = {}, action) => {
@@ -46,6 +50,21 @@ export const CreateMTATransportReducers = (state = {}, action) => {
     case CREATE_MTA_TRANSPORT_FAIL:
       return { ...state, isLoading: false, error: true, message: action.payload };
     case CREATE_MTA_TRANSPORT_RESET:
+      return { isLoading: false, success: false, error: false, message: '' };
+    default:
+      return state;
+  }
+};
+
+export const UpdateMTATransportReducers = (state = {}, action) => {
+  switch (action.type) {
+    case UPDATE_MTA_TRANSPORT:
+      return { ...state, isLoading: true };
+    case UPDATE_MTA_TRANSPORT_DONE:
+      return { ...state, isLoading: false, success: true, message: action.payload };
+    case UPDATE_MTA_TRANSPORT_FAIL:
+      return { ...state, isLoading: false, error: true, message: action.payload };
+    case UPDATE_MTA_TRANSPORT_RESET:
       return { isLoading: false, success: false, error: false, message: '' };
     default:
       return state;
