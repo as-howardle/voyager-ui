@@ -5,7 +5,7 @@ import {
   MTATransportTypeReducers,
   UpdateMTATransportReducers
 } from './reducers/mta.transport.reducer';
-import { MTADefinitionListReducers, CreateMTADefinitionReducers } from './reducers/mta.definition.reducer';
+import { MTADefinitionListReducers, CreateMTADefinitionReducers, UpdateMTADefinitionReducers } from './reducers/mta.definition.reducer';
 
 export const store = configureStore(
   {
@@ -15,7 +15,8 @@ export const store = configureStore(
       createMTATransport: CreateMTATransportReducers,
       updateMTATransport: UpdateMTATransportReducers,
       MTADefinitionList: MTADefinitionListReducers,
-      createMTADefinition: CreateMTADefinitionReducers
+      createMTADefinition: CreateMTADefinitionReducers,
+      updateMTADefinition: UpdateMTADefinitionReducers
     },
     preloadedState: {
       MTATransport: {
@@ -43,6 +44,12 @@ export const store = configureStore(
         list: []
       },
       createMTADefinition: {
+        isLoading: false,
+        success: false,
+        error: false,
+        message: ''
+      },
+      updateMTADefinition: {
         isLoading: false,
         success: false,
         error: false,

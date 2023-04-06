@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useReducer, useRef } from 'react';
 import PropTypes from 'prop-types';
 import AuthAPI from './../axios/AuthAPI';
+import UserStore from './../store/user.store';
 
 const HANDLERS = {
   INITIALIZE: 'INITIALIZE',
@@ -113,7 +114,7 @@ export const AuthProvider = (props) => {
         value: data.token,
         expiry: now.getTime() + (1000 * 3600 * 24)
       };
-      window.localStorage.setItem('token', JSON.stringify(token));
+      UserStore.setToken(token);
       const user = {
         id: data.user.id,
         avatar: '/assets/avatars/avatar-anika-visser.png',
@@ -123,7 +124,7 @@ export const AuthProvider = (props) => {
         securityGroups: [data.user.security_groups],
         isAdmin: data.user.is_admin
       };
-      window.localStorage.setItem('user', JSON.stringify(user));
+      UserStore.setUser(user);
 
       dispatch({
         type: HANDLERS.SIGN_IN,
@@ -140,8 +141,8 @@ export const AuthProvider = (props) => {
   };
 
   const signOut = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    UserStore.removeToken();
+    UserStore.removeUser();
     dispatch({
       type: HANDLERS.SIGN_OUT
     });

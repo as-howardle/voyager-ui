@@ -1,13 +1,13 @@
 import ReactDataGrid from '@inovua/reactdatagrid-community';
 import '@inovua/reactdatagrid-community/index.css';
-import { Box, Button, FormControl, FormControlLabel, FormGroup, Input, Switch, SvgIcon } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { Stack } from '@mui/system';
-import { useState, useCallback } from 'react';
-import { MTATransportModal } from '../../modals/mta.transport.modal';
-import DoneIcon from '@mui/icons-material/Done';
 import ClearIcon from '@mui/icons-material/Clear';
+import DoneIcon from '@mui/icons-material/Done';
+import { Box, Button, FormControl, FormControlLabel, FormGroup, Switch } from '@mui/material';
 import { red } from '@mui/material/colors';
+import { Stack } from '@mui/system';
+import { useCallback, useState } from 'react';
+import { MTATransportModal } from '../../modals/mta.transport.modal';
 
 const gridStyle = { minHeight: 600 };
 

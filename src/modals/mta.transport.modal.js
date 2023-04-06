@@ -90,11 +90,13 @@ export const MTATransportModal = (props) => {
       if (error || errorUpdate) {
         if (error) {
           toast.error('Create failed');
+          dispatch({ type: CREATE_MTA_TRANSPORT_RESET });
         }
         if (errorUpdate) {
           toast.error('Update failed');
+          dispatch({ type: UPDATE_MTA_TRANSPORT_RESET });
         }
-        dispatch({ type: CREATE_MTA_TRANSPORT_RESET });
+
       }
     }
   }, [dispatch, message, success, isUpdate, modalData, updateMessage, updateSuccess, errorUpdate]);

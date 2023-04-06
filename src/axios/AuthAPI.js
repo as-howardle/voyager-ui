@@ -1,4 +1,5 @@
 import axios from 'axios';
+import UserStore from './../store/user.store';
 
 const JANUS_API = process.env.JANUS_API;
 const ENDPOINTS = {
@@ -12,10 +13,10 @@ const AuthAPI = {
     return axios.post(JANUS_API + ENDPOINTS.SIGNIN, { username, password });
   },
   changePassword: (oldPassword, newPassword) => {
-    const token = JSON.parse(window.localStorage.getItem('token'));
+    const token = UserStore.getToken();
     const config = {
       headers: {
-        Authorization: `${token.value}`,
+        Authorization: `${token}`,
       }
     };
     return axios.post(JANUS_API + ENDPOINTS.CHANGE_PASSWORD, { oldPassword, newPassword }, config);

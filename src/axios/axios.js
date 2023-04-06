@@ -1,13 +1,14 @@
 import axios from 'axios';
+import UserStore from './../store/user.store';
 
 const instance = axios.create({
 });
 
 instance.interceptors.request.use(
   (config) => {
-    const token = JSON.parse(window.localStorage.getItem('token'));
+    const token = UserStore.getToken();
     if (token) {
-      config.headers['Authorization'] = `${token.value}`;
+      config.headers['Authorization'] = `${token}`;
     }
     return config;
   },

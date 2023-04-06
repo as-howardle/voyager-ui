@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { useAuthContext } from 'src/contexts/auth-context';
+import UserStore from './../store/user.store';
 
 export const AuthGuard = (props) => {
   const { children } = props;
@@ -27,9 +28,9 @@ export const AuthGuard = (props) => {
 
       ignore.current = true;
       const now = new Date();
-      const token = JSON.parse(localStorage.getItem('token'));
+      const token = UserStore.getToken();
       if (!token || token.expiry < now.getTime()) {
-        localStorage.removeItem('token')
+        UserStore.removeToken();
         router
           .replace({
             pathname: '/auth/login',
@@ -37,7 +38,7 @@ export const AuthGuard = (props) => {
           })
           .catch(console.error);
       } else {
-        const user = JSON.parse(localStorage.getItem('user'));
+        const user = UserStore.getUser();
         setUser(user);
         setChecked(true);
       }

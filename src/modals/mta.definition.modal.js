@@ -10,8 +10,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { createMTADefinition } from "src/redux/actions/mta.definition.action";
 import { listMTATranport } from './../redux/actions/mta.transport.action';
-import { CREATE_MTA_DEFINITION_RESET } from './../redux/constant/mta.definition.constant';
-import { listMTADefinition } from './../redux/actions/mta.definition.action';
+import { CREATE_MTA_DEFINITION_RESET, UPDATE_MTA_DEFINITION_RESET } from './../redux/constant/mta.definition.constant';
+import { listMTADefinition, updateMTADefinition } from './../redux/actions/mta.definition.action';
 
 export const MTADefinitionModal = (props) => {
   const { isOpen, handleClose, modalData, isUpdate } = props;
@@ -19,7 +19,8 @@ export const MTADefinitionModal = (props) => {
   // const { mtaTransportTypeList } = useSelector((state) => state.MTATransportType);
   const { listMTATransport } = useSelector((state) => state.MTATransport);
   const { message, success, error } = useSelector((state) => state.createMTADefinition);
-  // const { message: updateMessage, success: updateSuccess, error: errorUpdate } = useSelector((state) => state.updateMTATransport);
+  const { message: updateMessage, success: successUpdate, error: errorUpdate } = useSelector((state) => state.updateMTADefinition);
+  const [id, setId] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [mtaTransportId, setMTATransportId] = useState('');
@@ -27,63 +28,89 @@ export const MTADefinitionModal = (props) => {
   const [isActive, setIsActive] = useState(true);
   const [maxRecipientsPerDay, setMaxRecipientsPerDay] = useState(0);
 
-  const [validtaeRecipientPerDay, setValidtaeRecipientPerDay] = useState(false);
+  const [validtaeRecipientPerDay, setValidateRecipientPerDay] = useState(false);
+
+  const setInitialValues = (data) => {
+    setId(data.id);
+    setName(data.name);
+    setDescription(data.description);
+    setParameters(data.parameters);
+    setIsActive(data.is_active);
+    setMTATransportId(data.mta_transport_id);
+    setMaxRecipientsPerDay(data.max_recipients_per_day);
+  };
 
   useEffect(() => {
-    // async function setInitialValues() {
-    //   if (isUpdate) {
-    //     await formik.setValues(modalData.data, false);
-    //   }
-    //   else {
-    //     formik.resetForm();
-    //   }
-    // }
-    // setInitialValues();
+
+    if (isUpdate) {
+      setInitialValues(modalData.data);
+    }
+    else {
+      setId('');
+      setName('');
+      setDescription('');
+      setParameters('');
+      setIsActive(true);
+      setMTATransportId('');
+      setMaxRecipientsPerDay(0);
+    }
 
     if (listMTATransport.length === 0) {
       dispatch(listMTATranport());
     }
-    if (message !== '') {
-      if (success) {
+    if (message !== '' || updateMessage !== '') {
+      if (success || successUpdate) {
         if (success) {
           toast.success('Create successfully');
           dispatch({ type: CREATE_MTA_DEFINITION_RESET });
 
         }
-        // if (updateMessage) {
-        //   toast.success('Update successfully');
-        //   dispatch({ type: UPDATE_MTA_TRANSPORT_RESET });
-        // }
+        if (successUpdate) {
+          toast.success('Update successfully');
+          dispatch({ type: UPDATE_MTA_DEFINITION_RESET });
+        }
         dispatch(listMTADefinition());
       }
-      if (error) {
+      if (error || errorUpdate) {
         if (error) {
           toast.error('Create failed');
+          dispatch({ type: CREATE_MTA_DEFINITION_RESET });
         }
-        // if (errorUpdate) {
-        //   toast.error('Update failed');
-        // }
-        dispatch({ type: CREATE_MTA_DEFINITION_RESET });
+        if (errorUpdate) {
+          toast.error('Update failed');
+          dispatch({ type: UPDATE_MTA_DEFINITION_RESET });
+        }
       }
     }
-  }, [dispatch, listMTATransport, message, success, error]);
-  //dispatch, message, success, isUpdate, modalData, updateMessage, updateSuccess, errorUpdate
+  }, [dispatch, listMTATransport, message, success, error, isUpdate, modalData, updateMessage, successUpdate, errorUpdate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (maxRecipientsPerDay <= 0) {
-      setValidtaeRecipientPerDay(true);
+      setValidateRecipientPerDay(true);
     }
     else {
-      dispatch(createMTADefinition({
-        name,
-        description,
-        parameters,
-        is_active: isActive,
-        mta_transport_id: mtaTransportId,
-        max_recipients_per_day: maxRecipientsPerDay
-      }));
-      setValidtaeRecipientPerDay(false);
+      if (isUpdate) {
+        dispatch(updateMTADefinition({
+          name,
+          description,
+          parameters,
+          is_active: isActive,
+          mta_transport_id: mtaTransportId,
+          max_recipients_per_day: maxRecipientsPerDay
+        }, id));
+      }
+      else {
+        dispatch(createMTADefinition({
+          name,
+          description,
+          parameters,
+          is_active: isActive,
+          mta_transport_id: mtaTransportId,
+          max_recipients_per_day: maxRecipientsPerDay
+        }));
+      }
+      setValidateRecipientPerDay(false);
       setName('');
       setDescription('');
       setParameters('');
