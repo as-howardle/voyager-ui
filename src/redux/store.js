@@ -3,9 +3,16 @@ import {
   CreateMTATransportReducers,
   MTATransportReducers,
   MTATransportTypeReducers,
-  UpdateMTATransportReducers
+  UpdateMTATransportReducers,
+  SetMTATransportDetailReducers
 } from './reducers/mta.transport.reducer';
-import { MTADefinitionListReducers, CreateMTADefinitionReducers, UpdateMTADefinitionReducers } from './reducers/mta.definition.reducer';
+import {
+  MTADefinitionListReducers,
+  CreateMTADefinitionReducers,
+  UpdateMTADefinitionReducers,
+  SetMTADefinitionDetailReducers
+} from './reducers/mta.definition.reducer';
+import { MTAAssignationListReducers, SetMTAAssignationDetailReducers } from './reducers/mta.assignation.reducer';
 
 export const store = configureStore(
   {
@@ -16,7 +23,11 @@ export const store = configureStore(
       updateMTATransport: UpdateMTATransportReducers,
       MTADefinitionList: MTADefinitionListReducers,
       createMTADefinition: CreateMTADefinitionReducers,
-      updateMTADefinition: UpdateMTADefinitionReducers
+      updateMTADefinition: UpdateMTADefinitionReducers,
+      MTAAssignationList: MTAAssignationListReducers,
+      MTATransportDetail: SetMTATransportDetailReducers,
+      MTADefinitionDetail: SetMTADefinitionDetailReducers,
+      MTAAssignationDetail: SetMTAAssignationDetailReducers
     },
     preloadedState: {
       MTATransport: {
@@ -54,6 +65,22 @@ export const store = configureStore(
         success: false,
         error: false,
         message: ''
+      },
+      MTAAssignationList: {
+        isLoading: false,
+        list: []
+      },
+      MTATransportDetail: {
+        mta: null,
+        isLoading: false
+      },
+      MTADefinitionDetail: {
+        mta: null,
+        isLoading: false
+      },
+      MTAAssignationDetail: {
+        mta: null,
+        isLoading: false
       }
     }
   }

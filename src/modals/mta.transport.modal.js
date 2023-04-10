@@ -8,12 +8,13 @@ import {
 import { useFormik } from "formik";
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { listMTATransportType, createMTATransport, listMTATranport, updateMTATransport } from './../redux/actions/mta.transport.action';
+import { listMTATransportType, createMTATransport, updateMTATransport, getMTATransportList } from './../redux/actions/mta.transport.action';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from "react";
 import { CREATE_MTA_TRANSPORT_RESET, UPDATE_MTA_TRANSPORT_RESET } from 'src/redux/constant/mta.transport.constant';
 import Notification from './../components/notification';
 import { toast } from 'react-toastify';
+import JsonValidate from './../validator/json';
 
 const validationSchema = Yup.object({
   name: Yup
@@ -36,11 +37,14 @@ const validationSchema = Yup.object({
 });
 
 export const MTATransportModal = (props) => {
-  const { isOpen, handleClose, modalData, isUpdate } = props;
+  const { isOpen, handleClose } = props;
   const dispatch = useDispatch();
   const { mtaTransportTypeList } = useSelector((state) => state.MTATransportType);
   const { message, success, error } = useSelector((state) => state.createMTATransport);
-  const { message: updateMessage, success: updateSuccess, error: errorUpdate } = useSelector((state) => state.updateMTATransport);
+  // const { message: updateMessage, success: updateSuccess, error: errorUpdate } = useSelector((state) => state.updateMTATransport);
+
+  const [validateParams, setValidateParams] = useState(false);
+
 
   const formik = useFormik({
     initialValues: {
@@ -49,57 +53,55 @@ export const MTATransportModal = (props) => {
     validationSchema: validationSchema,
     enableReinitialize: true,
     onSubmit: (values) => {
-      if (isUpdate) {
-        dispatch(updateMTATransport(values, modalData.data.id));
-        handleClose();
-      }
-      else {
+      if (JsonValidate.isJSON(values.params)) {
         dispatch(createMTATransport(values));
         handleClose();
+      } else {
+        setValidateParams(true);
       }
     },
   });
 
   useEffect(() => {
-    async function setInitialValues() {
-      if (isUpdate) {
-        await formik.setValues(modalData.data, false);
-      }
-      else {
-        formik.resetForm();
-      }
-    }
-    setInitialValues();
+    // async function setInitialValues() {
+    //   if (isUpdate) {
+    //     await formik.setValues(modalData.data, false);
+    //   }
+    //   else {
+    //     formik.resetForm();
+    //   }
+    // }
+    // setInitialValues();
 
     if (mtaTransportTypeList.length === 0) {
       dispatch(listMTATransportType());
     }
-    if (message !== '' || updateMessage !== '') {
-      if (success || updateSuccess) {
+    if (message !== '') {
+      if (success) {
         if (success) {
           toast.success('Create successfully');
           dispatch({ type: CREATE_MTA_TRANSPORT_RESET });
 
         }
-        if (updateMessage) {
-          toast.success('Update successfully');
-          dispatch({ type: UPDATE_MTA_TRANSPORT_RESET });
-        }
-        dispatch(listMTATranport());
+        // if (updateMessage) {
+        //   toast.success('Update successfully');
+        //   dispatch({ type: UPDATE_MTA_TRANSPORT_RESET });
+        // }
+        dispatch(getMTATransportList());
       }
-      if (error || errorUpdate) {
+      if (error) {
         if (error) {
           toast.error('Create failed');
           dispatch({ type: CREATE_MTA_TRANSPORT_RESET });
         }
-        if (errorUpdate) {
-          toast.error('Update failed');
-          dispatch({ type: UPDATE_MTA_TRANSPORT_RESET });
-        }
+        // if (errorUpdate) {
+        //   toast.error('Update failed');
+        //   dispatch({ type: UPDATE_MTA_TRANSPORT_RESET });
+        // }
 
       }
     }
-  }, [dispatch, message, success, isUpdate, modalData, updateMessage, updateSuccess, errorUpdate]);
+  }, [dispatch, message, success]);
 
   return (
     <Modal
@@ -187,8 +189,8 @@ export const MTATransportModal = (props) => {
               <Grid item>
                 <TextField
                   fullWidth
-                  error={!!(formik.touched.params && formik.errors.params)}
-                  helperText={formik.touched.params && formik.errors.params}
+                  error={validateParams}
+                  helperText={validateParams && 'Must be JSON format'}
                   label="Params"
                   name="params"
                   onChange={formik.handleChange}
@@ -203,7 +205,7 @@ export const MTATransportModal = (props) => {
           <Divider />
           <CardActions sx={{ justifyContent: 'flex-end' }}>
             <Button variant="contained" type='submit'>
-              {isUpdate ? 'Update' : 'Create'}
+              Create
             </Button>
           </CardActions>
         </Card>

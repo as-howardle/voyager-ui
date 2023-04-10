@@ -6,10 +6,15 @@ import DoneIcon from '@mui/icons-material/Done';
 import { Box, Button, FormControl, FormControlLabel, FormGroup, Switch } from '@mui/material';
 import { red } from '@mui/material/colors';
 import { Stack } from '@mui/system';
-import { useCallback, useState } from 'react';
+import Router from 'next/router';
+import { useCallback, useState, useEffect } from 'react';
 import { MTATransportModal } from '../../modals/mta.transport.modal';
+import { useSelector, useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import { UPDATE_MTA_TRANSPORT_RESET } from 'src/redux/constant/mta.transport.constant';
+import { setMTATransportDetail } from './../../redux/actions/mta.transport.action';
 
-const gridStyle = { minHeight: 600 };
+const gridStyle = { minHeight: 500 };
 
 const columns = [
   { name: 'name', defaultFlex: 1, header: 'Name' },
@@ -39,6 +44,9 @@ export const MTATransportTable = (props) => {
   const [modalData, setModalData] = useState();
   const [isUpdate, setIsUpdate] = useState(false);
 
+  const dispatch = useDispatch();
+  const { success, error, message } = useSelector((state) => state.updateMTATransport);
+
   const handleCloseModal = () => {
     setIsOpenModal(!isOpenModal);
   };
@@ -51,14 +59,35 @@ export const MTATransportTable = (props) => {
   const onRenderRow = useCallback((rowProps) => {
     const { onClick } = rowProps;
     rowProps.onClick = (event) => {
-      setModalData(rowProps);
-      setIsUpdate(true);
-      setIsOpenModal(true);
+      dispatch(setMTATransportDetail(rowProps.data));
+      Router.push({
+        pathname: `/mta/detail`,
+        query: {
+          // data: JSON.stringify(rowProps.data),
+          type: 'transport'
+        }
+      });
+      // setModalData(rowProps);
+      // setIsUpdate(true);
+      // setIsOpenModal(true);
       if (onClick) {
         onClick(event);
       }
     };
   }, []);
+
+  // useEffect(() => {
+  //   if (message !== '') {
+  //     if (success) {
+  //       toast.success(message.message);
+  //       dispatch({ type: UPDATE_MTA_TRANSPORT_RESET });
+  //     }
+  //     else {
+  //       toast.error('Update failed');
+  //       dispatch({ type: UPDATE_MTA_TRANSPORT_RESET });
+  //     }
+  //   }
+  // }, [message]);
 
   return (
     <Box sx={{ minWidth: 800 }}>
@@ -86,7 +115,7 @@ export const MTATransportTable = (props) => {
           Add
         </Button>
       </Stack>
-      <MTATransportModal isOpen={isOpenModal} handleClose={handleCloseModal} modalData={modalData} isUpdate={isUpdate} />
+      <MTATransportModal isOpen={isOpenModal} handleClose={handleCloseModal} />
       <ReactDataGrid
         columns={columns}
         dataSource={data}
@@ -94,7 +123,7 @@ export const MTATransportTable = (props) => {
         defaultFilterValue={filterValue}
         pagination
         loading={isLoading}
-        defaultLimit={20}
+        defaultLimit={10}
         enableFiltering={enableFiltering}
         onRenderRow={onRenderRow}
       />

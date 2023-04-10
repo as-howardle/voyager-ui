@@ -12,6 +12,13 @@ const UserStore = {
     return null;
   },
 
+  getTokenExpiry: () => {
+    if (localStorage.getItem('token')) {
+      return JSON.parse(localStorage.getItem('token')).expiry;
+    }
+    return null;
+  },
+
   removeToken: () => {
     localStorage.removeItem('token');
   },

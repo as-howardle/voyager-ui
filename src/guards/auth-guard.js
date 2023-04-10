@@ -29,7 +29,8 @@ export const AuthGuard = (props) => {
       ignore.current = true;
       const now = new Date();
       const token = UserStore.getToken();
-      if (!token || token.expiry < now.getTime()) {
+      const tokenExpiry = UserStore.getTokenExpiry();
+      if (!token || tokenExpiry < now.getTime()) {
         UserStore.removeToken();
         router
           .replace({
