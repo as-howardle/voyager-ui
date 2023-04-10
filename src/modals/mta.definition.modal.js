@@ -47,19 +47,6 @@ export const MTADefinitionModal = (props) => {
 
   useEffect(() => {
 
-    // if (isUpdate) {
-    //   setInitialValues(modalData.data);
-    // }
-    // else {
-    //   setId('');
-    //   setName('');
-    //   setDescription('');
-    //   setParameters('');
-    //   setIsActive(true);
-    //   setMTATransportId('');
-    //   setMaxRecipientsPerDay(0);
-    // }
-
     if (listMTATransport.length === 0) {
       dispatch(getMTATransportList());
     }
@@ -70,10 +57,6 @@ export const MTADefinitionModal = (props) => {
           dispatch({ type: CREATE_MTA_DEFINITION_RESET });
 
         }
-        // if (successUpdate) {
-        //   toast.success('Update successfully');
-        //   dispatch({ type: UPDATE_MTA_DEFINITION_RESET });
-        // }
         dispatch(listMTADefinition());
       }
       if (error || errorUpdate) {
@@ -81,10 +64,6 @@ export const MTADefinitionModal = (props) => {
           toast.error('Create failed');
           dispatch({ type: CREATE_MTA_DEFINITION_RESET });
         }
-        // if (errorUpdate) {
-        //   toast.error('Update failed');
-        //   dispatch({ type: UPDATE_MTA_DEFINITION_RESET });
-        // }
       }
     }
   }, [dispatch, listMTATransport, message, success, error]);
