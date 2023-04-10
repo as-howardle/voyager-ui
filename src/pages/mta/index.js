@@ -67,7 +67,7 @@ const Page = () => {
       toast.error(messageUpdateMTATransport);
       dispatch({ type: UPDATE_MTA_TRANSPORT_RESET });
     }
-  }, [dispatch, listMTATransport]);
+  }, [dispatch, listMTATransport, successUpdateMTADefinition, errorUpdateMTADefinition, successUpdateMTATransport, errorUpdateMTATransport]);
 
   return (
     <>
