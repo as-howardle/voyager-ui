@@ -5,13 +5,18 @@ import {
   CardContent,
   CardHeader, Checkbox, Divider, FormControl, FormControlLabel, Grid, InputLabel, Modal, NativeSelect, TextField
 } from "@mui/material";
+import Select from 'react-select';
+import { createFilter } from "react-select";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { createMTADefinition } from "src/redux/actions/mta.definition.action";
-import { listMTATranport } from './../redux/actions/mta.transport.action';
+import { getMTATransportList } from './../redux/actions/mta.transport.action';
 import { CREATE_MTA_DEFINITION_RESET, UPDATE_MTA_DEFINITION_RESET } from './../redux/constant/mta.definition.constant';
 import { listMTADefinition, updateMTADefinition } from './../redux/actions/mta.definition.action';
+import { useMemo } from "react";
+import MenuList from './../components/select';
+import JsonValidate from './../validator/json';
 
 export const MTADefinitionModal = (props) => {
   const { isOpen, handleClose, modalData, isUpdate } = props;
@@ -29,46 +34,46 @@ export const MTADefinitionModal = (props) => {
   const [maxRecipientsPerDay, setMaxRecipientsPerDay] = useState(0);
 
   const [validtaeRecipientPerDay, setValidateRecipientPerDay] = useState(false);
+  const [validateParams, setValidateParams] = useState(false);
 
-  const setInitialValues = (data) => {
-    setId(data.id);
-    setName(data.name);
-    setDescription(data.description);
-    setParameters(data.parameters);
-    setIsActive(data.is_active);
-    setMTATransportId(data.mta_transport_id);
-    setMaxRecipientsPerDay(data.max_recipients_per_day);
-  };
+  const selectMTATransport = useMemo(() => {
+    if (listMTATransport.length > 0) {
+      return listMTATransport.map(l => ({
+        value: l.id,
+        label: l.name
+      }));
+    }
+  }, [listMTATransport]);
 
   useEffect(() => {
 
-    if (isUpdate) {
-      setInitialValues(modalData.data);
-    }
-    else {
-      setId('');
-      setName('');
-      setDescription('');
-      setParameters('');
-      setIsActive(true);
-      setMTATransportId('');
-      setMaxRecipientsPerDay(0);
-    }
+    // if (isUpdate) {
+    //   setInitialValues(modalData.data);
+    // }
+    // else {
+    //   setId('');
+    //   setName('');
+    //   setDescription('');
+    //   setParameters('');
+    //   setIsActive(true);
+    //   setMTATransportId('');
+    //   setMaxRecipientsPerDay(0);
+    // }
 
     if (listMTATransport.length === 0) {
-      dispatch(listMTATranport());
+      dispatch(getMTATransportList());
     }
-    if (message !== '' || updateMessage !== '') {
-      if (success || successUpdate) {
+    if (message !== '') {
+      if (success) {
         if (success) {
           toast.success('Create successfully');
           dispatch({ type: CREATE_MTA_DEFINITION_RESET });
 
         }
-        if (successUpdate) {
-          toast.success('Update successfully');
-          dispatch({ type: UPDATE_MTA_DEFINITION_RESET });
-        }
+        // if (successUpdate) {
+        //   toast.success('Update successfully');
+        //   dispatch({ type: UPDATE_MTA_DEFINITION_RESET });
+        // }
         dispatch(listMTADefinition());
       }
       if (error || errorUpdate) {
@@ -76,40 +81,30 @@ export const MTADefinitionModal = (props) => {
           toast.error('Create failed');
           dispatch({ type: CREATE_MTA_DEFINITION_RESET });
         }
-        if (errorUpdate) {
-          toast.error('Update failed');
-          dispatch({ type: UPDATE_MTA_DEFINITION_RESET });
-        }
+        // if (errorUpdate) {
+        //   toast.error('Update failed');
+        //   dispatch({ type: UPDATE_MTA_DEFINITION_RESET });
+        // }
       }
     }
-  }, [dispatch, listMTATransport, message, success, error, isUpdate, modalData, updateMessage, successUpdate, errorUpdate]);
+  }, [dispatch, listMTATransport, message, success, error]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (maxRecipientsPerDay <= 0) {
       setValidateRecipientPerDay(true);
     }
-    else {
-      if (isUpdate) {
-        dispatch(updateMTADefinition({
-          name,
-          description,
-          parameters,
-          is_active: isActive,
-          mta_transport_id: mtaTransportId,
-          max_recipients_per_day: maxRecipientsPerDay
-        }, id));
-      }
-      else {
-        dispatch(createMTADefinition({
-          name,
-          description,
-          parameters,
-          is_active: isActive,
-          mta_transport_id: mtaTransportId,
-          max_recipients_per_day: maxRecipientsPerDay
-        }));
-      }
+    else if (!JsonValidate.isJSON(parameters)) {
+      setValidateParams(true);
+    } else {
+      dispatch(createMTADefinition({
+        name,
+        description,
+        parameters,
+        is_active: isActive,
+        mta_transport_id: mtaTransportId.value,
+        max_recipients_per_day: maxRecipientsPerDay
+      }));
       setValidateRecipientPerDay(false);
       setName('');
       setDescription('');
@@ -135,7 +130,7 @@ export const MTADefinitionModal = (props) => {
       <form onSubmit={handleSubmit}>
         <Card variant="outlined" sx={{ minWidth: 500 }}>
           <CardHeader
-            title="Create MTA Transport"
+            title="Create MTA Definition"
           />
           <Divider />
           <CardContent>
@@ -182,31 +177,20 @@ export const MTADefinitionModal = (props) => {
                 />
               </Grid>
               <Grid container item spacing={3} direction="row" >
-                <Grid item xs={6}>
+                <Grid item xs={6} sx={{
+                  position: 'relative',
+                  zIndex: 999
+                }}>
                   {listMTATransport.length > 0 ? (
-                    <FormControl fullWidth>
-                      <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                        MTA Transport
-                      </InputLabel>
-                      <NativeSelect
-                        value={mtaTransportId}
-                        onChange={(e) => setMTATransportId(e.target.value)}
-                        inputProps={{
-                          name: 'mta_transport_id',
-                          id: 'uncontrolled-native',
-                        }}
-                      >
-                        <option value=""></option>
-                        {listMTATransport.map((e) => {
-                          return (
-                            <option key={e.id} value={e.id}>
-                              {e.name}
-                            </option>
-                          );
-                        })
-                        }
-                      </NativeSelect>
-                    </FormControl>
+                    <Select
+                      components={{ MenuList }}
+                      options={selectMTATransport}
+                      filterOption={createFilter({ ignoreAccents: false })}
+                      value={mtaTransportId}
+                      onChange={(e) => setMTATransportId(e)}
+                      placeholder='Select MTA Transport'
+                      isClearable={true}
+                    />
                   ) : null}
                 </Grid>
                 <Grid item xs={6}>
@@ -228,6 +212,8 @@ export const MTADefinitionModal = (props) => {
                   value={parameters}
                   multiline
                   rows={5}
+                  error={validateParams}
+                  helperText={validateParams && 'Must be JSON format'}
                 />
               </Grid>
             </Grid>
@@ -235,7 +221,7 @@ export const MTADefinitionModal = (props) => {
           <Divider />
           <CardActions sx={{ justifyContent: 'flex-end' }}>
             <Button variant="contained" type='submit'>
-              {isUpdate ? 'Update' : 'Create'}
+              Create
             </Button>
           </CardActions>
         </Card>

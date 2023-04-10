@@ -4,15 +4,16 @@ import '@inovua/reactdatagrid-community/index.css';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import DoneIcon from '@mui/icons-material/Done';
-import { Box, Button, CircularProgress, FormControl, FormControlLabel, FormGroup, Switch } from '@mui/material';
+import { Box, Button, FormControl, FormControlLabel, FormGroup, Switch } from '@mui/material';
 import { red } from '@mui/material/colors';
 import { Stack } from '@mui/system';
 import { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MTADefinitionModal } from './../../modals/mta.definition.modal';
-import { listMTADefinition } from './../../redux/actions/mta.definition.action';
+import { listMTADefinition, setMTADefinitionDetail } from './../../redux/actions/mta.definition.action';
+import Router from 'next/router';
 
-const gridStyle = { minHeight: 600 };
+const gridStyle = { minHeight: 500 };
 
 const columns = [
   { name: 'name', defaultFlex: 1, header: 'Name' },
@@ -51,15 +52,12 @@ export const MTADefinitionTable = (props) => {
 
   const [enableFiltering, setEnableFiltering] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [modalData, setModalData] = useState();
-  const [isUpdate, setIsUpdate] = useState(false);
 
   const handleCloseModal = () => {
     setIsOpenModal(!isOpenModal);
   };
 
   const handleOpenModal = () => {
-    setIsUpdate(false);
     setIsOpenModal(true);
   };
 
@@ -72,9 +70,17 @@ export const MTADefinitionTable = (props) => {
   const onRenderRow = useCallback((rowProps) => {
     const { onClick } = rowProps;
     rowProps.onClick = (event) => {
-      setModalData(rowProps);
-      setIsUpdate(true);
-      setIsOpenModal(true);
+      dispatch(setMTADefinitionDetail(rowProps.data));
+      Router.push({
+        pathname: `/mta/detail`,
+        query: {
+          // data: JSON.stringify(rowProps.data),
+          type: 'definition'
+        }
+      });
+      // setModalData(rowProps);
+      // setIsUpdate(true);
+      // setIsOpenModal(true);
       if (onClick) {
         onClick(event);
       }
@@ -82,58 +88,43 @@ export const MTADefinitionTable = (props) => {
   }, []);
 
   return (
-    <>
-      {
-        isLoading ? (
-          <Box sx={{ minWidth: 800 }}>
-            <Stack
-              direction="row"
-              justifyContent="center"
-            >
-              <CircularProgress />
-            </Stack>
-          </Box>
-        ) : (
-          <Box sx={{ minWidth: 800 }}>
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              sx={{
-                mb: 2
-              }}
-            >
-              <FormControl component="fieldset">
-                <FormGroup aria-label="position" row>
-                  <FormControlLabel
-                    value="start"
-                    control={
-                      <Switch color="primary" checked={enableFiltering} onChange={(e) => setEnableFiltering(e.target.checked)} />
-                    }
-                    label="Filter"
-                    labelPlacement="start"
-                    sx={{ ml: 0 }}
-                  />
-                </FormGroup>
-              </FormControl>
-              <Button variant="contained" startIcon={<AddIcon />} onClick={handleOpenModal}>
-                Add
-              </Button>
-            </Stack>
-            <MTADefinitionModal isOpen={isOpenModal} handleClose={handleCloseModal} isUpdate={isUpdate} modalData={modalData} />
-            <ReactDataGrid
-              columns={columns}
-              dataSource={list}
-              style={gridStyle}
-              defaultFilterValue={filterValue}
-              pagination
-              loading={isLoading}
-              defaultLimit={20}
-              enableFiltering={enableFiltering}
-              onRenderRow={onRenderRow}
+    <Box sx={{ minWidth: 800 }}>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        sx={{
+          mb: 2
+        }}
+      >
+        <FormControl component="fieldset">
+          <FormGroup aria-label="position" row>
+            <FormControlLabel
+              value="start"
+              control={
+                <Switch color="primary" checked={enableFiltering} onChange={(e) => setEnableFiltering(e.target.checked)} />
+              }
+              label="Filter"
+              labelPlacement="start"
+              sx={{ ml: 0 }}
             />
-          </Box>
-        )
-      }
-    </>
+          </FormGroup>
+        </FormControl>
+        <Button variant="contained" startIcon={<AddIcon />} onClick={handleOpenModal}>
+          Add
+        </Button>
+      </Stack>
+      <MTADefinitionModal isOpen={isOpenModal} handleClose={handleCloseModal} />
+      <ReactDataGrid
+        columns={columns}
+        dataSource={list}
+        style={gridStyle}
+        defaultFilterValue={filterValue}
+        pagination
+        loading={isLoading}
+        defaultLimit={10}
+        enableFiltering={enableFiltering}
+        onRenderRow={onRenderRow}
+      />
+    </Box>
   );
 };

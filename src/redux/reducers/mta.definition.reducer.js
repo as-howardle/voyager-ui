@@ -9,7 +9,10 @@ import {
   UPDATE_MTA_DEFINITION,
   UPDATE_MTA_DEFINITION_DONE,
   UPDATE_MTA_DEFINITION_FAIL,
-  UPDATE_MTA_DEFINITION_RESET
+  UPDATE_MTA_DEFINITION_RESET,
+  SET_MTA_DEFINITION_DETAIL,
+  SET_MTA_DEFINITION_DETAIL_DONE,
+  SET_MTA_DEFINITION_DETAIL_RESET
 } from './../constant/mta.definition.constant';
 
 
@@ -52,6 +55,19 @@ export const UpdateMTADefinitionReducers = (state = {}, action) => {
       return { ...state, isLoading: false, error: true, success: false, message: action.payload };
     case UPDATE_MTA_DEFINITION_RESET:
       return { isLoading: false, success: false, error: false, message: '' };
+    default:
+      return state;
+  }
+};
+
+export const SetMTADefinitionDetailReducers = (state = {}, action) => {
+  switch (action.type) {
+    case SET_MTA_DEFINITION_DETAIL:
+      return { ...state, isLoading: true };
+    case SET_MTA_DEFINITION_DETAIL_DONE:
+      return { ...state, isLoading: false, mta: action.payload };
+    case SET_MTA_DEFINITION_DETAIL_RESET:
+      return { ...state, isLoading: false, mta: null };
     default:
       return state;
   }
