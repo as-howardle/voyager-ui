@@ -63,15 +63,6 @@ export const MTATransportModal = (props) => {
   });
 
   useEffect(() => {
-    // async function setInitialValues() {
-    //   if (isUpdate) {
-    //     await formik.setValues(modalData.data, false);
-    //   }
-    //   else {
-    //     formik.resetForm();
-    //   }
-    // }
-    // setInitialValues();
 
     if (mtaTransportTypeList.length === 0) {
       dispatch(listMTATransportType());
@@ -83,10 +74,6 @@ export const MTATransportModal = (props) => {
           dispatch({ type: CREATE_MTA_TRANSPORT_RESET });
 
         }
-        // if (updateMessage) {
-        //   toast.success('Update successfully');
-        //   dispatch({ type: UPDATE_MTA_TRANSPORT_RESET });
-        // }
         dispatch(getMTATransportList());
       }
       if (error) {
@@ -94,10 +81,6 @@ export const MTATransportModal = (props) => {
           toast.error('Create failed');
           dispatch({ type: CREATE_MTA_TRANSPORT_RESET });
         }
-        // if (errorUpdate) {
-        //   toast.error('Update failed');
-        //   dispatch({ type: UPDATE_MTA_TRANSPORT_RESET });
-        // }
 
       }
     }

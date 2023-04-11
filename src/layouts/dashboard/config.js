@@ -6,6 +6,7 @@ import UserIcon from '@heroicons/react/24/solid/UserIcon';
 import UserPlusIcon from '@heroicons/react/24/solid/UserPlusIcon';
 import UsersIcon from '@heroicons/react/24/solid/UsersIcon';
 import XCircleIcon from '@heroicons/react/24/solid/XCircleIcon';
+import PaperAirplaneIcon from '@heroicons/react/24/solid/PaperAirplaneIcon';
 import { SvgIcon } from '@mui/material';
 
 export const items = [
@@ -27,24 +28,15 @@ export const items = [
       </SvgIcon>
     )
   },
-  // {
-  //   title: 'Companies',
-  //   path: '/companies',
-  //   icon: (
-  //     <SvgIcon fontSize="small">
-  //       <ShoppingBagIcon />
-  //     </SvgIcon>
-  //   )
-  // },
-  // {
-  //   title: 'Account',
-  //   path: '/account',
-  //   icon: (
-  //     <SvgIcon fontSize="small">
-  //       <UserIcon />
-  //     </SvgIcon>
-  //   )
-  // },
+  {
+    title: 'Publishers Management',
+    path: '/publisher',
+    icon: (
+      <SvgIcon fontSize="small">
+        <PaperAirplaneIcon />
+      </SvgIcon>
+    )
+  },
   {
     title: 'Settings',
     path: '/settings',
