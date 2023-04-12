@@ -24,7 +24,7 @@ export const getCountryList = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: LIST_COUNTRY_FAIL,
-      payload: data.message
+      payload: error.response.data.error
     });
   }
 };
@@ -42,7 +42,7 @@ export const getLanguageList = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: LIST_LANGUAGE_FAIL,
-      payload: data.message
+      payload: error.response.data.error
     });
   }
 };
@@ -60,7 +60,7 @@ export const getSaleManagerList = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: LIST_SALE_MANAGER_FAIL,
-      payload: data.message
+      payload: error.response.data.error
     });
   }
 };

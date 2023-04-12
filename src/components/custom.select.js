@@ -5,11 +5,11 @@ export const CustomSelect = (props) => {
   const { id, label, options, value, onChange, placeHolder, required, isMulti } = props;
   return (
     <>
-      <label htmlFor={id} style={{
+      {label && <label htmlFor={id} style={{
         fontSize: '.85rem',
         fontWeight: 'bold',
         lineHeight: 3
-      }}>{label} <b style={{ color: 'red' }}>*</b></label>
+      }}>{label} <b style={{ color: 'red' }}>*</b></label>}
       <Select
         inputId={id}
         components={{ MenuList }}

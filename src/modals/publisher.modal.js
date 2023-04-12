@@ -33,7 +33,6 @@ export const PublisherModal = (props) => {
   const [representativeSalesManagerId, setRepresentativeSalesManagerId] = useState('');
   const [localeCountryId, setLocaleCountryId] = useState('');
   const [languageId, setLanguageId] = useState(0);
-
   const [approvedProveniences, setApprovedProveniences] = useState([]);
   const [status, setStatus] = useState('integrating');
 
@@ -51,13 +50,12 @@ export const PublisherModal = (props) => {
       const arrFilter = listCountry.filter((l) => l.id !== 7);
       const arr = arrFilter.map(l => (
         {
-          value: l.id,
+          value: l.locale_country.id,
           label: l.name,
           locale_country_id: l.locale_country.id,
           timezone_id: l.timezone.id
         }
       ));
-      console.log(arr);
       return arr;
     }
   }, [listCountry]);
@@ -99,7 +97,7 @@ export const PublisherModal = (props) => {
     setName('');
     setRevenueShare(0);
     setLocaleCountryId('');
-    setLocaleCountryId('');
+    setLanguageId('');
     setApprovedProveniences([]);
     setStatus('');
     setRepresentativeSalesManagerId('');
@@ -218,7 +216,7 @@ export const PublisherModal = (props) => {
           </CardContent>
           <Divider />
           <CardActions sx={{ justifyContent: 'flex-end' }}>
-            <Button variant='contained' type='submit' color='error' onClick={handleClose}>
+            <Button variant='contained' color='error' onClick={handleClose}>
               Close
             </Button>
             <Button variant='contained' type='submit' color='success'>

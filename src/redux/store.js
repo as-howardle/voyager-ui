@@ -16,7 +16,12 @@ import {
   MTAAssignationListReducers,
   SetMTAAssignationDetailReducers
 } from './reducers/mta.assignation.reducer';
-import { CreatePublisherReducers, PublisherListReducers } from './reducers/publisher.reducer';
+import {
+  CreatePublisherReducers,
+  PublisherListReducers,
+  SetPublisherDetailReducers,
+  UpdatePublisherReducers
+} from './reducers/publisher.reducer';
 import {
   CountryListReducers,
   LanguageListReducers,
@@ -41,7 +46,9 @@ export const store = configureStore(
       listCountry: CountryListReducers,
       listLanguage: LanguageListReducers,
       listSaleManager: SaleManagerListReducers,
-      createPublisher: CreatePublisherReducers
+      createPublisher: CreatePublisherReducers,
+      publisherDetail: SetPublisherDetailReducers,
+      updatePublisher: UpdatePublisherReducers
     },
     preloadedState: {
       MTATransport: {
@@ -117,6 +124,17 @@ export const store = configureStore(
         isLoading: false
       },
       createPublisher: {
+        isLoading: false,
+        success: false,
+        error: false,
+        message: ''
+      },
+      publisherDetail: {
+        pub: null,
+        error: '',
+        isLoading: false
+      },
+      updatePublisher: {
         isLoading: false,
         success: false,
         error: false,

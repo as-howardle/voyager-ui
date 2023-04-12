@@ -6,7 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { getPublisherList } from '../../redux/actions/publisher.action';
-import { CREATE_PUBLISHER_RESET } from '../../redux/constant/publisher.constant';
+import {
+  CREATE_PUBLISHER_RESET,
+  UPDATE_PUBLISHER_RESET
+} from '../../redux/constant/publisher.constant';
 
 const Page = () => {
   const dispatch = useDispatch();
@@ -16,19 +19,42 @@ const Page = () => {
     success: createSuccess,
     error: createError
   } = createReducer;
+  const {
+    success: updateSuccess,
+    error: updateError,
+    message: updateMessage
+  } = useSelector((state) => state.updatePublisher);
 
   useEffect(() => {
-    if (createSuccess) {
-      toast.success(createMessage);
-      dispatch(getPublisherList());
-      dispatch({ type: CREATE_PUBLISHER_RESET });
-    }
+      if (createSuccess) {
+        toast.success(createMessage);
+        dispatch(getPublisherList());
+        dispatch({ type: CREATE_PUBLISHER_RESET });
+      }
+      if (updateSuccess) {
+        toast.success(updateMessage);
+        dispatch(getPublisherList());
+        dispatch({ type: UPDATE_PUBLISHER_RESET });
+      }
 
-    if (createError) {
-      toast.error(createMessage);
-      dispatch({ type: CREATE_PUBLISHER_RESET });
-    }
-  }, [createSuccess, createError, createMessage, dispatch]);
+      if (createError) {
+        toast.error(createMessage);
+        dispatch({ type: CREATE_PUBLISHER_RESET });
+      }
+      if (updateError) {
+        toast.error(updateMessage);
+        dispatch({ type: UPDATE_PUBLISHER_RESET });
+      }
+    },
+    [
+      createSuccess,
+      createError,
+      createMessage,
+      dispatch,
+      updateSuccess,
+      updateError,
+      updateMessage
+    ]);
 
   return (
     <>

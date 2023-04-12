@@ -3,12 +3,13 @@ import '@inovua/reactdatagrid-community/index.css';
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Button, FormControl, FormControlLabel, FormGroup, Switch } from '@mui/material';
 import { Stack } from '@mui/system';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPublisherList } from './../../redux/actions/publisher.action';
 import DateFilter from '@inovua/reactdatagrid-community/DateFilter';
 import moment from 'moment';
 import { PublisherModal } from '../../modals/publisher.modal.js';
+import Router from 'next/router';
 
 const gridStyle = { minHeight: 500 };
 
@@ -66,21 +67,20 @@ export const PublisherTable = (props) => {
     setIsOpenModal(true);
   };
 
-  // const onRenderRow = useCallback((rowProps) => {
-  //   const { onClick } = rowProps;
-  //   rowProps.onClick = (event) => {
-  //     dispatch(setMTATransportDetail(rowProps.data));
-  //     Router.push({
-  //       pathname: `/mta/detail`,
-  //       query: {
-  //         type: 'transport'
-  //       }
-  //     });
-  //     if (onClick) {
-  //       onClick(event);
-  //     }
-  //   };
-  // }, []);
+  const onRenderRow = useCallback((rowProps) => {
+    const { onClick } = rowProps;
+    rowProps.onClick = (event) => {
+      Router.push({
+        pathname: `/publisher/detail`,
+        query: {
+          id: rowProps.data.id
+        }
+      });
+      if (onClick) {
+        onClick(event);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (list.length === 0) {
@@ -125,7 +125,7 @@ export const PublisherTable = (props) => {
         loading={isLoading}
         defaultLimit={10}
         enableFiltering={enableFiltering}
-        // onRenderRow={onRenderRow}
+        onRenderRow={onRenderRow}
       />
     </Box>
   );

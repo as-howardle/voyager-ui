@@ -1,4 +1,3 @@
-
 import ReactDataGrid from '@inovua/reactdatagrid-community';
 import '@inovua/reactdatagrid-community/index.css';
 import AddIcon from '@mui/icons-material/Add';
@@ -7,10 +6,13 @@ import DoneIcon from '@mui/icons-material/Done';
 import { Box, Button, FormControl, FormControlLabel, FormGroup, Switch } from '@mui/material';
 import { red } from '@mui/material/colors';
 import { Stack } from '@mui/system';
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MTADefinitionModal } from './../../modals/mta.definition.modal';
-import { listMTADefinition, setMTADefinitionDetail } from './../../redux/actions/mta.definition.action';
+import {
+  listMTADefinition,
+  setMTADefinitionDetail
+} from './../../redux/actions/mta.definition.action';
 import Router from 'next/router';
 
 const gridStyle = { minHeight: 500 };
@@ -35,12 +37,12 @@ const columns = [
     }
   },
   { name: 'parameters', defaultFlex: 1, header: 'Params' },
-  { name: 'max_recipients_per_day', defaultFlex: 1, header: 'Max recipients per day' },
+  { name: 'max_recipients_per_day', defaultFlex: 1, header: 'Max recipients per day' }
 ];
 
 const filterValue = [
   { name: 'name', operator: 'startsWith', type: 'string', value: '' },
-  { name: 'description', operator: 'startsWith', type: 'string', value: '' },
+  { name: 'description', operator: 'startsWith', type: 'string', value: '' }
 ];
 
 export const MTADefinitionTable = (props) => {
@@ -74,13 +76,9 @@ export const MTADefinitionTable = (props) => {
       Router.push({
         pathname: `/mta/detail`,
         query: {
-          // data: JSON.stringify(rowProps.data),
           type: 'definition'
         }
       });
-      // setModalData(rowProps);
-      // setIsUpdate(true);
-      // setIsOpenModal(true);
       if (onClick) {
         onClick(event);
       }
@@ -90,26 +88,27 @@ export const MTADefinitionTable = (props) => {
   return (
     <Box sx={{ minWidth: 800 }}>
       <Stack
-        direction="row"
-        justifyContent="space-between"
+        direction='row'
+        justifyContent='space-between'
         sx={{
           mb: 2
         }}
       >
-        <FormControl component="fieldset">
-          <FormGroup aria-label="position" row>
+        <FormControl component='fieldset'>
+          <FormGroup aria-label='position' row>
             <FormControlLabel
-              value="start"
+              value='start'
               control={
-                <Switch color="primary" checked={enableFiltering} onChange={(e) => setEnableFiltering(e.target.checked)} />
+                <Switch color='primary' checked={enableFiltering}
+                        onChange={(e) => setEnableFiltering(e.target.checked)} />
               }
-              label="Filter"
-              labelPlacement="start"
+              label='Filter'
+              labelPlacement='start'
               sx={{ ml: 0 }}
             />
           </FormGroup>
         </FormControl>
-        <Button variant="contained" startIcon={<AddIcon />} onClick={handleOpenModal}>
+        <Button variant='contained' startIcon={<AddIcon />} onClick={handleOpenModal}>
           Add
         </Button>
       </Stack>

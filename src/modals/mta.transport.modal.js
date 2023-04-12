@@ -3,16 +3,25 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardHeader, Checkbox, Divider, FormControlLabel, Grid, Modal, TextField, MenuItem
-} from "@mui/material";
-import { useFormik } from "formik";
+  CardHeader,
+  Checkbox,
+  Divider,
+  FormControlLabel,
+  Grid,
+  MenuItem,
+  Modal,
+  TextField
+} from '@mui/material';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
-import { listMTATransportType, createMTATransport, updateMTATransport, getMTATransportList } from './../redux/actions/mta.transport.action';
-import { useSelector } from 'react-redux';
-import { useEffect, useState } from "react";
-import { CREATE_MTA_TRANSPORT_RESET, UPDATE_MTA_TRANSPORT_RESET } from 'src/redux/constant/mta.transport.constant';
-import Notification from './../components/notification';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  createMTATransport,
+  getMTATransportList,
+  listMTATransportType
+} from './../redux/actions/mta.transport.action';
+import { useEffect, useState } from 'react';
+import { CREATE_MTA_TRANSPORT_RESET } from 'src/redux/constant/mta.transport.constant';
 import { toast } from 'react-toastify';
 import JsonValidate from './../validator/json';
 
@@ -45,7 +54,6 @@ export const MTATransportModal = (props) => {
 
   const [validateParams, setValidateParams] = useState(false);
 
-
   const formik = useFormik({
     initialValues: {
       name: '', description: '', type: '', params: '', is_active: false
@@ -59,7 +67,7 @@ export const MTATransportModal = (props) => {
       } else {
         setValidateParams(true);
       }
-    },
+    }
   });
 
   useEffect(() => {
@@ -98,9 +106,9 @@ export const MTATransportModal = (props) => {
     >
 
       <form onSubmit={formik.handleSubmit}>
-        <Card variant="outlined" sx={{ minWidth: 500 }}>
+        <Card variant='outlined' sx={{ minWidth: 500 }}>
           <CardHeader
-            title="Create MTA Transport"
+            title='Create MTA Transport'
           />
           <Divider />
           <CardContent>
@@ -108,18 +116,18 @@ export const MTATransportModal = (props) => {
               container
               spacing={3}
               sx={{ minWidth: 1000, minHeight: 250 }}
-              direction="column"
+              direction='column'
             >
-              <Grid container item spacing={3} direction="row">
+              <Grid container item spacing={3} direction='row'>
                 <Grid item xs={6}>
                   <TextField
                     fullWidth
                     error={!!(formik.touched.name && formik.errors.name)}
                     helperText={formik.touched.name && formik.errors.name}
-                    label="Name"
-                    name="name"
+                    label='Name'
+                    name='name'
                     onChange={formik.handleChange}
-                    type="text"
+                    type='text'
                     value={formik.values.name}
                   />
                 </Grid>
@@ -128,15 +136,15 @@ export const MTATransportModal = (props) => {
                     fullWidth
                     error={!!(formik.touched.description && formik.errors.description)}
                     helperText={formik.touched.description && formik.errors.description}
-                    label="Description"
-                    name="description"
+                    label='Description'
+                    name='description'
                     onChange={formik.handleChange}
-                    type="text"
+                    type='text'
                     value={formik.values.description}
                   />
                 </Grid>
               </Grid>
-              <Grid container item spacing={3} direction="row" >
+              <Grid container item spacing={3} direction='row'>
                 <Grid item xs={6}>
                   {mtaTransportTypeList.length > 0 ? (
                     <TextField
@@ -144,8 +152,8 @@ export const MTATransportModal = (props) => {
                       error={!!(formik.touched.type && formik.errors.type)}
                       helperText={formik.touched.type && formik.errors.type}
                       select
-                      label="Type"
-                      name="type"
+                      label='Type'
+                      name='type'
                       onChange={formik.handleChange}
                       value={formik.values.type}
                     >
@@ -163,9 +171,10 @@ export const MTATransportModal = (props) => {
                 <Grid item xs={6}>
                   <FormControlLabel
                     control={
-                      <Checkbox checked={formik.values.is_active} onChange={formik.handleChange} name='is_active' />
+                      <Checkbox checked={formik.values.is_active} onChange={formik.handleChange}
+                                name='is_active' />
                     }
-                    label="Is active"
+                    label='Is active'
                   />
                 </Grid>
               </Grid>
@@ -174,10 +183,10 @@ export const MTATransportModal = (props) => {
                   fullWidth
                   error={validateParams}
                   helperText={validateParams && 'Must be JSON format'}
-                  label="Params"
-                  name="params"
+                  label='Params'
+                  name='params'
                   onChange={formik.handleChange}
-                  type="text"
+                  type='text'
                   value={formik.values.params}
                   multiline
                   rows={5}
@@ -187,7 +196,10 @@ export const MTATransportModal = (props) => {
           </CardContent>
           <Divider />
           <CardActions sx={{ justifyContent: 'flex-end' }}>
-            <Button variant="contained" type='submit'>
+            <Button variant='contained' color='error' onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant='contained' type='submit' color='success'>
               Create
             </Button>
           </CardActions>

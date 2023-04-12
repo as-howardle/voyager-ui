@@ -1,5 +1,10 @@
-
-import { LIST_MTA_ASSIGNATION, LIST_MTA_ASSIGNATION_DONE, LIST_MTA_ASSIGNATION_FAIL, SET_MTA_ASSIGNATION_DETAIL, SET_MTA_ASSIGNATION_DETAIL_DONE } from './../constant/mta.assignation.constant';
+import {
+  LIST_MTA_ASSIGNATION,
+  LIST_MTA_ASSIGNATION_DONE,
+  LIST_MTA_ASSIGNATION_FAIL,
+  SET_MTA_ASSIGNATION_DETAIL,
+  SET_MTA_ASSIGNATION_DETAIL_DONE
+} from './../constant/mta.assignation.constant';
 import MTAAssignationAPI from './../../axios/MTAAssignationAPI';
 
 export const listMTAAssignation = () => async (dispatch) => {
@@ -15,7 +20,7 @@ export const listMTAAssignation = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: LIST_MTA_ASSIGNATION_FAIL,
-      payload: 'error'
+      payload: error.response.data.error
     });
   }
 };
