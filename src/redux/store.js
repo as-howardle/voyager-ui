@@ -3,16 +3,30 @@ import {
   CreateMTATransportReducers,
   MTATransportReducers,
   MTATransportTypeReducers,
-  UpdateMTATransportReducers,
-  SetMTATransportDetailReducers
+  SetMTATransportDetailReducers,
+  UpdateMTATransportReducers
 } from './reducers/mta.transport.reducer';
 import {
-  MTADefinitionListReducers,
   CreateMTADefinitionReducers,
-  UpdateMTADefinitionReducers,
-  SetMTADefinitionDetailReducers
+  MTADefinitionListReducers,
+  SetMTADefinitionDetailReducers,
+  UpdateMTADefinitionReducers
 } from './reducers/mta.definition.reducer';
-import { MTAAssignationListReducers, SetMTAAssignationDetailReducers } from './reducers/mta.assignation.reducer';
+import {
+  MTAAssignationListReducers,
+  SetMTAAssignationDetailReducers
+} from './reducers/mta.assignation.reducer';
+import {
+  CreatePublisherReducers,
+  PublisherListReducers,
+  SetPublisherDetailReducers,
+  UpdatePublisherReducers
+} from './reducers/publisher.reducer';
+import {
+  CountryListReducers,
+  LanguageListReducers,
+  SaleManagerListReducers
+} from './reducers/general.reducer';
 
 export const store = configureStore(
   {
@@ -27,7 +41,14 @@ export const store = configureStore(
       MTAAssignationList: MTAAssignationListReducers,
       MTATransportDetail: SetMTATransportDetailReducers,
       MTADefinitionDetail: SetMTADefinitionDetailReducers,
-      MTAAssignationDetail: SetMTAAssignationDetailReducers
+      MTAAssignationDetail: SetMTAAssignationDetailReducers,
+      listPublisher: PublisherListReducers,
+      listCountry: CountryListReducers,
+      listLanguage: LanguageListReducers,
+      listSaleManager: SaleManagerListReducers,
+      createPublisher: CreatePublisherReducers,
+      publisherDetail: SetPublisherDetailReducers,
+      updatePublisher: UpdatePublisherReducers
     },
     preloadedState: {
       MTATransport: {
@@ -81,6 +102,43 @@ export const store = configureStore(
       MTAAssignationDetail: {
         mta: null,
         isLoading: false
+      },
+      listPublisher: {
+        list: [],
+        error: '',
+        isLoading: false
+      },
+      listCountry: {
+        list: [],
+        error: '',
+        isLoading: false
+      },
+      listLanguage: {
+        list: [],
+        error: '',
+        isLoading: false
+      },
+      listSaleManager: {
+        list: [],
+        error: '',
+        isLoading: false
+      },
+      createPublisher: {
+        isLoading: false,
+        success: false,
+        error: false,
+        message: ''
+      },
+      publisherDetail: {
+        pub: null,
+        error: '',
+        isLoading: false
+      },
+      updatePublisher: {
+        isLoading: false,
+        success: false,
+        error: false,
+        message: ''
       }
     }
   }

@@ -3,20 +3,23 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardHeader, Checkbox, Divider, FormControl, FormControlLabel, Grid, InputLabel, Modal, NativeSelect, TextField
-} from "@mui/material";
-import Select from 'react-select';
-import { createFilter } from "react-select";
-import { useEffect, useState } from "react";
+  CardHeader,
+  Checkbox,
+  Divider,
+  FormControlLabel,
+  Grid,
+  Modal,
+  TextField
+} from '@mui/material';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { createMTADefinition } from "src/redux/actions/mta.definition.action";
+import { createMTADefinition } from 'src/redux/actions/mta.definition.action';
 import { getMTATransportList } from './../redux/actions/mta.transport.action';
-import { CREATE_MTA_DEFINITION_RESET, UPDATE_MTA_DEFINITION_RESET } from './../redux/constant/mta.definition.constant';
-import { listMTADefinition, updateMTADefinition } from './../redux/actions/mta.definition.action';
-import { useMemo } from "react";
-import MenuList from './../components/select';
+import { CREATE_MTA_DEFINITION_RESET } from './../redux/constant/mta.definition.constant';
+import { listMTADefinition } from './../redux/actions/mta.definition.action';
 import JsonValidate from './../validator/json';
+import { CustomSelect } from '../components/custom.select.js';
 
 export const MTADefinitionModal = (props) => {
   const { isOpen, handleClose, modalData, isUpdate } = props;
@@ -24,7 +27,11 @@ export const MTADefinitionModal = (props) => {
   // const { mtaTransportTypeList } = useSelector((state) => state.MTATransportType);
   const { listMTATransport } = useSelector((state) => state.MTATransport);
   const { message, success, error } = useSelector((state) => state.createMTADefinition);
-  const { message: updateMessage, success: successUpdate, error: errorUpdate } = useSelector((state) => state.updateMTADefinition);
+  const {
+    message: updateMessage,
+    success: successUpdate,
+    error: errorUpdate
+  } = useSelector((state) => state.updateMTADefinition);
   const [id, setId] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -72,8 +79,7 @@ export const MTADefinitionModal = (props) => {
     e.preventDefault();
     if (maxRecipientsPerDay <= 0) {
       setValidateRecipientPerDay(true);
-    }
-    else if (!JsonValidate.isJSON(parameters)) {
+    } else if (!JsonValidate.isJSON(parameters)) {
       setValidateParams(true);
     } else {
       dispatch(createMTADefinition({
@@ -107,9 +113,9 @@ export const MTADefinitionModal = (props) => {
     >
 
       <form onSubmit={handleSubmit}>
-        <Card variant="outlined" sx={{ minWidth: 500 }}>
+        <Card variant='outlined' sx={{ minWidth: 500 }}>
           <CardHeader
-            title="Create MTA Definition"
+            title='Create MTA Definition'
           />
           <Divider />
           <CardContent>
@@ -117,16 +123,16 @@ export const MTADefinitionModal = (props) => {
               container
               spacing={3}
               sx={{ minWidth: 1000, minHeight: 250 }}
-              direction="column"
+              direction='column'
             >
-              <Grid container item spacing={3} direction="row">
+              <Grid container item spacing={3} direction='row'>
                 <Grid item xs={6}>
                   <TextField
                     fullWidth
-                    label="Name"
-                    name="name"
+                    label='Name'
+                    name='name'
                     onChange={(e) => setName(e.target.value)}
-                    type="text"
+                    type='text'
                     value={name}
                     required
                   />
@@ -134,10 +140,10 @@ export const MTADefinitionModal = (props) => {
                 <Grid item xs={6}>
                   <TextField
                     fullWidth
-                    label="Max recipents per day"
-                    name="max_recipients_per_day"
+                    label='Max recipents per day'
+                    name='max_recipients_per_day'
                     onChange={(e) => setMaxRecipientsPerDay(e.target.value)}
-                    type="number"
+                    type='number'
                     value={maxRecipientsPerDay}
                     required
                     error={validtaeRecipientPerDay}
@@ -148,46 +154,53 @@ export const MTADefinitionModal = (props) => {
               <Grid item>
                 <TextField
                   fullWidth
-                  label="Description"
-                  name="description"
+                  label='Description'
+                  name='description'
                   onChange={(e) => setDescription(e.target.value)}
-                  type="text"
+                  type='text'
                   value={description}
                 />
               </Grid>
-              <Grid container item spacing={3} direction="row" >
+              <Grid container item spacing={3} direction='row'>
                 <Grid item xs={6} sx={{
                   position: 'relative',
                   zIndex: 999
                 }}>
                   {listMTATransport.length > 0 ? (
-                    <Select
-                      components={{ MenuList }}
-                      options={selectMTATransport}
-                      filterOption={createFilter({ ignoreAccents: false })}
-                      value={mtaTransportId}
-                      onChange={(e) => setMTATransportId(e)}
-                      placeholder='Select MTA Transport'
-                      isClearable={true}
+                    <CustomSelect id='id-mta-transport'
+                                  options={selectMTATransport}
+                                  value={mtaTransportId} onChange={setMTATransportId}
+                                  placeHolder='Select MTA Transport' required={true} isMulti={false}
                     />
+                    // <Select
+                    //   components={{ MenuList }}
+                    //   options={selectMTATransport}
+                    //   filterOption={createFilter({ ignoreAccents: false })}
+                    //   value={mtaTransportId}
+                    //   onChange={(e) => setMTATransportId(e)}
+                    //   placeholder='Select MTA Transport'
+                    //   isClearable={true}
+                    // />
                   ) : null}
                 </Grid>
                 <Grid item xs={6}>
                   <FormControlLabel
                     control={
-                      <Checkbox checked={isActive} onChange={(e) => { setIsActive(e.target.checked); }} name='is_active' />
+                      <Checkbox checked={isActive}
+                                onChange={(e) => { setIsActive(e.target.checked); }}
+                                name='is_active' />
                     }
-                    label="Is active"
+                    label='Is active'
                   />
                 </Grid>
               </Grid>
               <Grid item>
                 <TextField
                   fullWidth
-                  label="Parameters"
-                  name="parameters"
+                  label='Parameters'
+                  name='parameters'
                   onChange={(e) => setParameters(e.target.value)}
-                  type="text"
+                  type='text'
                   value={parameters}
                   multiline
                   rows={5}
@@ -199,7 +212,10 @@ export const MTADefinitionModal = (props) => {
           </CardContent>
           <Divider />
           <CardActions sx={{ justifyContent: 'flex-end' }}>
-            <Button variant="contained" type='submit'>
+            <Button variant='contained' color='error' onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant='contained' type='submit' color='success'>
               Create
             </Button>
           </CardActions>

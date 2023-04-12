@@ -1,82 +1,79 @@
 import ReactDataGrid from '@inovua/reactdatagrid-community';
 import '@inovua/reactdatagrid-community/index.css';
 import AddIcon from '@mui/icons-material/Add';
-import ClearIcon from '@mui/icons-material/Clear';
-import DoneIcon from '@mui/icons-material/Done';
 import { Box, Button, FormControl, FormControlLabel, FormGroup, Switch } from '@mui/material';
-import { red } from '@mui/material/colors';
 import { Stack } from '@mui/system';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { MTADefinitionModal } from './../../modals/mta.definition.modal';
-import {
-  listMTADefinition,
-  setMTADefinitionDetail
-} from './../../redux/actions/mta.definition.action';
+import { getPublisherList } from './../../redux/actions/publisher.action';
+import DateFilter from '@inovua/reactdatagrid-community/DateFilter';
+import moment from 'moment';
+import { PublisherModal } from '../../modals/publisher.modal.js';
 import Router from 'next/router';
 
 const gridStyle = { minHeight: 500 };
 
 const columns = [
-  { name: 'name', defaultFlex: 1, header: 'Name' },
-  { name: 'description', defaultFlex: 1, header: 'Description' },
+  { name: 'account_name', defaultFlex: 1, header: 'Account name' },
+  { name: 'approved_proveniences', defaultFlex: 1, header: 'Approved proveniences' },
+  { name: 'revenue_share', defaultFlex: 1, header: 'Revenue share' },
   {
-    name: 'mta_transport',
-    defaultFlex: 1,
-    header: 'MTA Transport',
-    render: ({ value }) => {
-      return value.name;
-    }
-  },
-  {
-    name: 'is_active',
+    name: 'status',
     defaultWidth: 100,
-    header: 'Status',
-    render: ({ value }) => {
-      return value ? <DoneIcon color='success' /> : <ClearIcon sx={{ color: red[500] }} />;
-    }
+    header: 'Status'
   },
-  { name: 'parameters', defaultFlex: 1, header: 'Params' },
-  { name: 'max_recipients_per_day', defaultFlex: 1, header: 'Max recipients per day' }
+  {
+    name: 'created_at',
+    defaultFlex: 1,
+    header: 'Created at',
+    filterEditor: DateFilter,
+    filterEditorProps: (props, { index }) => {
+      return {
+        dateFormat: 'MM-DD-YYYY',
+        cancelButton: false,
+        highlightWeekends: false
+      };
+    },
+    render: ({ value, cellProps }) => {
+      return moment(value).format('MM-DD-YYYY');
+    }
+  }
 ];
 
 const filterValue = [
-  { name: 'name', operator: 'startsWith', type: 'string', value: '' },
-  { name: 'description', operator: 'startsWith', type: 'string', value: '' }
+  { name: 'account_name', operator: 'startsWith', type: 'string', value: '' },
+  { name: 'approved_proveniences', operator: 'startsWith', type: 'string', value: '' },
+  { name: 'revenue_share', operator: 'gte', type: 'number', value: 0 },
+  { name: 'created_at', operator: 'before', type: 'date', value: '' }
 ];
 
-export const MTADefinitionTable = (props) => {
-  // const { data, isLoading } = props;
-
-  const dispatch = useDispatch();
-  const MTADefinitionList = useSelector((state) => state.MTADefinitionList);
-  const { list, isLoading } = MTADefinitionList;
+export const PublisherTable = (props) => {
+  window.moment = moment;
 
   const [enableFiltering, setEnableFiltering] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [modalData, setModalData] = useState();
+  const [isUpdate, setIsUpdate] = useState(false);
+
+  const dispatch = useDispatch();
+  const { list, isLoading } = useSelector((state) => state.listPublisher);
 
   const handleCloseModal = () => {
     setIsOpenModal(!isOpenModal);
   };
 
   const handleOpenModal = () => {
+    // setIsUpdate(false);
     setIsOpenModal(true);
   };
-
-  useEffect(() => {
-    if (list.length === 0) {
-      dispatch(listMTADefinition());
-    }
-  }, [dispatch, list]);
 
   const onRenderRow = useCallback((rowProps) => {
     const { onClick } = rowProps;
     rowProps.onClick = (event) => {
-      dispatch(setMTADefinitionDetail(rowProps.data));
       Router.push({
-        pathname: `/mta/detail`,
+        pathname: `/publisher/detail`,
         query: {
-          type: 'definition'
+          id: rowProps.data.id
         }
       });
       if (onClick) {
@@ -84,6 +81,12 @@ export const MTADefinitionTable = (props) => {
       }
     };
   }, []);
+
+  useEffect(() => {
+    if (list.length === 0) {
+      dispatch(getPublisherList());
+    }
+  }, [list]);
 
   return (
     <Box sx={{ minWidth: 800 }}>
@@ -112,7 +115,7 @@ export const MTADefinitionTable = (props) => {
           Add
         </Button>
       </Stack>
-      <MTADefinitionModal isOpen={isOpenModal} handleClose={handleCloseModal} />
+      <PublisherModal isOpen={isOpenModal} handleClose={handleCloseModal} />
       <ReactDataGrid
         columns={columns}
         dataSource={list}

@@ -1,18 +1,18 @@
 import {
+  CREATE_MTA_TRANSPORT,
+  CREATE_MTA_TRANSPORT_DONE,
+  CREATE_MTA_TRANSPORT_FAIL,
   LIST_MTA_TRANSPORT,
   LIST_MTA_TRANSPORT_DONE,
   LIST_MTA_TRANSPORT_FAIL,
   LIST_MTA_TRANSPORT_TYPE,
   LIST_MTA_TRANSPORT_TYPE_DONE,
   LIST_MTA_TRANSPORT_TYPE_FAIL,
-  CREATE_MTA_TRANSPORT,
-  CREATE_MTA_TRANSPORT_DONE,
-  CREATE_MTA_TRANSPORT_FAIL,
+  SET_MTA_TRANSPORT_DETAIL,
+  SET_MTA_TRANSPORT_DETAIL_DONE,
   UPDATE_MTA_TRANSPORT,
   UPDATE_MTA_TRANSPORT_DONE,
-  UPDATE_MTA_TRANSPORT_FAIL,
-  SET_MTA_TRANSPORT_DETAIL,
-  SET_MTA_TRANSPORT_DETAIL_DONE
+  UPDATE_MTA_TRANSPORT_FAIL
 } from './../constant/mta.transport.constant';
 import MTATransportAPI from './../../axios/MTATransportAPI';
 
@@ -29,7 +29,7 @@ export const getMTATransportList = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: LIST_MTA_TRANSPORT_FAIL,
-      payload: 'error'
+      payload: error.response.data.error
     });
   }
 };
@@ -47,7 +47,7 @@ export const listMTATransportType = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: LIST_MTA_TRANSPORT_TYPE_FAIL,
-      payload: 'error'
+      payload: error.response.data.error
     });
   }
 };
@@ -65,7 +65,7 @@ export const createMTATransport = (value) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: CREATE_MTA_TRANSPORT_FAIL,
-      payload: 'error'
+      payload: error.response.data.error
     });
   }
 };
@@ -83,7 +83,7 @@ export const updateMTATransport = (value, id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: UPDATE_MTA_TRANSPORT_FAIL,
-      payload: data.message
+      payload: error.response.data.error
     });
   }
 };

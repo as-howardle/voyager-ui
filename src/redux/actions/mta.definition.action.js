@@ -1,21 +1,17 @@
-
 import {
-  LIST_MTA_DEFINITION,
-  LIST_MTA_DEFINITION_DONE,
-  LIST_MTA_DEFINITION_FAIL,
   CREATE_MTA_DEFINITION,
   CREATE_MTA_DEFINITION_DONE,
   CREATE_MTA_DEFINITION_FAIL,
+  LIST_MTA_DEFINITION,
+  LIST_MTA_DEFINITION_DONE,
+  LIST_MTA_DEFINITION_FAIL,
+  SET_MTA_DEFINITION_DETAIL,
+  SET_MTA_DEFINITION_DETAIL_DONE,
   UPDATE_MTA_DEFINITION,
   UPDATE_MTA_DEFINITION_DONE,
-  UPDATE_MTA_DEFINITION_FAIL,
-  SET_MTA_DEFINITION_DETAIL,
-  SET_MTA_DEFINITION_DETAIL_DONE
+  UPDATE_MTA_DEFINITION_FAIL
 } from './../constant/mta.definition.constant';
 import MTADefinitionAPI from './../../axios/MTADefinitionAPI';
-
-
-
 
 export const listMTADefinition = () => async (dispatch) => {
   try {
@@ -30,7 +26,7 @@ export const listMTADefinition = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: LIST_MTA_DEFINITION_FAIL,
-      payload: 'error'
+      payload: error.response.data.error
     });
   }
 };
@@ -48,7 +44,7 @@ export const createMTADefinition = (value) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: CREATE_MTA_DEFINITION_FAIL,
-      payload: data.message
+      payload: error.response.data.error
     });
   }
 };
@@ -66,7 +62,7 @@ export const updateMTADefinition = (value, id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: UPDATE_MTA_DEFINITION_FAIL,
-      payload: data.message
+      payload: error.response.data.error
     });
   }
 };
