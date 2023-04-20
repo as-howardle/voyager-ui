@@ -30,7 +30,7 @@ export const MTAAssignationDetail = (props) => {
 
   const handleBack = () => {
     Router.push({
-      pathname: `/mta`,
+      pathname: `/mta/assignation`,
     });
     dispatch({ type: SET_MTA_ASSIGNATION_DETAIL_RESET });
   };

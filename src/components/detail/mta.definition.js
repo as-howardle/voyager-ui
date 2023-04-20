@@ -59,7 +59,7 @@ export const MTADefinitionDetail = (props) => {
   const handleBack = () => {
     dispatch({ type: SET_MTA_DEFINITION_DETAIL_RESET });
     Router.push({
-      pathname: `/mta`,
+      pathname: `/mta/definition`,
     });
   };
 
@@ -80,7 +80,7 @@ export const MTADefinitionDetail = (props) => {
       }, mta.id));
       dispatch({ type: SET_MTA_DEFINITION_DETAIL_RESET });
       Router.push({
-        pathname: `/mta`,
+        pathname: `/mta/definition`,
       });
     }
   };

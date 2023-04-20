@@ -1,11 +1,6 @@
 import ChartBarIcon from '@heroicons/react/24/solid/ChartBarIcon';
 import CogIcon from '@heroicons/react/24/solid/CogIcon';
-import LockClosedIcon from '@heroicons/react/24/solid/LockClosedIcon';
-import ShoppingBagIcon from '@heroicons/react/24/solid/ShoppingBagIcon';
-import UserIcon from '@heroicons/react/24/solid/UserIcon';
-import UserPlusIcon from '@heroicons/react/24/solid/UserPlusIcon';
 import UsersIcon from '@heroicons/react/24/solid/UsersIcon';
-import XCircleIcon from '@heroicons/react/24/solid/XCircleIcon';
 import PaperAirplaneIcon from '@heroicons/react/24/solid/PaperAirplaneIcon';
 import { SvgIcon } from '@mui/material';
 
@@ -14,26 +9,26 @@ export const items = [
     title: 'Overview',
     path: '/',
     icon: (
-      <SvgIcon fontSize="small">
+      <SvgIcon fontSize='small'>
         <ChartBarIcon />
       </SvgIcon>
     )
   },
   {
-    title: 'MTA Management',
+    title: 'MTA',
     path: '/mta',
     icon: (
-      <SvgIcon fontSize="small">
-        <UsersIcon />
+      <SvgIcon fontSize='small'>
+        <PaperAirplaneIcon />
       </SvgIcon>
     )
   },
   {
-    title: 'Publishers Management',
+    title: 'Publishers',
     path: '/publisher',
     icon: (
-      <SvgIcon fontSize="small">
-        <PaperAirplaneIcon />
+      <SvgIcon fontSize='small'>
+        <UsersIcon />
       </SvgIcon>
     )
   },
@@ -41,11 +36,11 @@ export const items = [
     title: 'Settings',
     path: '/settings',
     icon: (
-      <SvgIcon fontSize="small">
+      <SvgIcon fontSize='small'>
         <CogIcon />
       </SvgIcon>
     )
-  },
+  }
   // {
   //   title: 'Login',
   //   path: '/auth/login',

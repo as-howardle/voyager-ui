@@ -49,7 +49,7 @@ export const MTATransportDetail = (props) => {
       );
       dispatch({ type: SET_MTA_TRANSPORT_DETAIL_RESET });
       Router.push({
-        pathname: `/mta`,
+        pathname: `/mta/transport`,
       });
     } else {
       setValidateParams(true);
@@ -59,7 +59,7 @@ export const MTATransportDetail = (props) => {
   const handleBack = () => {
     dispatch({ type: SET_MTA_TRANSPORT_DETAIL_RESET });
     Router.push({
-      pathname: `/mta`,
+      pathname: `/mta/transport`,
     });
   };
 
