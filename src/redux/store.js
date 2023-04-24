@@ -27,6 +27,7 @@ import {
   LanguageListReducers,
   SaleManagerListReducers
 } from './reducers/general.reducer';
+import { DeliverabilityListReducer } from './reducers/deliverability.reducer';
 
 export const store = configureStore(
   {
@@ -48,7 +49,8 @@ export const store = configureStore(
       listSaleManager: SaleManagerListReducers,
       createPublisher: CreatePublisherReducers,
       publisherDetail: SetPublisherDetailReducers,
-      updatePublisher: UpdatePublisherReducers
+      updatePublisher: UpdatePublisherReducers,
+      listDeliverability: DeliverabilityListReducer
     },
     preloadedState: {
       MTATransport: {
@@ -139,6 +141,11 @@ export const store = configureStore(
         success: false,
         error: false,
         message: ''
+      },
+      listDeliverability: {
+        list: [],
+        error: '',
+        isLoading: false
       }
     }
   }
