@@ -72,14 +72,14 @@ export const SideNav = (props) => {
               onSelect={({ itemId }) => {
                 if (itemId !== 'mta-parent') {
                   Router.push({
-                    pathname: `/${itemId}`,
+                    pathname: `${itemId}`,
                   });
                 }
               }}
               items={[
                 {
                   title: "Overview",
-                  itemId: "/",
+                  itemId: "",
                   // Optional
                   elemBefore: () => <SvgIcon><ChartBarIcon /></SvgIcon>
                 },

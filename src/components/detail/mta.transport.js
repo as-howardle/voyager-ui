@@ -1,4 +1,4 @@
-import { Card, CardHeader, Divider, CardContent, Grid, TextField, CardActions, Button, MenuItem, FormControlLabel, Checkbox } from '@mui/material';
+import { Card, CardHeader, Divider, CardContent, Grid, TextField, CardActions, Button, MenuItem, FormControlLabel, Checkbox, CircularProgress } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { listMTATransportType, updateMTATransport } from 'src/redux/actions/mta.transport.action';
 import { useState, useEffect } from 'react';
@@ -7,10 +7,11 @@ import { useRouter } from 'next/router';
 import JsonValidate from './../../validator/json';
 import { SET_MTA_TRANSPORT_DETAIL_RESET } from './../../redux/constant/mta.transport.constant';
 import { setMTATransportDetail } from './../../redux/actions/mta.transport.action';
+import { Box } from '@mui/system';
 
 export const MTATransportDetail = (props) => {
 
-  const { mta } = props;
+  const { mta, isLoading } = props;
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -74,83 +75,93 @@ export const MTATransportDetail = (props) => {
         />
         <Divider />
         <CardContent>
-          <Grid
-            container
-            spacing={3}
-            sx={{
-              minWidth: 1000, minHeight: 250, "& .MuiInputBase-input.Mui-disabled": {
-                WebkitTextFillColor: "#000000",
-              },
-            }}
-            direction="column"
-          >
-            <Grid container item spacing={3} direction="row">
-              <Grid item xs={6}>
-                <TextField
-                  fullWidth
-                  label="Name"
-                  type="text"
-                  value={name}
-                  onChange={((e) => setName(e.target.value))}
-                  required
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  fullWidth
-                  label="Description"
-                  type="text"
-                  value={description}
-                  onChange={((e) => setDescription(e.target.value))}
-                  required
-                />
-              </Grid>
-            </Grid>
-            <Grid container item spacing={3} direction="row">
-              <Grid item xs={6}>
-                {mtaTransportTypeList.length > 0 ? (
+          {isLoading ?
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center'
+              }}
+            >
+              <CircularProgress />
+            </Box>
+            : <Grid
+              container
+              spacing={3}
+              sx={{
+                minWidth: 1000, minHeight: 250, "& .MuiInputBase-input.Mui-disabled": {
+                  WebkitTextFillColor: "#000000",
+                },
+              }}
+              direction="column"
+            >
+              <Grid container item spacing={3} direction="row">
+                <Grid item xs={6}>
                   <TextField
                     fullWidth
-                    select
-                    label="Type"
-                    name="type"
-                    onChange={((e) => setType(e.target.value))}
-                    value={type}
-                  >
-                    {mtaTransportTypeList.map((e) => {
-                      return (
-                        <MenuItem key={e.id} value={e.name}>
-                          {e.name}
-                        </MenuItem>
-                      );
-                    })
-                    }
-                  </TextField>
-                ) : null}
+                    label="Name"
+                    type="text"
+                    value={name}
+                    onChange={((e) => setName(e.target.value))}
+                    required
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    fullWidth
+                    label="Description"
+                    type="text"
+                    value={description}
+                    onChange={((e) => setDescription(e.target.value))}
+                    required
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={6}>
-                <FormControlLabel
-                  control={
-                    <Checkbox checked={isActive} onChange={(e) => { setIsActive(e.target.checked); }} name='is_active' />
-                  }
-                  label="Is active"
+              <Grid container item spacing={3} direction="row">
+                <Grid item xs={6}>
+                  {mtaTransportTypeList.length > 0 ? (
+                    <TextField
+                      fullWidth
+                      select
+                      label="Type"
+                      name="type"
+                      onChange={((e) => setType(e.target.value))}
+                      value={type}
+                    >
+                      {mtaTransportTypeList.map((e) => {
+                        return (
+                          <MenuItem key={e.id} value={e.name}>
+                            {e.name}
+                          </MenuItem>
+                        );
+                      })
+                      }
+                    </TextField>
+                  ) : null}
+                </Grid>
+                <Grid item xs={6}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox checked={isActive} onChange={(e) => { setIsActive(e.target.checked); }} name='is_active' />
+                    }
+                    label="Is active"
+                  />
+                </Grid>
+              </Grid>
+              <Grid item>
+                <TextField
+                  fullWidth
+                  label="Params"
+                  type="text"
+                  value={params}
+                  onChange={((e) => setParams(e.target.value))}
+                  multiline
+                  rows={5}
+                  error={validateParams}
+                  helperText={validateParams && 'Must be JSON format'}
                 />
               </Grid>
             </Grid>
-            <Grid item>
-              <TextField
-                fullWidth
-                label="Params"
-                type="text"
-                value={params}
-                onChange={((e) => setParams(e.target.value))}
-                multiline
-                rows={5}
-                error={validateParams}
-                helperText={validateParams && 'Must be JSON format'}
-              />
-            </Grid>
-          </Grid>
+          }
         </CardContent>
         <CardActions sx={{ justifyContent: 'flex-end', paddingRight: 3 }}>
           <Button variant="contained" onClick={handleBack}>

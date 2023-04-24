@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -13,7 +13,7 @@ const Page = () => {
   const id = router.query.id;
 
   const dispatch = useDispatch();
-  const { mta } = useSelector((state) => state.MTATransportDetail);
+  const { mta, isLoading } = useSelector((state) => state.MTATransportDetail);
 
   useEffect(() => {
     if (id) {
@@ -35,7 +35,7 @@ const Page = () => {
           py: 8
         }}
       >
-        <MTATransportDetail mta={mta} />
+        <MTATransportDetail mta={mta} isLoading={ isLoading } />
       </Box>
     </>
   );
