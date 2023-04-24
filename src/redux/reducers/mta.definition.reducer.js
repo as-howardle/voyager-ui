@@ -12,7 +12,7 @@ import {
   UPDATE_MTA_DEFINITION_RESET,
   SET_MTA_DEFINITION_DETAIL,
   SET_MTA_DEFINITION_DETAIL_DONE,
-  SET_MTA_DEFINITION_DETAIL_RESET
+  SET_MTA_DEFINITION_DETAIL_FAIL
 } from './../constant/mta.definition.constant';
 
 
@@ -66,8 +66,8 @@ export const SetMTADefinitionDetailReducers = (state = {}, action) => {
       return { ...state, isLoading: true };
     case SET_MTA_DEFINITION_DETAIL_DONE:
       return { ...state, isLoading: false, mta: action.payload };
-    case SET_MTA_DEFINITION_DETAIL_RESET:
-      return { ...state, isLoading: false, mta: null };
+    case SET_MTA_DEFINITION_DETAIL_FAIL:
+      return { ...state, isLoading: false, error: action.payload };
     default:
       return state;
   }

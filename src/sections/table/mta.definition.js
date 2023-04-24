@@ -72,11 +72,11 @@ export const MTADefinitionTable = (props) => {
   const onRenderRow = useCallback((rowProps) => {
     const { onClick } = rowProps;
     rowProps.onClick = (event) => {
-      dispatch(setMTADefinitionDetail(rowProps.data));
+      // dispatch(setMTADefinitionDetail(rowProps.data));
       Router.push({
-        pathname: `/mta/detail`,
+        pathname: `/mta/definition/detail`,
         query: {
-          type: 'definition'
+          id: rowProps.data.id
         }
       });
       if (onClick) {

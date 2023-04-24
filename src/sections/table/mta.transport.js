@@ -59,12 +59,12 @@ export const MTATransportTable = (props) => {
   const onRenderRow = useCallback((rowProps) => {
     const { onClick } = rowProps;
     rowProps.onClick = (event) => {
-      dispatch(setMTATransportDetail(rowProps.data));
+      // dispatch(setMTATransportDetail(rowProps.data));
       Router.push({
-        pathname: `/mta/detail`,
+        pathname: `/mta/transport/detail`,
         query: {
           // data: JSON.stringify(rowProps.data),
-          type: 'transport'
+          id: rowProps.data.id
         }
       });
       // setModalData(rowProps);
