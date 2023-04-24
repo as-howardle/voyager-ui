@@ -4,18 +4,14 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from 'react-toastify';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { getMTATransportList } from '../../redux/actions/mta.transport.action';
-import { listMTADefinition } from './../../redux/actions/mta.definition.action';
-import { UPDATE_MTA_DEFINITION_RESET } from './../../redux/constant/mta.definition.constant';
-import { MTADefinitionTable } from './../../sections/table/mta.definition';
-const now = new Date();
-
-
+import { getMTATransportList } from '../../../redux/actions/mta.transport.action';
+import { listMTADefinition } from './../../../redux/actions/mta.definition.action';
+import { UPDATE_MTA_DEFINITION_RESET } from './../../../redux/constant/mta.definition.constant';
+import { MTADefinitionTable } from './../../../sections/table/mta.definition';
 
 const Page = () => {
   const dispatch = useDispatch();
   const mtaTransport = useSelector((state) => state.MTATransport);
-  // const MTADefinitionList = useSelector((state) => state.MTADefinitionList);
   const { listMTATransport } = mtaTransport;
 
   const {

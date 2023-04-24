@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from 'react-toastify';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { UPDATE_MTA_TRANSPORT_RESET } from 'src/redux/constant/mta.transport.constant';
-import { getMTATransportList } from '../../redux/actions/mta.transport.action';
-import { MTATransportTable } from '../../sections/table/mta.transport';
+import { getMTATransportList } from '../../../redux/actions/mta.transport.action';
+import { MTATransportTable } from '../../../sections/table/mta.transport';
 
 const Page = () => {
   const dispatch = useDispatch();
