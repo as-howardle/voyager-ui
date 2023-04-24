@@ -12,7 +12,7 @@ import JsonValidate from './../../validator/json';
 import { SET_MTA_DEFINITION_DETAIL_RESET } from 'src/redux/constant/mta.definition.constant';
 
 export const MTADefinitionDetail = (props) => {
-  // const { data } = props;
+  const { mta } = props;
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -27,7 +27,7 @@ export const MTADefinitionDetail = (props) => {
   const dispatch = useDispatch();
   const { listMTATransport } = useSelector((state) => state.MTATransport);
 
-  const { mta } = useSelector((state) => state.MTADefinitionDetail);
+  // const { mta } = useSelector((state) => state.MTADefinitionDetail);
 
   useEffect(() => {
     if (listMTATransport.length === 0) {
@@ -57,7 +57,7 @@ export const MTADefinitionDetail = (props) => {
   }, [listMTATransport]);
 
   const handleBack = () => {
-    dispatch({ type: SET_MTA_DEFINITION_DETAIL_RESET });
+    // dispatch({ type: SET_MTA_DEFINITION_DETAIL_RESET });
     Router.push({
       pathname: `/mta/definition`,
     });
@@ -78,7 +78,7 @@ export const MTADefinitionDetail = (props) => {
         mta_transport_id: mtaTransportId.value,
         max_recipients_per_day: maxRecipientsPerDay
       }, mta.id));
-      dispatch({ type: SET_MTA_DEFINITION_DETAIL_RESET });
+      // dispatch({ type: SET_MTA_DEFINITION_DETAIL_RESET });
       Router.push({
         pathname: `/mta/definition`,
       });

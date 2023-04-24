@@ -10,6 +10,7 @@ import {
   LIST_MTA_TRANSPORT_TYPE_FAIL,
   SET_MTA_TRANSPORT_DETAIL,
   SET_MTA_TRANSPORT_DETAIL_DONE,
+  SET_MTA_TRANSPORT_DETAIL_FAIL,
   UPDATE_MTA_TRANSPORT,
   UPDATE_MTA_TRANSPORT_DONE,
   UPDATE_MTA_TRANSPORT_FAIL
@@ -88,12 +89,20 @@ export const updateMTATransport = (value, id) => async (dispatch) => {
   }
 };
 
-export const setMTATransportDetail = (value) => (dispatch) => {
-  dispatch({
-    type: SET_MTA_TRANSPORT_DETAIL
-  });
-  dispatch({
-    type: SET_MTA_TRANSPORT_DETAIL_DONE,
-    payload: value
-  });
+export const setMTATransportDetail = (id) => async(dispatch) => {
+  try {
+    dispatch({
+      type: SET_MTA_TRANSPORT_DETAIL
+    });
+    const { data } = await MTATransportAPI.getById(id)
+    dispatch({
+      type: SET_MTA_TRANSPORT_DETAIL_DONE,
+      payload: data[0]
+    });
+  } catch (error) {
+    dispatch({
+      type: SET_MTA_TRANSPORT_DETAIL_FAIL,
+      payload: error.response.data.error
+    });
+  }
 };

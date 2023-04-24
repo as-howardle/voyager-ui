@@ -5,13 +5,18 @@ const ENDPOINTS = {
   GET_LIST: '/mta/mta_transport/list',
   GET_TRANSPORT_TYPE: '/mta/mta_transport_type/list',
   CREATE: '/mta/mta_transport/create',
-  UPDATE: '/mta/mta_transport/update/:id:'
+  UPDATE: '/mta/mta_transport/update/:id:',
+  GET_BY_ID: '/mta/mta_transport/list?id=:id:'
 };
 
 
 const MTATransportAPI = {
   getList: () => {
     return axios.get(JANUS_API + ENDPOINTS.GET_LIST);
+  },
+
+  getById: (id) => {
+    return axios.get(JANUS_API + ENDPOINTS.GET_BY_ID.replace(':id:', id));
   },
 
   getTransportType: () => {

@@ -7,6 +7,7 @@ import {
   LIST_MTA_DEFINITION_FAIL,
   SET_MTA_DEFINITION_DETAIL,
   SET_MTA_DEFINITION_DETAIL_DONE,
+  SET_MTA_DEFINITION_DETAIL_FAIL,
   UPDATE_MTA_DEFINITION,
   UPDATE_MTA_DEFINITION_DONE,
   UPDATE_MTA_DEFINITION_FAIL
@@ -67,12 +68,20 @@ export const updateMTADefinition = (value, id) => async (dispatch) => {
   }
 };
 
-export const setMTADefinitionDetail = (value) => (dispatch) => {
-  dispatch({
-    type: SET_MTA_DEFINITION_DETAIL
-  });
-  dispatch({
-    type: SET_MTA_DEFINITION_DETAIL_DONE,
-    payload: value
-  });
+export const setMTADefinitionDetail = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: SET_MTA_DEFINITION_DETAIL
+    });
+    const { data } = await MTADefinitionAPI.getById(id);
+    dispatch({
+      type: SET_MTA_DEFINITION_DETAIL_DONE,
+      payload: data[0]
+    });
+  } catch (error) {
+    dispatch({
+      type: SET_MTA_DEFINITION_DETAIL_FAIL,
+      payload: error.response.data.error
+    });
+  }
 };

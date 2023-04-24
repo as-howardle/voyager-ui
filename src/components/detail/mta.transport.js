@@ -3,11 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { listMTATransportType, updateMTATransport } from 'src/redux/actions/mta.transport.action';
 import { useState, useEffect } from 'react';
 import Router from 'next/router';
+import { useRouter } from 'next/router';
 import JsonValidate from './../../validator/json';
 import { SET_MTA_TRANSPORT_DETAIL_RESET } from './../../redux/constant/mta.transport.constant';
+import { setMTATransportDetail } from './../../redux/actions/mta.transport.action';
 
 export const MTATransportDetail = (props) => {
-  // const { data } = props;
+
+  const { mta } = props;
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -17,7 +20,7 @@ export const MTATransportDetail = (props) => {
 
   const dispatch = useDispatch();
   const { mtaTransportTypeList } = useSelector((state) => state.MTATransportType);
-  const { mta } = useSelector((state) => state.MTATransportDetail);
+  // const { mta } = useSelector((state) => state.MTATransportDetail);
 
   const [validateParams, setValidateParams] = useState(false);
 
@@ -47,7 +50,7 @@ export const MTATransportDetail = (props) => {
         type
       }, mta.id)
       );
-      dispatch({ type: SET_MTA_TRANSPORT_DETAIL_RESET });
+      // dispatch({ type: SET_MTA_TRANSPORT_DETAIL_RESET });
       Router.push({
         pathname: `/mta/transport`,
       });
@@ -57,7 +60,7 @@ export const MTATransportDetail = (props) => {
   };
 
   const handleBack = () => {
-    dispatch({ type: SET_MTA_TRANSPORT_DETAIL_RESET });
+    // dispatch({ type: SET_MTA_TRANSPORT_DETAIL_RESET });
     Router.push({
       pathname: `/mta/transport`,
     });
