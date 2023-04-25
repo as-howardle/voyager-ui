@@ -1,4 +1,6 @@
 import {
+  CREATE_DELIVERABILITY,
+  CREATE_DELIVERABILITY_DONE,
   CREATE_DELIVERABILITY_FAIL,
   CREATE_DELIVERABILITY_RESET,
   DELETE_DELIVERABILITY,
@@ -13,7 +15,7 @@ import {
   LIST_DELIVERABILITY_FAIL,
   SET_DELIVERABILITY_DETAIL,
   SET_DELIVERABILITY_DETAIL_DONE,
-  SET_DELIVERABILITY_DETAIL_RESET,
+  SET_DELIVERABILITY_DETAIL_FAIL,
   UPDATE_DELIVERABILITY,
   UPDATE_DELIVERABILITY_DONE,
   UPDATE_DELIVERABILITY_FAIL,
@@ -38,7 +40,7 @@ export const DefinitionListReducer = (state = {}, action) => {
     case LIST_DEFINITION:
       return { ...state, isLoading: true };
     case LIST_DEFINITION_DONE:
-      return { isLoading: false, listDefinition: action.payload };
+      return { isLoading: false, list: action.payload };
     case LIST_DEFINITION_FAIL:
       return { ...state, isLoading: false, error: action.payload };
     default:
@@ -51,11 +53,30 @@ export const CreateDeliverabilityConfigReducers = (state = {}, action) => {
     case CREATE_DELIVERABILITY:
       return { ...state, isLoading: true, success: false, error: false };
     case CREATE_DELIVERABILITY_DONE:
-      return { ...state, isLoading: false, success: true, error: false, message: action.payload };
+      return {
+        ...state,
+        isLoading: false,
+        success: true,
+        error: false,
+        message: action.payload
+      };
     case CREATE_DELIVERABILITY_FAIL:
       return { ...state, isLoading: false, error: true, success: false, message: action.payload };
     case CREATE_DELIVERABILITY_RESET:
       return { isLoading: false, success: false, error: false, message: '' };
+    default:
+      return state;
+  }
+};
+
+export const SetDeliverabilityConfigReducers = (state = {}, action) => {
+  switch (action.type) {
+    case SET_DELIVERABILITY_DETAIL:
+      return { ...state, isLoading: true };
+    case SET_DELIVERABILITY_DETAIL_DONE:
+      return { ...state, isLoading: false, config: action.payload };
+    case SET_DELIVERABILITY_DETAIL_FAIL:
+      return { ...state, isLoading: false, error: action.payload };
     default:
       return state;
   }
@@ -71,19 +92,6 @@ export const UpdateDeliverabilityConfigReducers = (state = {}, action) => {
       return { ...state, isLoading: false, error: true, success: false, message: action.payload };
     case UPDATE_DELIVERABILITY_RESET:
       return { isLoading: false, success: false, error: false, message: '' };
-    default:
-      return state;
-  }
-};
-
-export const SetDeliverabilityConfigReducers = (state = {}, action) => {
-  switch (action.type) {
-    case SET_DELIVERABILITY_DETAIL:
-      return { ...state, isLoading: true };
-    case SET_DELIVERABILITY_DETAIL_DONE:
-      return { ...state, isLoading: false, config: action.payload };
-    case SET_DELIVERABILITY_DETAIL_RESET:
-      return { ...state, isLoading: false, config: null };
     default:
       return state;
   }

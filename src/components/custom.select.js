@@ -9,7 +9,7 @@ export const CustomSelect = (props) => {
         fontSize: '.85rem',
         fontWeight: 'bold',
         lineHeight: 3
-      }}>{label} <b style={{ color: 'red' }}>*</b></label>}
+      }}>{label} {required && <b style={{ color: 'red' }}>*</b>}</label>}
       <Select
         inputId={id}
         components={{ MenuList }}

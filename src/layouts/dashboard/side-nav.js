@@ -1,17 +1,18 @@
 import ChartBarIcon from '@heroicons/react/24/solid/ChartBarIcon';
 import CogIcon from '@heroicons/react/24/solid/CogIcon';
 import PaperAirplaneIcon from '@heroicons/react/24/solid/PaperAirplaneIcon';
-import { Box, Divider, Drawer, SvgIcon, useMediaQuery } from '@mui/material';
+import { Box, Drawer, SvgIcon, useMediaQuery } from '@mui/material';
 import NextLink from 'next/link';
 import Router, { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import { FaUsers } from "react-icons/fa";
-import { HiTable } from "react-icons/hi";
-import { MdOutlineAssignmentTurnedIn } from "react-icons/md";
-import { TbTruckDelivery } from "react-icons/tb";
-import { Navigation } from "react-minimal-side-navigation";
+import { FaFly, FaUsers } from 'react-icons/fa';
+import { HiTable } from 'react-icons/hi';
+import { MdOutlineAssignmentTurnedIn } from 'react-icons/md';
+import { TbTruckDelivery } from 'react-icons/tb';
+import { Navigation } from 'react-minimal-side-navigation';
 import { Logo } from 'src/components/logo';
 import { Scrollbar } from 'src/components/scrollbar';
+import { GrConfigure } from 'react-icons/gr';
 
 export const SideNav = (props) => {
   const router = useRouter();
@@ -21,7 +22,7 @@ export const SideNav = (props) => {
   if (lgUp) {
     return (
       <Drawer
-        anchor="left"
+        anchor='left'
         open
         PaperProps={{
           sx: {
@@ -29,7 +30,7 @@ export const SideNav = (props) => {
             backgroundColor: 'neutral.50'
           }
         }}
-        variant="permanent"
+        variant='permanent'
       >
         <Scrollbar
           sx={{
@@ -67,61 +68,74 @@ export const SideNav = (props) => {
               sx={{
                 '&. .side-navigation-panel-select-option:hover': {
                   backgroundColor: 'blue'
-                } 
+                }
               }}
               onSelect={({ itemId }) => {
-                if (itemId !== 'mta-parent') {
+                if (itemId !== 'mta-parent' && itemId !== 'deliverability-parent') {
                   Router.push({
-                    pathname: `${itemId}`,
+                    pathname: `${itemId}`
                   });
                 }
               }}
               items={[
                 {
-                  title: "Overview",
-                  itemId: "",
+                  title: 'Overview',
+                  itemId: '',
                   // Optional
                   elemBefore: () => <SvgIcon><ChartBarIcon /></SvgIcon>
                 },
                 {
-                  title: "MTA",
-                  itemId: "mta-parent",
+                  title: 'MTA',
+                  itemId: 'mta-parent',
                   elemBefore: () => <SvgIcon><PaperAirplaneIcon /></SvgIcon>,
                   subNav: [
                     {
-                      title: "Transport",
-                      itemId: "/mta/transport",
+                      title: 'Transport',
+                      itemId: '/mta/transport',
                       // Optional
                       elemBefore: () => <SvgIcon><TbTruckDelivery /></SvgIcon>
                     },
                     {
-                      title: "Definition",
-                      itemId: "/mta/definition",
+                      title: 'Definition',
+                      itemId: '/mta/definition',
                       elemBefore: () => <SvgIcon><HiTable /></SvgIcon>
                     },
                     {
-                      title: "Assignation",
-                      itemId: "/mta/assignation",
+                      title: 'Assignation',
+                      itemId: '/mta/assignation',
                       elemBefore: () => <SvgIcon><MdOutlineAssignmentTurnedIn /></SvgIcon>
                     }
                   ]
                 },
                 {
-                  title: "Publisher",
-                  itemId: "/publisher",
-                  elemBefore: () => <SvgIcon><FaUsers /></SvgIcon>,
+                  title: 'Deliverability',
+                  itemId: 'deliverability-parent',
+                  elemBefore: () => <SvgIcon><FaFly /></SvgIcon>,
+                  subNav: [
+                    {
+                      title: 'Config',
+                      itemId: '/deliverability/config',
+                      // Optional
+                      elemBefore: () => <SvgIcon><GrConfigure /></SvgIcon>
+                    }
+                  ]
                 },
                 {
-                  title: "Settings",
-                  itemId: "/settings",
-                  elemBefore: () => <SvgIcon><CogIcon /></SvgIcon>,
+                  title: 'Publisher',
+                  itemId: '/publisher',
+                  elemBefore: () => <SvgIcon><FaUsers /></SvgIcon>
+                },
+                {
+                  title: 'Settings',
+                  itemId: '/settings',
+                  elemBefore: () => <SvgIcon><CogIcon /></SvgIcon>
                 }
               ]}
             />
           </Box>
         </Scrollbar>
       </Drawer>
-      
+
     );
   }
 
@@ -130,38 +144,38 @@ export const SideNav = (props) => {
       activeItemId={router.pathname}
       onSelect={({ itemId }) => {
         Router.push({
-          pathname: `/`,
+          pathname: `/`
         });
       }}
       items={[
         {
-          title: "Overview",
-          itemId: "/",
+          title: 'Overview',
+          itemId: '/',
           // Optional
           elemBefore: () => <ChartBarIcon />
         },
         {
-          title: "MTA",
-          itemId: "/mta",
+          title: 'MTA',
+          itemId: '/mta',
           elemBefore: () => <PaperAirplaneIcon />,
           subNav: [
             {
-              title: "Projects",
-              itemId: "/mta/transport",
+              title: 'Projects',
+              itemId: '/mta/transport',
               // Optional
               elemBefore: () => <PaperAirplaneIcon />
             },
             {
-              title: "Members",
-              itemId: "/mta/definition",
+              title: 'Members',
+              itemId: '/mta/definition',
               elemBefore: () => <PaperAirplaneIcon />
             }
           ]
         },
         {
-          title: "Settings",
-          itemId: "/settings",
-          elemBefore: () => <CogIcon />,
+          title: 'Settings',
+          itemId: '/settings',
+          elemBefore: () => <CogIcon />
         }
       ]}
     />
