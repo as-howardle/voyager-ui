@@ -13,11 +13,11 @@ import {
   LIST_DELIVERABILITY_FAIL,
   SET_DELIVERABILITY_DETAIL,
   SET_DELIVERABILITY_DETAIL_DONE,
-  SET_PUBLISHER_DETAIL_FAIL,
+  SET_DELIVERABILITY_DETAIL_FAIL,
   UPDATE_DELIVERABILITY,
   UPDATE_DELIVERABILITY_DONE,
   UPDATE_DELIVERABILITY_FAIL
-} from './../constant/deliverability.constant';
+} from '../constant/deliverability.constant.js';
 import DeliverabilityAPI from '../../axios/DeliverabilityAPI';
 
 export const getDeliverabilityConfigList = () => async (dispatch) => {
@@ -86,7 +86,7 @@ export const setDeliverabilityConfigDetail = (id) => async (dispatch) => {
     });
   } catch (error) {
     dispatch({
-      type: SET_PUBLISHER_DETAIL_FAIL,
+      type: SET_DELIVERABILITY_DETAIL_FAIL,
       payload: error.response.data.error
     });
   }

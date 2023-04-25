@@ -15,7 +15,7 @@ import {
   UPDATE_MTA_TRANSPORT_RESET,
   SET_MTA_TRANSPORT_DETAIL,
   SET_MTA_TRANSPORT_DETAIL_DONE,
-  SET_PUBLISHER_DETAIL_FAIL
+  SET_MTA_TRANSPORT_DETAIL_FAIL
 } from './../constant/mta.transport.constant';
 
 export const MTATransportReducers = (state = {}, action) => {
@@ -80,7 +80,7 @@ export const SetMTATransportDetailReducers = (state = {}, action) => {
       return { ...state, isLoading: true };
     case SET_MTA_TRANSPORT_DETAIL_DONE:
       return { ...state, isLoading: false, mta: action.payload };
-    case SET_PUBLISHER_DETAIL_FAIL:
+    case SET_MTA_TRANSPORT_DETAIL_FAIL:
       return { ...state, isLoading: false, error: action.payload };
     default:
       return state;
