@@ -1,15 +1,12 @@
-import { Box, Card, CardHeader, Divider, CardContent, Grid, TextField, CardActions, Button, MenuItem, FormControlLabel, Checkbox, CircularProgress } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { listMTATransportType, updateMTATransport } from 'src/redux/actions/mta.transport.action';
-import { useState, useEffect, useMemo } from 'react';
+import { Box, Button, Card, CardActions, CardContent, CardHeader, Checkbox, CircularProgress, Divider, FormControlLabel, Grid, TextField } from '@mui/material';
 import Router from 'next/router';
-import { getMTATransportList } from './../../redux/actions/mta.transport.action';
-import MenuList from './../select';
-import Select from 'react-select';
-import { createFilter } from "react-select";
+import { useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Select, { createFilter } from 'react-select';
 import { updateMTADefinition } from './../../redux/actions/mta.definition.action';
+import { getMTATransportList } from './../../redux/actions/mta.transport.action';
 import JsonValidate from './../../validator/json';
-import { SET_MTA_DEFINITION_DETAIL_RESET } from 'src/redux/constant/mta.definition.constant';
+import MenuList from './../select';
 
 export const MTADefinitionDetail = (props) => {
   const { mta, isLoading } = props;

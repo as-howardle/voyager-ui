@@ -40,7 +40,7 @@ export const MTADefinitionModal = (props) => {
   const [isActive, setIsActive] = useState(true);
   const [maxRecipientsPerDay, setMaxRecipientsPerDay] = useState(0);
 
-  const [validtaeRecipientPerDay, setValidateRecipientPerDay] = useState(false);
+  const [validateRecipientPerDay, setValidateRecipientPerDay] = useState(false);
   const [validateParams, setValidateParams] = useState(false);
 
   const selectMTATransport = useMemo(() => {
@@ -146,8 +146,8 @@ export const MTADefinitionModal = (props) => {
                     type='number'
                     value={maxRecipientsPerDay}
                     required
-                    error={validtaeRecipientPerDay}
-                    helperText={validtaeRecipientPerDay && 'Must be greater than 0'}
+                    error={validateRecipientPerDay}
+                    helperText={validateRecipientPerDay && 'Must be greater than 0'}
                   />
                 </Grid>
               </Grid>

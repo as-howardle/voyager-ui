@@ -5,6 +5,12 @@ import {
   LIST_LANGUAGE,
   LIST_LANGUAGE_DONE,
   LIST_LANGUAGE_FAIL,
+  LIST_PROVIDER,
+  LIST_PROVIDER_DOMAIN,
+  LIST_PROVIDER_DOMAIN_DONE,
+  LIST_PROVIDER_DOMAIN_FAIL,
+  LIST_PROVIDER_DONE,
+  LIST_PROVIDER_FAIL,
   LIST_SALE_MANAGER,
   LIST_SALE_MANAGER_DONE,
   LIST_SALE_MANAGER_FAIL
@@ -43,6 +49,31 @@ export const SaleManagerListReducers = (state = {}, action) => {
     case LIST_SALE_MANAGER_DONE:
       return { isLoading: false, list: action.payload };
     case LIST_SALE_MANAGER_FAIL:
+      return { ...state, isLoading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const ProviderListReducers = (state = {}, action) => {
+  switch (action.type) {
+    case LIST_PROVIDER:
+      return { ...state, isLoading: true };
+    case LIST_PROVIDER_DONE:
+      return { isLoading: false, list: action.payload };
+    case LIST_PROVIDER_FAIL:
+      return { ...state, isLoading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+export const ProviderDomainListReducers = (state = {}, action) => {
+  switch (action.type) {
+    case LIST_PROVIDER_DOMAIN:
+      return { ...state, isLoading: true };
+    case LIST_PROVIDER_DOMAIN_DONE:
+      return { isLoading: false, list: action.payload };
+    case LIST_PROVIDER_DOMAIN_FAIL:
       return { ...state, isLoading: false, error: action.payload };
     default:
       return state;

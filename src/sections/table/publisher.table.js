@@ -47,13 +47,11 @@ const filterValue = [
   { name: 'created_at', operator: 'before', type: 'date', value: '' }
 ];
 
-export const PublisherTable = (props) => {
+export const PublisherTable = () => {
   window.moment = moment;
 
   const [enableFiltering, setEnableFiltering] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [modalData, setModalData] = useState();
-  const [isUpdate, setIsUpdate] = useState(false);
 
   const dispatch = useDispatch();
   const { list, isLoading } = useSelector((state) => state.listPublisher);
@@ -63,7 +61,6 @@ export const PublisherTable = (props) => {
   };
 
   const handleOpenModal = () => {
-    // setIsUpdate(false);
     setIsOpenModal(true);
   };
 

@@ -25,8 +25,18 @@ import {
 import {
   CountryListReducers,
   LanguageListReducers,
+  ProviderDomainListReducers,
+  ProviderListReducers,
   SaleManagerListReducers
 } from './reducers/general.reducer';
+import {
+  CreateDeliverabilityConfigReducers,
+  DefinitionListReducer,
+  DeleteDeliverabilityConfigReducers,
+  DeliverabilityListReducer,
+  SetDeliverabilityConfigReducers,
+  UpdateDeliverabilityConfigReducers
+} from './reducers/deliverability.reducer';
 
 export const store = configureStore(
   {
@@ -46,9 +56,17 @@ export const store = configureStore(
       listCountry: CountryListReducers,
       listLanguage: LanguageListReducers,
       listSaleManager: SaleManagerListReducers,
+      listProvider: ProviderListReducers,
+      listProviderDomain: ProviderDomainListReducers,
       createPublisher: CreatePublisherReducers,
       publisherDetail: SetPublisherDetailReducers,
-      updatePublisher: UpdatePublisherReducers
+      updatePublisher: UpdatePublisherReducers,
+      listDeliverability: DeliverabilityListReducer,
+      listDefinitionDeliverability: DefinitionListReducer,
+      createDeliverabilityConfig: CreateDeliverabilityConfigReducers,
+      deliverabilityConfigDetail: SetDeliverabilityConfigReducers,
+      updateDeliverabilityConfig: UpdateDeliverabilityConfigReducers,
+      deleteDeliverabilityConfig: DeleteDeliverabilityConfigReducers
     },
     preloadedState: {
       MTATransport: {
@@ -123,6 +141,16 @@ export const store = configureStore(
         error: '',
         isLoading: false
       },
+      listProvider: {
+        list: [],
+        error: '',
+        isLoading: false
+      },
+      listProviderDomain: {
+        list: [],
+        error: '',
+        isLoading: false
+      },
       createPublisher: {
         isLoading: false,
         success: false,
@@ -139,7 +167,40 @@ export const store = configureStore(
         success: false,
         error: false,
         message: ''
-      }
+      },
+      listDeliverability: {
+        list: [],
+        error: '',
+        isLoading: false
+      },
+      listDefinitionDeliverability: {
+        list: [],
+        error: '',
+        isLoading: false
+      },
+      createDeliverabilityConfig: {
+        isLoading: false,
+        success: false,
+        error: false,
+        message: ''
+      },
+      deliverabilityConfigDetail: {
+        config: null,
+        isLoading: false,
+        error: ''
+      },
+      updateDeliverabilityConfig: {
+        isLoading: false,
+        success: false,
+        error: false,
+        message: ''
+      },
+      deleteDeliverabilityConfig: {
+        isLoading: false,
+        success: false,
+        error: false,
+        message: ''
+      },
     }
   }
 );
