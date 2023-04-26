@@ -153,7 +153,7 @@ export const DeliverabilityConfigDetail = (props) => {
 
   return (
     <form onSubmit={handleUpdate}>
-      <Card sx={{ minWidth: 500 }}>
+      <Card sx={{ minWidth: 500, marginLeft: 5, marginRight: 5 }}>
         <CardHeader title="Deliverability Config Detail" />
         <Divider />
         <CardContent sx={{ minHeight: 450 }}>
@@ -313,7 +313,7 @@ export const DeliverabilityConfigDetail = (props) => {
           )}
         </CardContent>
         <Divider />
-        <CardActions sx={{ justifyContent: "flex-end" }}>
+        <CardActions sx={{ justifyContent: "flex-end", minHeight: 80, paddingRight: 3 }}>
           <Button variant="contained" color="error" onClick={showDeleteDialog}>
             Delete
           </Button>

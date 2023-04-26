@@ -84,7 +84,7 @@ export const MTADefinitionDetail = (props) => {
 
   return (
     <form onSubmit={handleUpdate}>
-      <Card sx={{ minWidth: 500 }} >
+      <Card sx={{ minWidth: 500, marginLeft: 5, marginRight: 5 }} >
         <CardHeader
           title="MTA Definition detail"
         />
@@ -187,7 +187,7 @@ export const MTADefinitionDetail = (props) => {
             </Grid>
             }
         </CardContent>
-        <CardActions sx={{ justifyContent: 'flex-end', paddingRight: 3 }}>
+        <CardActions sx={{ justifyContent: 'flex-end', minHeight: 80, paddingRight: 3 }}>
           <Button variant="contained" onClick={handleBack}>
             Back
           </Button>

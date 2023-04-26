@@ -34,7 +34,7 @@ const Page = () => {
     <>
       <Head>
         <title>
-          MTA Detail
+          MTA Assignation Detail
         </title>
       </Head>
       <Box
@@ -45,8 +45,6 @@ const Page = () => {
         }}
       >
         {type === 'assignation' && <MTAAssignationDetail />}
-        {type === 'transport' && <MTATransportDetail />}
-        {type === 'definition' && <MTADefinitionDetail />}
       </Box>
     </>
   );
