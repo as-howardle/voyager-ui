@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, Divider, Grid, TextField, CardActions } from '@mui/material';
 import { Button } from '@mui/material';
 
-export const Step2 = (props) => {
+const Step2 = (props) => {
   const { next, back } = props;
   return (
     <form>
@@ -54,3 +54,5 @@ export const Step2 = (props) => {
     </form>
   );
 };
+
+export default Step2;

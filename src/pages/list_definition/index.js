@@ -6,8 +6,8 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { Step1 } from './steps/step1';
-import { Step2 } from './steps/step2';
+import Step1 from './steps/step1';
+import Step2 from './steps/step2';
 
 const steps = ["Select campaign settings", "Create an ad group", "Create an ad"];
 
