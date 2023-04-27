@@ -36,7 +36,7 @@ export const MTAAssignationDetail = (props) => {
   };
 
   return (
-    <Card sx={{ minWidth: 500 }}>
+    <Card sx={{ minWidth: 500, marginLeft: 5, marginRight: 5 }}>
       <CardHeader
         title="MTA Assignation detail"
       />
@@ -118,7 +118,7 @@ export const MTAAssignationDetail = (props) => {
           </Grid>
         </Grid>
       </CardContent>
-      <CardActions sx={{ justifyContent: 'flex-end', paddingRight: 3 }}>
+      <CardActions sx={{ justifyContent: 'flex-end', paddingRight: 3, minHeight: 80 }}>
         <Button variant="contained" onClick={handleBack}>
           Back
         </Button>

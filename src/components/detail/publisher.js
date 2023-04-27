@@ -155,7 +155,7 @@ export const PublisherDetail = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Card sx={{ minWidth: 500 }}>
+      <Card sx={{ minWidth: 500, marginLeft: 5, marginRight: 5 }}>
         <CardHeader
           title='Publisher detail'
         />
@@ -280,7 +280,7 @@ export const PublisherDetail = (props) => {
           </Grid>
         </CardContent>
         <Divider />
-        <CardActions sx={{ justifyContent: 'flex-end', paddingRight: 3 }}>
+        <CardActions sx={{ justifyContent: 'flex-end', minHeight: 80, paddingRight: 3 }}>
           <Button variant='contained' color='error' onClick={handleBack}>
             Back
           </Button>

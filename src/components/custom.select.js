@@ -1,6 +1,24 @@
 import Select, { createFilter } from 'react-select';
 import MenuList from './select';
 
+const customStyle = {
+  placeholder: (defaultStyles) => {
+    return {
+      ...defaultStyles,
+      fontSize: 14,
+      fontWeight: 500
+    };
+  },
+  control: (defaultStyles) => {
+    return {
+      ...defaultStyles,
+      minHeight: 53,
+      borderRadius: 8,
+      borderColor: '#E5E7EB'
+    };
+  }
+}
+
 export const CustomSelect = (props) => {
   const { id, label, options, value, onChange, placeHolder, required, isMulti } = props;
   return (
@@ -12,6 +30,7 @@ export const CustomSelect = (props) => {
       }}>{label} {required && <b style={{ color: 'red' }}>*</b>}</label>}
       <Select
         inputId={id}
+        styles={customStyle}
         components={{ MenuList }}
         options={options}
         filterOption={createFilter({ ignoreAccents: false })}
