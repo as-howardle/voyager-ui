@@ -44,6 +44,13 @@ import {
   UpdateDeliverabilityDomainConfigReducers,
   DeleteDeliverabilityDomainConfigReducers,
 } from "./reducers/deliverability.domain.reducer";
+import {
+  NewDomainFormValueReducer,
+  CreateRecordForDomainReducer,
+  AddDomainToPostfixReducer,
+  AddDkimToMailerQReducer,
+  AddNewDomainToListDefinitionReducer,
+} from "./reducers/setup.domain.reducer";
 
 export const store = configureStore({
   reducer: {
@@ -78,6 +85,11 @@ export const store = configureStore({
     deliverabilityDomainConfigDetail: SetDeliverabilityDomainConfigReducers,
     updateDeliverabilityDomainConfig: UpdateDeliverabilityDomainConfigReducers,
     deleteDeliverabilityDomainConfig: DeleteDeliverabilityDomainConfigReducers,
+    newDomainFormValue: NewDomainFormValueReducer,
+    createRecordForDomain: CreateRecordForDomainReducer,
+    addDomainToPostfix: AddDomainToPostfixReducer,
+    addDkimToMailerQ: AddDkimToMailerQReducer,
+    addNewDomainToListDefinition: AddNewDomainToListDefinitionReducer,
   },
   preloadedState: {
     MTATransport: {
@@ -235,6 +247,33 @@ export const store = configureStore({
       message: "",
     },
     deleteDeliverabilityDomainConfig: {
+      isLoading: false,
+      success: false,
+      error: false,
+      message: "",
+    },
+    newDomainFormValue: {
+      value: null,
+    },
+    createRecordForDomain: {
+      isLoading: false,
+      success: false,
+      error: false,
+      message: "",
+    },
+    addDomainToPostfix: {
+      isLoading: false,
+      success: false,
+      error: false,
+      message: "",
+    },
+    addDkimToMailerQ: {
+      isLoading: false,
+      success: false,
+      error: false,
+      message: "",
+    },
+    addNewDomainToListDefinition: {
       isLoading: false,
       success: false,
       error: false,

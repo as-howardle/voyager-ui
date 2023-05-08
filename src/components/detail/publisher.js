@@ -20,6 +20,7 @@ import {
 import Router from 'next/router';
 import PublisherAPI from '../../axios/PublisherAPI';
 import { updatePublisher } from '../../redux/actions/publisher.action';
+import DialogNotification from './../dialog';
 
 export const PublisherDetail = (props) => {
   const { pub } = props;
@@ -39,6 +40,8 @@ export const PublisherDetail = (props) => {
 
   const [apiKey, setAPIKey] = useState('');
   const [uiKey, setUIKey] = useState('');
+
+  const [openDialog, setOpenDialog] = useState(false);
 
   const selectLanguage = useMemo(() => {
     if (listLanguage.length > 0) {
@@ -112,9 +115,15 @@ export const PublisherDetail = (props) => {
         value: pub.status,
         label: pub.status
       });
+      setAPIKey(pub.credential_api);
+      setUIKey(pub.credential_ui);
     }
 
   }, [dispatch, listCountry, listLanguage, listSaleManager, pub]);
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  }
 
   const handleBack = () => {
     Router.push({
@@ -127,6 +136,7 @@ export const PublisherDetail = (props) => {
     const { data: uiData } = await PublisherAPI.generateKey(pub.id, 'ui');
     setAPIKey(apiData.key_secret);
     setUIKey(uiData.key_secret);
+    handleCloseDialog();
   };
 
   const handleSubmit = (e) => {
@@ -139,7 +149,9 @@ export const PublisherDetail = (props) => {
       timezone_id: localeCountryId.timezone_id,
       language_id: languageId.value,
       approved_proveniences: approvedProveniences.map(a => a.value),
-      status: status.value
+      status: status.value,
+      credential_ui: uiKey,
+      credential_api: apiKey
     }, pub.id));
     setName('');
     setRevenueShare(0);
@@ -284,7 +296,7 @@ export const PublisherDetail = (props) => {
           <Button variant='contained' color='error' onClick={handleBack}>
             Back
           </Button>
-          <Button variant='contained' onClick={generateKey}>
+          <Button variant='contained' onClick={() => setOpenDialog(true)}>
             Generate key
           </Button>
           <Button variant='contained' type='submit' color='success'>
@@ -292,6 +304,7 @@ export const PublisherDetail = (props) => {
           </Button>
         </CardActions>
       </Card>
+      <DialogNotification open={openDialog} handleClose={handleCloseDialog} title={'Warning'} content={'Do you to regenerate key. It will delete all the old keys!'} handleAccept={generateKey} />
     </form>
   );
 };
