@@ -20,6 +20,10 @@ const CONST = {
     { value: 'no_sends_or_interactions', label: 'no_sends_or_interactions' },
     { value: 'first_sent', label: 'first_sent' },
     { value: 'unresponsive', label: 'unresponsive' }
+  ],
+  AWS_ACCOUNT: [
+    { value: 'EB', label: 'EB'},
+    { value: 'KARMA', label: 'KARMA'}
   ]
 };
 

@@ -45,7 +45,7 @@
 }
 
 .side-navigation-panel .side-navigation-panel-select .side-navigation-panel-select-wrap .side-navigation-panel-select-option .side-navigation-panel-select-option-wrap .side-navigation-panel-select-option-text {
-  font-weight: 500;
+  font-weight: 450;
   margin-left: 1rem;
   margin-right: 1rem
 }
@@ -91,7 +91,7 @@
 }
 
 .side-navigation-panel .side-navigation-panel-select .side-navigation-panel-select-inner .side-navigation-panel-select-inner-wrap .side-navigation-panel-select-inner-option .side-navigation-panel-select-inner-option-wrap .side-navigation-panel-select-inner-option-text {
-  font-size: .875rem;
+  font-size: .800rem;
   line-height: 1.25rem;
   margin-left: .75rem;
   margin-right: .75rem

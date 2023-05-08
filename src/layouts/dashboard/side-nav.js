@@ -5,7 +5,7 @@ import { Box, Drawer, SvgIcon, useMediaQuery } from '@mui/material';
 import NextLink from 'next/link';
 import Router, { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import { FaFly, FaUsers, FaTools } from 'react-icons/fa';
+import { FaFly, FaUsers, FaTools, FaSyringe } from 'react-icons/fa';
 import { HiTable } from 'react-icons/hi';
 import { MdOutlineAssignmentTurnedIn } from 'react-icons/md';
 import { TbTruckDelivery } from 'react-icons/tb';
@@ -48,7 +48,8 @@ export const SideNav = (props) => {
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              height: '100%'
+              height: '100%',
+              fontSize: 14
             }}
           >
             <Box sx={{ p: 3 }}>
@@ -131,6 +132,11 @@ export const SideNav = (props) => {
                   title: 'Publisher',
                   itemId: '/publisher',
                   elemBefore: () => <SvgIcon><FaUsers /></SvgIcon>
+                },
+                {
+                  title: 'Set up new domain',
+                  itemId: '/setup_new_domain',
+                  elemBefore: () => <SvgIcon><FaSyringe /></SvgIcon>
                 },
                 {
                   title: 'Settings',
