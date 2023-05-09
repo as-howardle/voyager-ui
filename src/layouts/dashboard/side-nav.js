@@ -5,7 +5,7 @@ import { Box, Drawer, SvgIcon, useMediaQuery } from '@mui/material';
 import NextLink from 'next/link';
 import Router, { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import { FaFly, FaUsers, FaTools, FaSyringe } from 'react-icons/fa';
+import { FaFly, FaUsers, FaTools, FaSyringe, FaListUl } from 'react-icons/fa';
 import { HiTable } from 'react-icons/hi';
 import { MdOutlineAssignmentTurnedIn } from 'react-icons/md';
 import { TbTruckDelivery } from 'react-icons/tb';
@@ -132,6 +132,11 @@ export const SideNav = (props) => {
                   title: 'Publisher',
                   itemId: '/publisher',
                   elemBefore: () => <SvgIcon><FaUsers /></SvgIcon>
+                },
+                {
+                  title: 'List Definition',
+                  itemId: '/list_definition',
+                  elemBefore: () => <SvgIcon><FaListUl /></SvgIcon>
                 },
                 {
                   title: 'Set up new domain',

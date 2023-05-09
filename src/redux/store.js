@@ -51,6 +51,13 @@ import {
   AddDkimToMailerQReducer,
   AddNewDomainToListDefinitionReducer,
 } from "./reducers/setup.domain.reducer";
+import {
+  ListDatabaseReducers,
+  ListTemplateCountryListReducers,
+  ListTemplateListReducers,
+  SetListDefinitionDetail,
+  UpdateListDefinitionReducers,
+} from "./reducers/list.definition.reducer";
 
 export const store = configureStore({
   reducer: {
@@ -90,6 +97,11 @@ export const store = configureStore({
     addDomainToPostfix: AddDomainToPostfixReducer,
     addDkimToMailerQ: AddDkimToMailerQReducer,
     addNewDomainToListDefinition: AddNewDomainToListDefinitionReducer,
+    listDefinitionDetail: SetListDefinitionDetail,
+    listTemplate: ListTemplateListReducers,
+    listTemplateCountry: ListTemplateCountryListReducers,
+    listDatabase: ListDatabaseReducers,
+    updateListDefinition: UpdateListDefinitionReducers,
   },
   preloadedState: {
     MTATransport: {
@@ -274,6 +286,32 @@ export const store = configureStore({
       message: "",
     },
     addNewDomainToListDefinition: {
+      isLoading: false,
+      success: false,
+      error: false,
+      message: "",
+    },
+    listDefinitionDetail: {
+      def: null,
+      isLoading: false,
+      error: "",
+    },
+    listTemplate: {
+      list: [],
+      error: "",
+      isLoading: false,
+    },
+    listTemplateCountry: {
+      list: [],
+      error: "",
+      isLoading: false,
+    },
+    listDatabase: {
+      list: [],
+      error: "",
+      isLoading: false,
+    },
+    updateListDefinition: {
       isLoading: false,
       success: false,
       error: false,

@@ -94,7 +94,7 @@ export const setMTATransportDetail = (id) => async(dispatch) => {
     dispatch({
       type: SET_MTA_TRANSPORT_DETAIL
     });
-    const { data } = await MTATransportAPI.getById(id)
+    const { data } = await MTATransportAPI.getById(id);
     dispatch({
       type: SET_MTA_TRANSPORT_DETAIL_DONE,
       payload: data[0]
