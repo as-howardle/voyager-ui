@@ -142,7 +142,7 @@ export const SideNav = (props) => {
                   elemBefore: () => <SvgIcon><FaSyringe /></SvgIcon>
                 },
                 {
-                  title: 'Verify Email',
+                  title: 'Verify Email Blacklist',
                   itemId: '/verify_email',
                   elemBefore: () => <SvgIcon><MdVerifiedUser /></SvgIcon>
                 },

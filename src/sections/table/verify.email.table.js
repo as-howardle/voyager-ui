@@ -42,6 +42,7 @@ export const VerifyEmailTable = () => {
     dispatch(verifyEmailAction({
       csv: e.target.files[0]
     }));
+    e.target.value = '';
   };
 
   const handleExportCSV = () => {
