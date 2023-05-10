@@ -2,7 +2,8 @@ const DEFAULT_DEMILITER = '\t';
 
 const ExportHelper = {
   generateVerifyEmailCSV: (row) => {
-    const csv = convertArrayOfObjectsToCSV(row);
+    const data = row.map(r => ({ email: r.email_address }));
+    const csv = convertArrayOfObjectsToCSV(data);
     downloadCSV(csv);
   }
 
