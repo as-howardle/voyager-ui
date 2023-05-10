@@ -5,15 +5,13 @@ import { Box, Drawer, SvgIcon, useMediaQuery } from '@mui/material';
 import NextLink from 'next/link';
 import Router, { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import { FaFly, FaUsers, FaTools, FaSyringe, FaListUl } from 'react-icons/fa';
+import { FaFly, FaListUl, FaSyringe, FaTools, FaUsers } from 'react-icons/fa';
 import { HiTable } from 'react-icons/hi';
-import { MdOutlineAssignmentTurnedIn } from 'react-icons/md';
+import { MdDomain, MdOutlineAssignmentTurnedIn, MdVerifiedUser } from 'react-icons/md';
 import { TbTruckDelivery } from 'react-icons/tb';
 import { Navigation } from 'react-minimal-side-navigation';
 import { Logo } from 'src/components/logo';
 import { Scrollbar } from 'src/components/scrollbar';
-import { GrConfigure } from 'react-icons/gr';
-import { MdDomain } from 'react-icons/md';
 
 export const SideNav = (props) => {
   const router = useRouter();
@@ -142,6 +140,11 @@ export const SideNav = (props) => {
                   title: 'Set up new domain',
                   itemId: '/setup_new_domain',
                   elemBefore: () => <SvgIcon><FaSyringe /></SvgIcon>
+                },
+                {
+                  title: 'Verify Email',
+                  itemId: '/verify_email',
+                  elemBefore: () => <SvgIcon><MdVerifiedUser /></SvgIcon>
                 },
                 {
                   title: 'Settings',

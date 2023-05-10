@@ -1,5 +1,13 @@
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Button, Card, CardActions, CardContent, CardHeader, Divider, Grid, TextField } from '@mui/material';
+import {
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Divider,
+  Grid,
+  TextField
+} from '@mui/material';
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CustomSelect } from 'src/components/custom.select';
@@ -17,15 +25,19 @@ const AddNewDomainToListDefinition = (props) => {
   const dispatch = useDispatch();
   const { value } = useSelector((state) => state.newDomainFormValue);
   const { list: listDefinition } = useSelector((state) => state.listDefinitionDeliverability);
-  const { isLoading, success, error, message } = useSelector((state) => state.createRecordForDomain);
+  const {
+    isLoading,
+    success,
+    error,
+    message
+  } = useSelector((state) => state.createRecordForDomain);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(list);
     let listId = [];
     list.map((l) => {
       listId.push(l.value);
-    })
+    });
     dispatch(setValueForNewDomainForm({
       ...value, domain_to_list_definition: {
         domain,
@@ -50,7 +62,7 @@ const AddNewDomainToListDefinition = (props) => {
   }, [listDefinition]);
 
   useEffect(() => {
-    if(listDefinition.length === 0) {
+    if (listDefinition.length === 0) {
       dispatch(getDefinitionList());
     }
   }, [dispatch, isLoading, listDefinition]);
@@ -58,14 +70,14 @@ const AddNewDomainToListDefinition = (props) => {
   return (
     <form onSubmit={onSubmit}>
       <Card sx={{ minWidth: 900, marginLeft: 5, marginRight: 5, marginTop: 5 }}>
-        <CardHeader title="Create new record for domain" />
+        <CardHeader title='Create new record for domain' />
         <Divider />
         <CardContent>
-          <Grid container spacing={3} direction="column">
+          <Grid container spacing={3} direction='column'>
             <Grid item zIndex={999}>
               <CustomSelect
-                id="id-aws-account"
-                label="List definition"
+                id='id-aws-account'
+                label='List definition'
                 options={selectMTADefinition}
                 value={list}
                 onChange={setList}
@@ -77,26 +89,26 @@ const AddNewDomainToListDefinition = (props) => {
               <TextField
                 value={domain}
                 onChange={(e) => setDomain(e.target.value)}
-                label="Domain"
+                label='Domain'
                 fullWidth
                 required
               />
             </Grid>
           </Grid>
         </CardContent>
-        <CardActions sx={{ justifyContent: "flex-end", minHeight: 200, paddingRight: 3 }}>
-          <LoadingButton variant="contained" type="submit" loading={isLoading}>
+        <CardActions sx={{ justifyContent: 'flex-end', minHeight: 200, paddingRight: 3 }}>
+          <LoadingButton variant='contained' type='submit' loading={isLoading}>
             Create
           </LoadingButton>
           {/* {success ? (
-            <Button variant="contained" color="success" onClick={handleNext}>
-              Next
-            </Button>
-          ) : (
-            <LoadingButton variant="contained" type="submit" loading={isLoading}>
-              Create
-            </LoadingButton>
-          )} */}
+           <Button variant="contained" color="success" onClick={handleNext}>
+           Next
+           </Button>
+           ) : (
+           <LoadingButton variant="contained" type="submit" loading={isLoading}>
+           Create
+           </LoadingButton>
+           )} */}
         </CardActions>
       </Card>
     </form>
