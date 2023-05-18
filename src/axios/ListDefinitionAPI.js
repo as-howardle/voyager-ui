@@ -6,7 +6,8 @@ const ENDPOINTS = {
   GET_LIST_TEMPLATE: '/list_definition/list_template?publisher_id=:val:',
   GET_LIST_COUNTRY_TEMPLATE: '/list_definition/list_template_country?list_template_id=:val:',
   GET_LIST_DATABASE: '/list_definition/list_database',
-  UPDATE_LIST_DEFINITION: '/list_definition/:id:'
+  UPDATE_LIST_DEFINITION: '/list_definition/:id:',
+  CREATE_LIST_DEFINITION: '/list_definition/create'
 };
 
 const ListDefinitionAPI = {
@@ -24,7 +25,10 @@ const ListDefinitionAPI = {
   },
   updateListDefinition: (id, value) => {
     return axios.patch(JANUS_API + ENDPOINTS.UPDATE_LIST_DEFINITION.replace(':id:', id), value);
+  },
+  createListDefinition: (value) => {
+    return axios.post(JANUS_API + ENDPOINTS.CREATE_LIST_DEFINITION, value);
   }
-};  
+};
 
 export default ListDefinitionAPI;

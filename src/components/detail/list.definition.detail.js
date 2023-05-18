@@ -1,25 +1,22 @@
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { getListTemplate, updateListDefinition } from "src/redux/actions/list.definition.action";
-import { useState, useMemo } from "react";
-import { useSelector } from "react-redux";
-import Router from "next/router";
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useMemo, useState } from 'react';
+import { getListTemplate, updateListDefinition } from 'src/redux/actions/list.definition.action';
+import Router from 'next/router';
 import {
-  Card,
-  CardHeader,
-  Divider,
-  CardContent,
-  Grid,
-  TextField,
-  CardActions,
   Button,
-  MenuItem,
-  FormControlLabel,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
   Checkbox,
   CircularProgress,
-} from "@mui/material";
-import { Box } from "@mui/system";
-import { CustomSelect } from "./../custom.select";
+  Divider,
+  FormControlLabel,
+  Grid,
+  TextField
+} from '@mui/material';
+import { Box } from '@mui/system';
+import { CustomSelect } from './../custom.select';
 
 export const ListDefinitionDetail = (props) => {
   const { def, isLoading } = props;
@@ -30,35 +27,35 @@ export const ListDefinitionDetail = (props) => {
   const { list: listSaleManager } = useSelector((state) => state.listSaleManager);
   const { list: listCountry } = useSelector((state) => state.listCountry);
 
-  const [listTemplateId, setListTemplateId] = useState("");
+  const [listTemplateId, setListTemplateId] = useState('');
   const [publisher, setPublisher] = useState(null);
   const [representativeSalesManager, setRepresentativeSalesManager] = useState(null);
   const [defaultCountry, setDefaultCountry] = useState(null);
   const [listDatabase, setListDatabse] = useState(null);
-  const [affiliateId, setAffiliateId] = useState("");
-  const [externalId, setExternalId] = useState("");
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [fromName, setFromName] = useState("");
-  const [fromEmail, setFromEmail] = useState("");
-  const [customDomain, setCustomDomain] = useState("");
-  const [customProtocol, setCustomProtocol] = useState("");
-  const [customPath, setCustomPath] = useState("");
-  const [publicName, setPublicName] = useState("");
-  const [replytoEmail, setReplytoEmail] = useState("");
-  const [headersDomain, setHeadersDomain] = useState("");
-  const [trackingDomain, setTrackingDomain] = useState("");
-  const [rightEmailAddress, setRightEmailAddress] = useState("");
-  const [businessType, setBusinessType] = useState("");
+  const [affiliateId, setAffiliateId] = useState('');
+  const [externalId, setExternalId] = useState('');
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [fromName, setFromName] = useState('');
+  const [fromEmail, setFromEmail] = useState('');
+  const [customDomain, setCustomDomain] = useState('');
+  const [customProtocol, setCustomProtocol] = useState('');
+  const [customPath, setCustomPath] = useState('');
+  const [publicName, setPublicName] = useState('');
+  const [replytoEmail, setReplytoEmail] = useState('');
+  const [headersDomain, setHeadersDomain] = useState('');
+  const [trackingDomain, setTrackingDomain] = useState('');
+  const [rightEmailAddress, setRightEmailAddress] = useState('');
+  const [businessType, setBusinessType] = useState('');
   const [isActive, setIsActive] = useState(false);
-  const [listWorkflowStatus, setListWorkflowStatus] = useState("");
+  const [listWorkflowStatus, setListWorkflowStatus] = useState('');
   const [hasPreviewEnabled, setHasPreviewEnabled] = useState(false);
   const [isEnabledForCPMBidding, setIsEnabledForCPMBidding] = useState(false);
   const [isEnabledForCPMOBidding, setIsEnabledForCPMOBidding] = useState(false);
   const [recSendsWeek, setRecSendsWeek] = useState(0);
-  const [interests, setInterests] = useState("");
+  const [interests, setInterests] = useState('');
   const [minCPMOPayout, setMinCPMOPayout] = useState(0);
-  const [listWarmUp, setListWarmUp] = useState("");
+  const [listWarmUp, setListWarmUp] = useState('');
 
   const { list: listTemplate } = useSelector((state) => state.listTemplate);
 
@@ -68,24 +65,30 @@ export const ListDefinitionDetail = (props) => {
 
       setListTemplateId({
         id: def.list_template_id,
-        label: def.list_template_id,
+        label: def.list_template_id
       });
 
       const pub = listPublisher.find((p) => p.id === def.publisher.id);
       const saleManager = listSaleManager.find((p) => p.id === def.representative_sales_manager_id);
       const country = listCountry.find((p) => p.id === def.default_country.id);
-      setPublisher({
-        value: pub.id,
-        label: pub.account_name,
-      });
-      setRepresentativeSalesManager({
-        value: saleManager.id,
-        label: saleManager.name,
-      });
-      setDefaultCountry({
-        value: country.id,
-        label: country.name,
-      });
+      if (pub) {
+        setPublisher({
+          value: pub.id,
+          label: pub.account_name
+        });
+      }
+      if (saleManager) {
+        setRepresentativeSalesManager({
+          value: saleManager.id,
+          label: saleManager.name
+        });
+      }
+      if (country) {
+        setDefaultCountry({
+          value: country.id,
+          label: country.name
+        });
+      }
       // setListDatabse({
       //   value: def.list_database.id,
       //   label: def.list_database.id,
@@ -122,7 +125,7 @@ export const ListDefinitionDetail = (props) => {
     if (listTemplate.length > 0) {
       return listTemplate.map((l) => ({
         value: l.id,
-        label: l.id,
+        label: l.id
       }));
     }
   }, [listTemplate]);
@@ -131,7 +134,7 @@ export const ListDefinitionDetail = (props) => {
     if (listPublisher.length > 0) {
       return listPublisher.map((l) => ({
         value: l.id,
-        label: l.account_name,
+        label: l.account_name
       }));
     }
   }, [listPublisher]);
@@ -140,7 +143,7 @@ export const ListDefinitionDetail = (props) => {
     if (listSaleManager.length > 0) {
       return listSaleManager.map((l) => ({
         value: l.id,
-        label: l.name,
+        label: l.name
       }));
     }
   }, [listSaleManager]);
@@ -149,7 +152,7 @@ export const ListDefinitionDetail = (props) => {
     if (listCountry.length > 0) {
       return listCountry.map((l) => ({
         value: l.id,
-        label: l.name,
+        label: l.name
       }));
     }
   }, [listCountry]);
@@ -158,7 +161,7 @@ export const ListDefinitionDetail = (props) => {
     if (databaseList.length > 0) {
       return databaseList.map((l) => ({
         value: l.id,
-        label: l.id,
+        label: l.id
       }));
     }
   }, [databaseList]);
@@ -204,32 +207,31 @@ export const ListDefinitionDetail = (props) => {
       }
     }));
     Router.push({
-      pathname: `/list_definition`,
+      pathname: `/list_definition`
     });
-  }
+  };
 
   const handleBack = () => {
     Router.push({
-      pathname: `/list_definition`,
+      pathname: `/list_definition`
     });
-  }
+  };
 
   return (
     <form onSubmit={handleUpdate}>
       <Card sx={{ minWidth: 500, marginLeft: 5, marginRight: 5 }}>
-        <CardHeader title="List Definition Detail" />
+        <CardHeader title='List Definition Detail' />
         <Divider />
         <CardContent
           sx={{
-            maxHeight: 600,
-            overflow: "auto",
+            overflow: 'auto'
           }}
         >
           {isLoading ? (
             <Box
               sx={{
-                display: "flex",
-                justifyContent: "center",
+                display: 'flex',
+                justifyContent: 'center'
               }}
             >
               <CircularProgress />
@@ -241,24 +243,24 @@ export const ListDefinitionDetail = (props) => {
               sx={{
                 minWidth: 1000,
                 minHeight: 250,
-                "& .MuiInputBase-input.Mui-disabled": {
-                  WebkitTextFillColor: "#000000",
-                },
+                '& .MuiInputBase-input.Mui-disabled': {
+                  WebkitTextFillColor: '#000000'
+                }
               }}
-              direction="column"
+              direction='column'
             >
               <Grid
                 item
                 spacing={3}
                 sx={{
-                  position: "relative",
-                  zIndex: 999,
+                  position: 'relative',
+                  zIndex: 999
                 }}
               >
                 {listTemplate.length > 0 ? (
                   <CustomSelect
-                    id="id-list-template"
-                    label="List Tempate"
+                    id='id-list-template'
+                    label='List Tempate'
                     options={selectListTemplate}
                     value={listTemplateId}
                     onChange={setListTemplateId}
@@ -271,14 +273,14 @@ export const ListDefinitionDetail = (props) => {
                 item
                 spacing={3}
                 sx={{
-                  position: "relative",
-                  zIndex: 998,
+                  position: 'relative',
+                  zIndex: 998
                 }}
               >
                 {selectListPublisher.length > 0 ? (
                   <CustomSelect
-                    id="id-list-publisher"
-                    label="List Publisher"
+                    id='id-list-publisher'
+                    label='List Publisher'
                     options={selectListPublisher}
                     value={publisher}
                     onChange={setPublisher}
@@ -291,14 +293,14 @@ export const ListDefinitionDetail = (props) => {
                 item
                 spacing={3}
                 sx={{
-                  position: "relative",
-                  zIndex: 997,
+                  position: 'relative',
+                  zIndex: 997
                 }}
               >
                 {listSaleManager.length > 0 ? (
                   <CustomSelect
-                    id="id-list-sale-manager"
-                    label="Representative Sales Manager"
+                    id='id-list-sale-manager'
+                    label='Representative Sales Manager'
                     options={selectSaleManager}
                     value={representativeSalesManager}
                     onChange={setRepresentativeSalesManager}
@@ -311,14 +313,14 @@ export const ListDefinitionDetail = (props) => {
                 item
                 spacing={3}
                 sx={{
-                  position: "relative",
-                  zIndex: 996,
+                  position: 'relative',
+                  zIndex: 996
                 }}
               >
                 {listCountry.length > 0 ? (
                   <CustomSelect
-                    id="id-list-default-country"
-                    label="Default Country"
+                    id='id-list-default-country'
+                    label='Default Country'
                     options={selectDefaultCountry}
                     value={defaultCountry}
                     onChange={setDefaultCountry}
@@ -328,30 +330,30 @@ export const ListDefinitionDetail = (props) => {
                 ) : null}
               </Grid>
               {/* <Grid
-                item
-                spacing={3}
-                sx={{
-                  position: "relative",
-                  zIndex: 995,
-                }}
-              >
-                {databaseList.length > 0 ? (
-                  <CustomSelect
-                    id="id-list-database"
-                    label="List Database"
-                    options={selectListDatabase}
-                    value={listDatabase}
-                    onChange={setListDatabse}
-                    required={true}
-                    isMulti={false}
-                  />
-                ) : null}
-              </Grid> */}
+               item
+               spacing={3}
+               sx={{
+               position: "relative",
+               zIndex: 995,
+               }}
+               >
+               {databaseList.length > 0 ? (
+               <CustomSelect
+               id="id-list-database"
+               label="List Database"
+               options={selectListDatabase}
+               value={listDatabase}
+               onChange={setListDatabse}
+               required={true}
+               isMulti={false}
+               />
+               ) : null}
+               </Grid> */}
               <Grid item>
                 <TextField
                   fullWidth
-                  label="Affiliate Id"
-                  type="text"
+                  label='Affiliate Id'
+                  type='text'
                   value={affiliateId}
                   onChange={(e) => setAffiliateId(e.target.value)}
                   required
@@ -360,8 +362,8 @@ export const ListDefinitionDetail = (props) => {
               <Grid item>
                 <TextField
                   fullWidth
-                  label="External Id"
-                  type="text"
+                  label='External Id'
+                  type='text'
                   value={externalId}
                   onChange={(e) => setExternalId(e.target.value)}
                   required
@@ -370,8 +372,8 @@ export const ListDefinitionDetail = (props) => {
               <Grid item>
                 <TextField
                   fullWidth
-                  label="Name"
-                  type="text"
+                  label='Name'
+                  type='text'
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
@@ -380,8 +382,8 @@ export const ListDefinitionDetail = (props) => {
               <Grid item>
                 <TextField
                   fullWidth
-                  label="Description"
-                  type="text"
+                  label='Description'
+                  type='text'
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 />
@@ -389,8 +391,8 @@ export const ListDefinitionDetail = (props) => {
               <Grid item>
                 <TextField
                   fullWidth
-                  label="From Name"
-                  type="text"
+                  label='From Name'
+                  type='text'
                   value={fromName}
                   onChange={(e) => setFromName(e.target.value)}
                   multiline
@@ -399,8 +401,8 @@ export const ListDefinitionDetail = (props) => {
               <Grid item>
                 <TextField
                   fullWidth
-                  label="From Email"
-                  type="text"
+                  label='From Email'
+                  type='text'
                   value={fromEmail}
                   onChange={(e) => setFromEmail(e.target.value)}
                   multiline
@@ -409,8 +411,8 @@ export const ListDefinitionDetail = (props) => {
               <Grid item>
                 <TextField
                   fullWidth
-                  label="Custom Domain"
-                  type="text"
+                  label='Custom Domain'
+                  type='text'
                   value={customDomain}
                   onChange={(e) => setCustomDomain(e.target.value)}
                   required
@@ -419,8 +421,8 @@ export const ListDefinitionDetail = (props) => {
               <Grid item>
                 <TextField
                   fullWidth
-                  label="Custom Protocol"
-                  type="text"
+                  label='Custom Protocol'
+                  type='text'
                   value={customProtocol}
                   onChange={(e) => setCustomProtocol(e.target.value)}
                   required
@@ -429,8 +431,8 @@ export const ListDefinitionDetail = (props) => {
               <Grid item>
                 <TextField
                   fullWidth
-                  label="Public Name"
-                  type="text"
+                  label='Public Name'
+                  type='text'
                   value={publicName}
                   onChange={(e) => setPublicName(e.target.value)}
                 />
@@ -438,8 +440,8 @@ export const ListDefinitionDetail = (props) => {
               <Grid item>
                 <TextField
                   fullWidth
-                  label="Replyto Email"
-                  type="text"
+                  label='Replyto Email'
+                  type='text'
                   value={replytoEmail}
                   onChange={(e) => setReplytoEmail(e.target.value)}
                 />
@@ -447,8 +449,8 @@ export const ListDefinitionDetail = (props) => {
               <Grid item>
                 <TextField
                   fullWidth
-                  label="Headers Domain"
-                  type="text"
+                  label='Headers Domain'
+                  type='text'
                   value={headersDomain}
                   onChange={(e) => setHeadersDomain(e.target.value)}
                 />
@@ -456,8 +458,8 @@ export const ListDefinitionDetail = (props) => {
               <Grid item>
                 <TextField
                   fullWidth
-                  label="Tracking Domain"
-                  type="text"
+                  label='Tracking Domain'
+                  type='text'
                   value={trackingDomain}
                   onChange={(e) => setTrackingDomain(e.target.value)}
                 />
@@ -465,8 +467,8 @@ export const ListDefinitionDetail = (props) => {
               <Grid item>
                 <TextField
                   fullWidth
-                  label="Right Email Address"
-                  type="text"
+                  label='Right Email Address'
+                  type='text'
                   value={rightEmailAddress}
                   onChange={(e) => setRightEmailAddress(e.target.value)}
                 />
@@ -474,14 +476,14 @@ export const ListDefinitionDetail = (props) => {
               <Grid item>
                 <TextField
                   fullWidth
-                  label="Business Type"
-                  type="text"
+                  label='Business Type'
+                  type='text'
                   value={businessType}
                   onChange={(e) => setBusinessType(e.target.value)}
                   required
                 />
               </Grid>
-              <Grid container item spacing={3} direction="row">
+              <Grid container item spacing={3} direction='row'>
                 <Grid item>
                   <FormControlLabel
                     control={
@@ -490,113 +492,113 @@ export const ListDefinitionDetail = (props) => {
                         onChange={(e) => {
                           setIsActive(e.target.checked);
                         }}
-                        name="is_active"
+                        name='is_active'
                       />
                     }
-                    label="Is active"
+                    label='Is active'
                   />
                 </Grid>
               </Grid>
-                <Grid container item spacing={3} direction="row">
-                  <Grid item>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={hasPreviewEnabled}
-                          onChange={(e) => {
-                            setHasPreviewEnabled(e.target.checked);
-                          }}
-                        />
-                      }
-                      label="Has Preview Enabled"
-                    />
-                  </Grid>
-                </Grid>
-                <Grid container item spacing={3} direction="row">
-                  <Grid item>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={isEnabledForCPMBidding}
-                          onChange={(e) => {
-                            setIsEnabledForCPMBidding(e.target.checked);
-                          }}
-                        />
-                      }
-                      label="Is Enabled For CPM Bidding"
-                    />
-                  </Grid>
-                </Grid>
-                <Grid container item spacing={3} direction="row">
-                  <Grid item>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={isEnabledForCPMOBidding}
-                          onChange={(e) => {
-                            setIsEnabledForCPMOBidding(e.target.checked);
-                          }}
-                        />
-                      }
-                      label="Is Enabled For CPMO Bidding"
-                    />
-                  </Grid>
-                </Grid>
+              <Grid container item spacing={3} direction='row'>
                 <Grid item>
-                  <TextField
-                    fullWidth
-                    label="List Workflow Status"
-                    type="text"
-                    value={listWorkflowStatus}
-                    onChange={(e) => setListWorkflowStatus(e.target.value)}
-                    required
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={hasPreviewEnabled}
+                        onChange={(e) => {
+                          setHasPreviewEnabled(e.target.checked);
+                        }}
+                      />
+                    }
+                    label='Has Preview Enabled'
                   />
                 </Grid>
+              </Grid>
+              <Grid container item spacing={3} direction='row'>
                 <Grid item>
-                  <TextField
-                    fullWidth
-                    label="Rec Sends Week"
-                    type="number"
-                    value={recSendsWeek}
-                    onChange={(e) => setRecSendsWeek(e.target.value)}
-                    required
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={isEnabledForCPMBidding}
+                        onChange={(e) => {
+                          setIsEnabledForCPMBidding(e.target.checked);
+                        }}
+                      />
+                    }
+                    label='Is Enabled For CPM Bidding'
                   />
                 </Grid>
+              </Grid>
+              <Grid container item spacing={3} direction='row'>
                 <Grid item>
-                  <TextField
-                    fullWidth
-                    label="Interests"
-                    type="text"
-                    value={interests}
-                    onChange={(e) => setInterests(e.target.value)}
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={isEnabledForCPMOBidding}
+                        onChange={(e) => {
+                          setIsEnabledForCPMOBidding(e.target.checked);
+                        }}
+                      />
+                    }
+                    label='Is Enabled For CPMO Bidding'
                   />
                 </Grid>
-                <Grid item>
-                  <TextField
-                    fullWidth
-                    label="Min CPMO Payout"
-                    type="number"
-                    value={minCPMOPayout}
-                    onChange={(e) => setMinCPMOPayout(e.target.value)}
-                    required
-                  />
-                </Grid>
-                <Grid item>
-                  <TextField
-                    fullWidth
-                    label="List Warm Up"
-                    type="text"
-                    value={listWarmUp}
-                    onChange={(e) => setListWarmUp(e.target.value)}
-                    required
-                  />
-                </Grid>
+              </Grid>
+              <Grid item>
+                <TextField
+                  fullWidth
+                  label='List Workflow Status'
+                  type='text'
+                  value={listWorkflowStatus}
+                  onChange={(e) => setListWorkflowStatus(e.target.value)}
+                  required
+                />
+              </Grid>
+              <Grid item>
+                <TextField
+                  fullWidth
+                  label='Rec Sends Week'
+                  type='number'
+                  value={recSendsWeek}
+                  onChange={(e) => setRecSendsWeek(e.target.value)}
+                  required
+                />
+              </Grid>
+              <Grid item>
+                <TextField
+                  fullWidth
+                  label='Interests'
+                  type='text'
+                  value={interests}
+                  onChange={(e) => setInterests(e.target.value)}
+                />
+              </Grid>
+              <Grid item>
+                <TextField
+                  fullWidth
+                  label='Min CPMO Payout'
+                  type='number'
+                  value={minCPMOPayout}
+                  onChange={(e) => setMinCPMOPayout(e.target.value)}
+                  required
+                />
+              </Grid>
+              <Grid item>
+                <TextField
+                  fullWidth
+                  label='List Warm Up'
+                  type='text'
+                  value={listWarmUp}
+                  onChange={(e) => setListWarmUp(e.target.value)}
+                  required
+                />
+              </Grid>
             </Grid>
           )}
         </CardContent>
-        <CardActions sx={{ justifyContent: "flex-end", minHeight: 80, paddingRight: 3 }}>
-          <Button variant="contained" onClick={handleBack}>Back</Button>
-          <Button variant="contained" type="submit" color="success">
+        <CardActions sx={{ justifyContent: 'flex-end', minHeight: 80, paddingRight: 3 }}>
+          <Button variant='contained' onClick={handleBack}>Back</Button>
+          <Button variant='contained' type='submit' color='success'>
             Update
           </Button>
         </CardActions>
