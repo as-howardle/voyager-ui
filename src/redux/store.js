@@ -1,63 +1,64 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
 import {
   CreateMTATransportReducers,
   MTATransportReducers,
   MTATransportTypeReducers,
   SetMTATransportDetailReducers,
-  UpdateMTATransportReducers,
-} from "./reducers/mta.transport.reducer";
+  UpdateMTATransportReducers
+} from './reducers/mta.transport.reducer';
 import {
   CreateMTADefinitionReducers,
   MTADefinitionListReducers,
   SetMTADefinitionDetailReducers,
-  UpdateMTADefinitionReducers,
-} from "./reducers/mta.definition.reducer";
+  UpdateMTADefinitionReducers
+} from './reducers/mta.definition.reducer';
 import {
   MTAAssignationListReducers,
-  SetMTAAssignationDetailReducers,
-} from "./reducers/mta.assignation.reducer";
+  SetMTAAssignationDetailReducers
+} from './reducers/mta.assignation.reducer';
 import {
   CreatePublisherReducers,
   PublisherListReducers,
   SetPublisherDetailReducers,
-  UpdatePublisherReducers,
-} from "./reducers/publisher.reducer";
+  UpdatePublisherReducers
+} from './reducers/publisher.reducer';
 import {
   CountryListReducers,
   LanguageListReducers,
   ProviderDomainListReducers,
   ProviderListReducers,
-  SaleManagerListReducers,
-} from "./reducers/general.reducer";
+  SaleManagerListReducers
+} from './reducers/general.reducer';
 import {
   CreateDeliverabilityConfigReducers,
   DefinitionListReducer,
   DeleteDeliverabilityConfigReducers,
   DeliverabilityListReducer,
   SetDeliverabilityConfigReducers,
-  UpdateDeliverabilityConfigReducers,
-} from "./reducers/deliverability.reducer";
+  UpdateDeliverabilityConfigReducers
+} from './reducers/deliverability.reducer';
 import {
   CreateDeliverabilityDomainConfigReducers,
+  DeleteDeliverabilityDomainConfigReducers,
   DeliverabilityDomainListReducer,
   SetDeliverabilityDomainConfigReducers,
-  UpdateDeliverabilityDomainConfigReducers,
-  DeleteDeliverabilityDomainConfigReducers,
-} from "./reducers/deliverability.domain.reducer";
+  UpdateDeliverabilityDomainConfigReducers
+} from './reducers/deliverability.domain.reducer';
 import {
-  NewDomainFormValueReducer,
-  CreateRecordForDomainReducer,
-  AddDomainToPostfixReducer,
   AddDkimToMailerQReducer,
+  AddDomainToPostfixReducer,
   AddNewDomainToListDefinitionReducer,
-} from "./reducers/setup.domain.reducer";
+  CreateRecordForDomainReducer,
+  NewDomainFormValueReducer
+} from './reducers/setup.domain.reducer';
 import {
+  CreateListDefinitionReducers,
   ListDatabaseReducers,
   ListTemplateCountryListReducers,
   ListTemplateListReducers,
   SetListDefinitionDetail,
-  UpdateListDefinitionReducers,
-} from "./reducers/list.definition.reducer";
+  UpdateListDefinitionReducers
+} from './reducers/list.definition.reducer';
 
 export const store = configureStore({
   reducer: {
@@ -102,220 +103,227 @@ export const store = configureStore({
     listTemplateCountry: ListTemplateCountryListReducers,
     listDatabase: ListDatabaseReducers,
     updateListDefinition: UpdateListDefinitionReducers,
+    createListDefinition: CreateListDefinitionReducers
   },
   preloadedState: {
     MTATransport: {
       isLoading: false,
-      listMTATransport: [],
+      listMTATransport: []
     },
     MTATransportType: {
       isLoading: false,
-      mtaTransportTypeList: [],
+      mtaTransportTypeList: []
     },
     createMTATransport: {
       isLoading: false,
       success: false,
       error: false,
-      message: "",
+      message: ''
     },
     updateMTATransport: {
       isLoading: false,
       success: false,
       error: false,
-      message: "",
+      message: ''
     },
     MTADefinitionList: {
       isLoading: false,
-      list: [],
+      list: []
     },
     createMTADefinition: {
       isLoading: false,
       success: false,
       error: false,
-      message: "",
+      message: ''
     },
     updateMTADefinition: {
       isLoading: false,
       success: false,
       error: false,
-      message: "",
+      message: ''
     },
     MTAAssignationList: {
       isLoading: false,
-      list: [],
+      list: []
     },
     MTATransportDetail: {
       mta: null,
-      isLoading: false,
+      isLoading: false
     },
     MTADefinitionDetail: {
       mta: null,
-      isLoading: false,
+      isLoading: false
     },
     MTAAssignationDetail: {
       mta: null,
-      isLoading: false,
+      isLoading: false
     },
     listPublisher: {
       list: [],
-      error: "",
-      isLoading: false,
+      error: '',
+      isLoading: false
     },
     listCountry: {
       list: [],
-      error: "",
-      isLoading: false,
+      error: '',
+      isLoading: false
     },
     listLanguage: {
       list: [],
-      error: "",
-      isLoading: false,
+      error: '',
+      isLoading: false
     },
     listSaleManager: {
       list: [],
-      error: "",
-      isLoading: false,
+      error: '',
+      isLoading: false
     },
     listProvider: {
       list: [],
-      error: "",
-      isLoading: false,
+      error: '',
+      isLoading: false
     },
     listProviderDomain: {
       list: [],
-      error: "",
-      isLoading: false,
+      error: '',
+      isLoading: false
     },
     createPublisher: {
       isLoading: false,
       success: false,
       error: false,
-      message: "",
+      message: ''
     },
     publisherDetail: {
       pub: null,
-      error: "",
-      isLoading: false,
+      error: '',
+      isLoading: false
     },
     updatePublisher: {
       isLoading: false,
       success: false,
       error: false,
-      message: "",
+      message: ''
     },
     listDeliverability: {
       list: [],
-      error: "",
-      isLoading: false,
+      error: '',
+      isLoading: false
     },
     listDefinitionDeliverability: {
       list: [],
-      error: "",
-      isLoading: false,
+      error: '',
+      isLoading: false
     },
     createDeliverabilityConfig: {
       isLoading: false,
       success: false,
       error: false,
-      message: "",
+      message: ''
     },
     deliverabilityConfigDetail: {
       config: null,
       isLoading: false,
-      error: "",
+      error: ''
     },
     updateDeliverabilityConfig: {
       isLoading: false,
       success: false,
       error: false,
-      message: "",
+      message: ''
     },
     deleteDeliverabilityConfig: {
       isLoading: false,
       success: false,
       error: false,
-      message: "",
+      message: ''
     },
     listDeliverabilityDomain: {
       list: [],
-      error: "",
-      isLoading: false,
+      error: '',
+      isLoading: false
     },
     createDeliverabilityDomainConfig: {
       isLoading: false,
       success: false,
       error: false,
-      message: "",
+      message: ''
     },
     deliverabilityDomainConfigDetail: {
       config: null,
       isLoading: false,
-      error: "",
+      error: ''
     },
     updateDeliverabilityDomainConfig: {
       isLoading: false,
       success: false,
       error: false,
-      message: "",
+      message: ''
     },
     deleteDeliverabilityDomainConfig: {
       isLoading: false,
       success: false,
       error: false,
-      message: "",
+      message: ''
     },
     newDomainFormValue: {
-      value: null,
+      value: null
     },
     createRecordForDomain: {
       isLoading: false,
       success: false,
       error: false,
-      message: "",
+      message: ''
     },
     addDomainToPostfix: {
       isLoading: false,
       success: false,
       error: false,
-      message: "",
+      message: ''
     },
     addDkimToMailerQ: {
       isLoading: false,
       success: false,
       error: false,
-      message: "",
+      message: ''
     },
     addNewDomainToListDefinition: {
       isLoading: false,
       success: false,
       error: false,
-      message: "",
+      message: ''
     },
     listDefinitionDetail: {
       def: null,
       isLoading: false,
-      error: "",
+      error: ''
     },
     listTemplate: {
       list: [],
-      error: "",
-      isLoading: false,
+      error: '',
+      isLoading: false
     },
     listTemplateCountry: {
       list: [],
-      error: "",
-      isLoading: false,
+      error: '',
+      isLoading: false
     },
     listDatabase: {
       list: [],
-      error: "",
-      isLoading: false,
+      error: '',
+      isLoading: false
     },
     updateListDefinition: {
       isLoading: false,
       success: false,
       error: false,
-      message: "",
+      message: ''
     },
-  },
+    createListDefinition: {
+      isLoading: false,
+      success: false,
+      error: false,
+      message: ''
+    }
+  }
 });
