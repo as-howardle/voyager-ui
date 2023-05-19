@@ -101,7 +101,6 @@ const ListDefinitionModal = (props) => {
   }, [listTemplate]);
 
   function validateDbPrefix(str) {
-    console.log(str);
     const regex = new RegExp('^[a-zA-z0-9_]+$');
     if (regex.test(str) || str === '') {
       setDbPrefix(str);
