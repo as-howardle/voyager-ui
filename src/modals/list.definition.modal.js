@@ -33,7 +33,7 @@ const ListDefinitionModal = (props) => {
   const { list: listTemplate } = useSelector((state) => state.listTemplate);
 
   const [publisherId, setPublisherId] = useState();
-  const [dbPrefix, setDbPrefix] = useState();
+  const [dbPrefix, setDbPrefix] = useState('');
   const [externalId, setExternalId] = useState();
   const [name, setName] = useState();
   const [description, setDescription] = useState();
@@ -48,6 +48,7 @@ const ListDefinitionModal = (props) => {
   const [globalFrequencyDefinitionId, setGlobalFrequencyDefinitionId] = useState();
 
   const [validateTemplate, setValidateTemplate] = useState(false);
+  const [isDbPrefixValid, setIsDbPrefixValid] = useState(true);
   const [useNewTemplate, setUseNewTemplate] = useState(false);
 
   const selectPublisher = useMemo(() => {
@@ -98,6 +99,18 @@ const ListDefinitionModal = (props) => {
       }));
     }
   }, [listTemplate]);
+
+  function validateDbPrefix(str) {
+    console.log(str);
+    const regex = new RegExp('^[a-zA-z0-9_]+$');
+    if (regex.test(str) || str === '') {
+      setDbPrefix(str);
+      setIsDbPrefixValid(true);
+    } else {
+      setDbPrefix(str);
+      setIsDbPrefixValid(false);
+    }
+  }
 
   useEffect(() => {
     if (listPublisher.length <= 0) {
@@ -302,9 +315,11 @@ const ListDefinitionModal = (props) => {
                     fullWidth
                     label='Database Prefix'
                     name='db_prefix'
-                    onChange={(e) => setDbPrefix(e.target.value)}
+                    onChange={(e) => validateDbPrefix(e.target.value)}
                     type='text'
                     value={dbPrefix}
+                    error={!isDbPrefixValid}
+                    helperText={!isDbPrefixValid && 'Can only contain character and underscore'}
                     required
                   />
                 </Grid>
