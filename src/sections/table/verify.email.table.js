@@ -1,6 +1,6 @@
 import ReactDataGrid from '@inovua/reactdatagrid-community';
 import '@inovua/reactdatagrid-community/index.css';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -59,6 +59,11 @@ export const VerifyEmailTable = () => {
           mb: 2
         }}
       >
+        <Typography sx={{
+          marginRight: 5
+        }}>
+          100,000 rows limit
+        </Typography>
         <Button
           variant='contained'
           component='label'

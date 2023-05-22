@@ -100,8 +100,6 @@ const Page = () => {
     if (createRecordSuccess) {
       toast.success(createRecordMessage);
       dispatch({ type: CREATE_NEW_RECORD_RESET });
-      handleNext();
-
     }
     if (createRecordError) {
       toast.error(createRecordMessage);
