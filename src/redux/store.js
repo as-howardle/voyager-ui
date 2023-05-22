@@ -275,7 +275,8 @@ export const store = configureStore({
       isLoading: false,
       success: false,
       error: false,
-      message: ''
+      message: '',
+      aws: ''
     },
     addDomainToPostfix: {
       isLoading: false,
