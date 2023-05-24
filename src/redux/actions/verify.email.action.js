@@ -19,7 +19,7 @@ export const verifyEmailAction = (value) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: VERIFY_EMAIL_FAIL,
-      message: error.response.data.error
+      message: error.response.data?.error || error.message || 'Error'
     });
   }
 };
