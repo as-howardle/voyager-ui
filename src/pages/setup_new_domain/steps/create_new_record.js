@@ -4,26 +4,30 @@ import {
   CardActions,
   CardContent,
   CardHeader,
+  Checkbox,
   Divider,
+  FormControlLabel,
   Grid,
-  TextField
+  TextField,
+  Typography
 } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useEffect, useState } from 'react';
 import { CustomSelect } from 'src/components/custom.select';
 import CONST from '../../../const/general.const';
 import { useDispatch, useSelector } from 'react-redux';
+import { CREATE_NEW_RECORD_RESET } from '../../../redux/constant/setup.domain.constant';
 import {
   createNewRecordForDomain,
   setValueForNewDomainForm
 } from '../../../redux/actions/setup.domain.action';
-import { CREATE_NEW_RECORD_RESET } from '../../../redux/constant/setup.domain.constant';
 
 const CreateNewRecord = (props) => {
   const { next, back } = props;
   const [domain, setDomain] = useState('');
   const [description, setDescription] = useState('');
   const [account, setAccount] = useState(null);
+  const [integrateToKarma, setIntegrateToKarma] = useState(false);
 
   const dispatch = useDispatch();
   const { value } = useSelector((state) => state.newDomainFormValue);
@@ -37,6 +41,15 @@ const CreateNewRecord = (props) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    const value = {
+      domain,
+      description,
+      account: account.value,
+      integrate_to_karma: false
+    };
+    if (account.value === 'EB') {
+      value.integrate_to_karma = integrateToKarma;
+    }
     dispatch(setValueForNewDomainForm({
       ...value, record: {
         domain,
@@ -44,13 +57,7 @@ const CreateNewRecord = (props) => {
         account: account.value
       }
     }));
-    dispatch(createNewRecordForDomain(
-      {
-        domain,
-        description,
-        account: account.value
-      }
-    ));
+    dispatch(createNewRecordForDomain(value));
   };
 
   const handleNext = () => {
@@ -68,8 +75,6 @@ const CreateNewRecord = (props) => {
       });
     }
   }, [dispatch, isLoading]);
-
-  console.log(aws);
 
   useEffect(() => {}, [aws, dispatch]);
 
@@ -89,6 +94,19 @@ const CreateNewRecord = (props) => {
                   fullWidth
                   required
                 />
+                {account &&
+                <Typography
+                  sx={{
+                    marginTop: 2,
+                    marginLeft: 2,
+                    fontWeight: 400,
+                    fontSize: '0.875rem',
+                    color: '#6C737F'
+                  }}>
+                  Example: {account.value === 'EB' ? <span>eb.domain.com</span> :
+                  <span>domain.com</span>}
+                </Typography>
+                }
               </Grid>
               <Grid item xs={6}>
                 <TextField
@@ -111,6 +129,19 @@ const CreateNewRecord = (props) => {
                 isMulti={false}
               />
             </Grid>
+            {
+              account && account.value === 'EB' &&
+              <Grid item xs={6}>
+                <FormControlLabel
+                  control={
+                    <Checkbox checked={integrateToKarma}
+                              onChange={(e) => setIntegrateToKarma(e.target.checked)}
+                              name='is_active' />
+                  }
+                  label='Integrate to Karma'
+                />
+              </Grid>
+            }
             <Grid item>
               <pre>{aws}</pre>
             </Grid>
@@ -123,15 +154,6 @@ const CreateNewRecord = (props) => {
           <LoadingButton variant='contained' type='submit' loading={isLoading}>
             Create
           </LoadingButton>
-          {/*{success ? (*/}
-          {/*  <Button variant='contained' color='success' onClick={handleNext}>*/}
-          {/*    Next*/}
-          {/*  </Button>*/}
-          {/*) : (*/}
-          {/*  <LoadingButton variant='contained' type='submit' loading={isLoading}>*/}
-          {/*    Create*/}
-          {/*  </LoadingButton>*/}
-          {/*)}*/}
         </CardActions>
       </Card>
     </form>

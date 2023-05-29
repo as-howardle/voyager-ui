@@ -7,12 +7,9 @@ import { Box, Button, FormControl, FormControlLabel, FormGroup, Switch } from '@
 import { red } from '@mui/material/colors';
 import { Stack } from '@mui/system';
 import Router from 'next/router';
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState } from 'react';
 import { MTATransportModal } from '../../modals/mta.transport.modal';
-import { useSelector, useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
-import { UPDATE_MTA_TRANSPORT_RESET } from 'src/redux/constant/mta.transport.constant';
-import { setMTATransportDetail } from './../../redux/actions/mta.transport.action';
+import { useDispatch, useSelector } from 'react-redux';
 
 const gridStyle = { minHeight: 500 };
 
@@ -28,13 +25,13 @@ const columns = [
       return value ? <DoneIcon color='success' /> : <ClearIcon sx={{ color: red[500] }} />;
     }
   },
-  { name: 'params', defaultFlex: 1, header: 'Params' },
+  { name: 'params', defaultFlex: 1, header: 'Params' }
 ];
 
 const filterValue = [
   { name: 'name', operator: 'startsWith', type: 'string', value: '' },
   { name: 'description', operator: 'startsWith', type: 'string', value: '' },
-  { name: 'type', operator: 'startsWith', type: 'string', value: '' },
+  { name: 'type', operator: 'startsWith', type: 'string', value: '' }
 ];
 
 export const MTATransportTable = (props) => {
@@ -59,59 +56,43 @@ export const MTATransportTable = (props) => {
   const onRenderRow = useCallback((rowProps) => {
     const { onClick } = rowProps;
     rowProps.onClick = (event) => {
-      // dispatch(setMTATransportDetail(rowProps.data));
       Router.push({
         pathname: `/mta/transport/detail`,
         query: {
-          // data: JSON.stringify(rowProps.data),
           id: rowProps.data.id
         }
       });
-      // setModalData(rowProps);
-      // setIsUpdate(true);
-      // setIsOpenModal(true);
+
       if (onClick) {
         onClick(event);
       }
     };
   }, []);
 
-  // useEffect(() => {
-  //   if (message !== '') {
-  //     if (success) {
-  //       toast.success(message.message);
-  //       dispatch({ type: UPDATE_MTA_TRANSPORT_RESET });
-  //     }
-  //     else {
-  //       toast.error('Update failed');
-  //       dispatch({ type: UPDATE_MTA_TRANSPORT_RESET });
-  //     }
-  //   }
-  // }, [message]);
-
   return (
     <Box sx={{ minWidth: 800 }}>
       <Stack
-        direction="row"
-        justifyContent="space-between"
+        direction='row'
+        justifyContent='space-between'
         sx={{
           mb: 2
         }}
       >
-        <FormControl component="fieldset">
-          <FormGroup aria-label="position" row>
+        <FormControl component='fieldset'>
+          <FormGroup aria-label='position' row>
             <FormControlLabel
-              value="start"
+              value='start'
               control={
-                <Switch color="primary" checked={enableFiltering} onChange={(e) => setEnableFiltering(e.target.checked)} />
+                <Switch color='primary' checked={enableFiltering}
+                        onChange={(e) => setEnableFiltering(e.target.checked)} />
               }
-              label="Filter"
-              labelPlacement="start"
+              label='Filter'
+              labelPlacement='start'
               sx={{ ml: 0 }}
             />
           </FormGroup>
         </FormControl>
-        <Button variant="contained" startIcon={<AddIcon />} onClick={handleOpenModal}>
+        <Button variant='contained' startIcon={<AddIcon />} onClick={handleOpenModal}>
           Add
         </Button>
       </Stack>
