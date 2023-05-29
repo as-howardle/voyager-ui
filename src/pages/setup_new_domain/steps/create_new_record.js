@@ -57,13 +57,7 @@ const CreateNewRecord = (props) => {
         account: account.value
       }
     }));
-    dispatch(createNewRecordForDomain(
-      {
-        domain,
-        description,
-        account: account.value
-      }
-    ));
+    dispatch(createNewRecordForDomain(value));
   };
 
   const handleNext = () => {
