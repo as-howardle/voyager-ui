@@ -20,7 +20,7 @@ const customStyle = {
 }
 
 export const CustomSelect = (props) => {
-  const { id, label, options, value, onChange, placeHolder, required, isMulti } = props;
+  const { id, label, options, value, onChange, placeHolder, required, isMulti, isLoading } = props;
   return (
     <>
       {label && <label htmlFor={id} style={{
@@ -41,6 +41,7 @@ export const CustomSelect = (props) => {
         required={required}
         maxMenuHeight={150}
         isMulti={isMulti}
+        isLoading={isLoading}
       />
     </>
   );
