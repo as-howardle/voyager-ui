@@ -27,7 +27,7 @@ export const VerifyEmailTable = () => {
   const dispatch = useDispatch();
 
   const { emails, isLoading, success, error, message } = useSelector((state) => state.verifyEmail);
-  const { list, loading: listDefinitionLoading } = useSelector(
+  const { list, isLoading: listDefinitionLoading } = useSelector(
     (state) => state.listDefinitionDeliverability
   );
 
@@ -121,7 +121,7 @@ export const VerifyEmailTable = () => {
           CSV
         </Button>
         <Button variant="contained" component="label" startIcon={<UploadFileIcon />}>
-          Upload File
+          Verify Blacklist
           <input type="file" hidden onChange={handleFileChange} />
         </Button>
       </Stack>
@@ -134,7 +134,16 @@ export const VerifyEmailTable = () => {
         }}
       >
         <Box sx={{ minWidth: "300px" }}>
-          {list.length > 0 ? (
+          <CustomSelect
+            id="id-list-definition"
+            options={selectListDefinition}
+            value={listDefinitionId}
+            onChange={setListDefinitionId}
+            required={false}
+            isMulti={false}
+            isLoading={listDefinitionLoading}
+          />
+          {/* {list.length > 0 ? (
             <CustomSelect
               id="id-list-definition"
               options={selectListDefinition}
@@ -144,7 +153,7 @@ export const VerifyEmailTable = () => {
               isMulti={false}
               isLoading={listDefinitionLoading}
             />
-          ) : null}
+          ) : null} */}
         </Box>
         <Button
           variant="contained"
@@ -154,6 +163,7 @@ export const VerifyEmailTable = () => {
           sx={{
             marginLeft: 2,
           }}
+          disabled={listDefinitionLoading}
         >
           Verify List
           <input type="file" hidden onChange={handleVerifyList} />
