@@ -39,21 +39,20 @@ export const UserTable = (props) => {
   const { data } = props;
   const [enableFiltering, setEnableFiltering] = useState(false);
 
-  // const onRenderRow = useCallback((rowProps) => {
-  //   const { onClick } = rowProps;
-  //   rowProps.onClick = (event) => {
-  //     // dispatch(setMTADefinitionDetail(rowProps.data));
-  //     Router.push({
-  //       pathname: `/domain/edit`,
-  //       query: {
-  //         id: rowProps.data.id
-  //       }
-  //     });
-  //     if (onClick) {
-  //       onClick(event);
-  //     }
-  //   };
-  // }, []);
+  const onRenderRow = useCallback((rowProps) => {
+    const { onClick } = rowProps;
+    rowProps.onClick = (event) => {
+      Router.push({
+        pathname: `/user/edit`,
+        query: {
+          id: rowProps.data.id
+        }
+      });
+      if (onClick) {
+        onClick(event);
+      }
+    };
+  }, []);
 
   const handleCreateUser = () => {
     Router.push({
@@ -99,6 +98,7 @@ export const UserTable = (props) => {
         pagination
         defaultLimit={10}
         enableFiltering={enableFiltering}
+        onRenderRow={onRenderRow}
       />
     </Box>
   );

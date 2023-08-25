@@ -1,26 +1,19 @@
-import { Box, Container, Stack, Typography, Grid, TextField, Divider, Button, FormControl, FormControlLabel, Checkbox } from '@mui/material';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useEffect, useState, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { setPublisherDetail } from '../../redux/actions/publisher.action';
-import { PublisherDetail } from '../../components/detail/publisher.js';
-import TemplateAPI from './../../axios/TemplateAPI';
-import { CustomSelect } from './../../components/custom.select';
-import Router from 'next/router';
-import { Label } from './../../components/label';
-import DomainAPI from './../../axios/DomainAPI';
-import { toast } from 'react-toastify';
 import { LoadingButton } from '@mui/lab';
+import { Box, Button, Checkbox, Container, Divider, Grid, Stack, TextField, Typography } from '@mui/material';
+import Head from 'next/head';
+import Router from 'next/router';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import UserAPI from './../../axios/UserAPI';
+import { Label } from './../../components/label';
 
-const Page = () => {
-  const [fullname, setFullName] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [isAdmin, setIsAdmin] = useState(false);
-  // const [isActive, setIsActive] = useState(true);
+const Page = (props) => {
+  const { user } = props;
+  const [fullname, setFullName] = useState(user.full_name);
+  const [email, setEmail] = useState(user.email);
+  const [isAdmin, setIsAdmin] = useState(user.is_admin);
+  const [isEnabled, setIsEnabled] = useState(user.is_enabled);
   const [loading, setLoading] = useState(false);
 
 
@@ -30,19 +23,19 @@ const Page = () => {
     });
   };
 
-  const handleCreateUser = async (e) => {
+  const handleEditUser = async (e) => {
     e.preventDefault();
     const data = {
-      email: email,
-      password: password,
-      fullname: fullname,
-      isAdmin: isAdmin
+      id: user.id,
+      fullname,
+      isAdmin,
+      isEnabled
     };
     setLoading(true);
     try {
-      await UserAPI.createUser(data);
+      await UserAPI.updateUser(data)
       setLoading(false);
-      toast.success('Create user successfully');
+      toast.success('Update user successfully');
       Router.push({
         pathname: `/user`
       });
@@ -56,7 +49,7 @@ const Page = () => {
     <>
       <Head>
         <title>
-          Create User
+          Edit User
         </title>
       </Head>
       <Box
@@ -75,7 +68,7 @@ const Page = () => {
             >
               <Stack spacing={1}>
                 <Typography variant="h4">
-                  Create User
+                  Edit User
                 </Typography>
               </Stack>
             </Stack>
@@ -116,20 +109,13 @@ const Page = () => {
                 </Grid>
                 <Grid container item spacing={3} direction='row'>
                   <Grid item xs={6}>
-                    <Label label='Password' required={true} />
-                    <TextField
-                      fullWidth
-                      name='password'
-                      onChange={(e) => setPassword(e.target.value)}
-                      type='password'
-                      value={password}
-                      required
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Box sx={{pt: 6}}>
+                    <Box sx={{ pt: 6 }}>
                       <Label label='Is Admin' />
                       <Checkbox checked={isAdmin} onChange={(e) => { setIsAdmin(e.target.checked); }} name='is_admin' />
+                    </Box>
+                    <Box sx={{ pt: 6 }}>
+                      <Label label='Is Active' />
+                      <Checkbox checked={isEnabled} onChange={(e) => { setIsEnabled(e.target.checked); }} name='is_active' />
                     </Box>
                   </Grid>
                 </Grid>
@@ -146,8 +132,8 @@ const Page = () => {
               <Button variant='contained' color='error' onClick={handleBack} sx={{ mr: 2 }}>
                 Back
               </Button>
-              <LoadingButton variant='contained' color='success' sx={{ mr: 2 }} onClick={handleCreateUser} loading={loading}>
-                <span>Create</span>
+              <LoadingButton variant='contained' sx={{ mr: 2 }} onClick={handleEditUser} loading={loading}>
+                <span>Update</span>
               </LoadingButton>
             </Stack>
           </Stack>
@@ -162,5 +148,15 @@ Page.getLayout = (page) => (
     {page}
   </DashboardLayout>
 );
+
+export async function getServerSideProps(context) {
+  const id = context.query.id;
+  const response = await UserAPI.getUserById(id);
+  return {
+    props: {
+      user: response.data[0]
+    }
+  };
+}
 
 export default Page;

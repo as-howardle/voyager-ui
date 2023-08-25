@@ -25,7 +25,7 @@ const UserAPI = {
   },
 
   updateUser: (data) => {
-    return axios.patch(VOYAGER_API + ENDPOINTS.UPDATE_USER, data);
+    return axiosWithToken.patch(VOYAGER_API + ENDPOINTS.UPDATE_USER, data);
   },
 };
 
