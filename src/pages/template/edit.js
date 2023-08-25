@@ -15,45 +15,34 @@ import { toast } from 'react-toastify';
 import { LoadingButton } from '@mui/lab';
 
 const Page = (props) => {
-  const { domain, template } = props;
-  const [domainName, setDomainName] = useState(domain.name);
-  const [domainTitle, setDomainTitle] = useState(domain.title);
-  const [templateId, setTemplateId] = useState({
-    value: domain.template_id,
-    label: domain.template_name
-  });
+  const { template } = props
+  const [name, setName] = useState(template.name);
+  const [logoUrl, setLogoUrl] = useState(template.logo_url);
+  const [navbarItem, setNavbarItem] = useState(template.navbar_item);
+  const [footerContent, setFooterContent] = useState(template.footer_content);
   const [loading, setLoading] = useState(false);
-
-  const selectTemplate = useMemo(() => {
-    if (template.length > 0) {
-      return template.map(l => ({
-        value: l.id,
-        label: l.name
-      }));
-    }
-  }, [template]);
 
   const handleBack = () => {
     Router.push({
-      pathname: `/domain`
+      pathname: `/template`
     });
   };
 
-  const handleCreateDomainSetting = async (e) => {
+  const handleUpdateTemplate = async (e) => {
     e.preventDefault();
     const data = {
-      id: domain.id,
-      name: domainName,
-      title: domainTitle,
-      template_id: templateId.value
+      name,
+      logoUrl,
+      navbarItem,
+      footerContent
     };
     setLoading(true);
     try {
-      await DomainAPI.updateDomain(data);
+      await TemplateAPI.updateTemplate(template.id, data);
       setLoading(false);
-      toast.success('Update domain setting successfully');
+      toast.success('Update template successfully');
       Router.push({
-        pathname: `/domain`
+        pathname: `/template`
       });
     } catch (error) {
       toast.error(error.response.data.message);
@@ -65,7 +54,7 @@ const Page = (props) => {
     <>
       <Head>
         <title>
-          Create Domain Setting
+          Edit Template
         </title>
       </Head>
       <Box
@@ -84,7 +73,7 @@ const Page = (props) => {
             >
               <Stack spacing={1}>
                 <Typography variant="h4">
-                  Create Domain Setting
+                  Edit Template
                 </Typography>
               </Stack>
             </Stack>
@@ -101,37 +90,48 @@ const Page = (props) => {
               >
                 <Grid container item spacing={3} direction='row'>
                   <Grid item xs={6}>
-                    <Label label='Domain Name' required={true} />
+                    <Label label='Name' required={true} />
                     <TextField
                       fullWidth
-                      name='domainName'
-                      onChange={(e) => setDomainName(e.target.value)}
+                      name='name'
+                      onChange={(e) => setName(e.target.value)}
                       type='text'
-                      value={domainName}
+                      value={name}
                       required
                     />
                   </Grid>
-                  <Grid item xs={6} sx={{
-                    position: 'relative',
-                    zIndex: 999
-                  }}>
-                    {template.length > 0 ? (
-                      <CustomSelect id='id-template' label='Template' options={selectTemplate}
-                        value={templateId} onChange={setTemplateId}
-                        required={true} isMulti={false}
-                      />
-                    ) : null}
+                  <Grid item xs={6}>
+                    <Label label='Logo URL' />
+                    <TextField
+                      fullWidth
+                      name='logoUrl'
+                      onChange={(e) => setLogoUrl(e.target.value)}
+                      type='text'
+                      value={logoUrl}
+                      required
+                    />
                   </Grid>
                 </Grid>
                 <Grid container item spacing={3} direction='row'>
                   <Grid item xs={6}>
-                    <Label label='Domain Title' required={true} />
+                    <Label label='Navbar Item' />
                     <TextField
                       fullWidth
-                      name='domainTitle'
-                      onChange={(e) => setDomainTitle(e.target.value)}
+                      name='navbarItem'
+                      onChange={(e) => setNavbarItem(e.target.value)}
                       type='text'
-                      value={domainTitle}
+                      value={navbarItem}
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Label label='Footer Content' />
+                    <TextField
+                      fullWidth
+                      name='footerContent'
+                      onChange={(e) => setFooterContent(e.target.value)}
+                      type='text'
+                      value={footerContent}
                       required
                     />
                   </Grid>
@@ -149,7 +149,7 @@ const Page = (props) => {
               <Button variant='contained' color='error' onClick={handleBack} sx={{ mr: 2 }}>
                 Back
               </Button>
-              <LoadingButton variant='contained' sx={{ mr: 2 }} onClick={handleCreateDomainSetting} loading={loading}>
+              <LoadingButton variant='contained' sx={{ mr: 2 }} onClick={handleUpdateTemplate} loading={loading} >
                 <span>Update</span>
               </LoadingButton>
             </Stack>
@@ -166,16 +166,16 @@ Page.getLayout = (page) => (
   </DashboardLayout>
 );
 
+
 export async function getServerSideProps(context) {
   const id = context.query.id;
-  const response = await DomainAPI.getDomainById(id);
-  const templates = await TemplateAPI.getAllTemplate();
+  const response = await TemplateAPI.getTemplateById(id);
   return {
     props: {
-      domain: response.data[0],
-      template: templates.data
+      template: response.data[0],
     }
   };
 }
+
 
 export default Page;

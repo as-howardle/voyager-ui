@@ -9,16 +9,14 @@ import Router from 'next/router';
 const gridStyle = { minHeight: 500 };
 
 const columns = [
-  { name: "name", defaultFlex: 1, header: "Domain Name" },
-  { name: "template_name", defaultFlex: 1, header: "Template" },
+  { name: "name", defaultFlex: 1, header: "Name" },
 ];
 
 const filterValue = [
   { name: "name", operator: "startsWith", type: "string", value: "" },
-  { name: "template_name", operator: "startsWith", type: "string", value: "" },
 ];
 
-export const DomainTable = (props) => {
+export const TemplateTable = (props) => {
   const { data } = props;
   const [enableFiltering, setEnableFiltering] = useState(false);
 
@@ -27,7 +25,7 @@ export const DomainTable = (props) => {
     const { onClick } = rowProps;
     rowProps.onClick = (event) => {
       Router.push({
-        pathname: `/domain/edit`,
+        pathname: `/template/edit`,
         query: {
           id: rowProps.data.id
         }
@@ -38,9 +36,9 @@ export const DomainTable = (props) => {
     };
   }, []);
 
-  const handleAddDomain = () => {
+  const handleAddTemplate = () => {
     Router.push({
-      pathname: `/domain/create`,
+      pathname: `/template/create`,
     });
   };
 
@@ -70,7 +68,7 @@ export const DomainTable = (props) => {
             />
           </FormGroup>
         </FormControl>
-        <Button variant="contained" startIcon={<AddIcon />} onClick={handleAddDomain}>
+        <Button variant="contained" startIcon={<AddIcon />} onClick={handleAddTemplate}>
           Add
         </Button>
       </Stack>

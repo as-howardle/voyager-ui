@@ -31,7 +31,7 @@ const App = (props) => {
     <CacheProvider value={emotionCache}>
       <Head>
         <title>
-          Janus
+          Voyager
         </title>
         <meta
           name="viewport"

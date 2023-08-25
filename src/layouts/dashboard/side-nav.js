@@ -11,6 +11,7 @@ import { MdOutlineDomain } from "react-icons/md";
 import { Scrollbar } from 'src/components/scrollbar';
 import { useAuth } from './../../hooks/use-auth';
 import { FiUsers } from 'react-icons/fi';
+import { GrTemplate } from 'react-icons/gr'
 import { useMemo } from 'react';
 
 
@@ -34,6 +35,12 @@ export const SideNav = (props) => {
         itemId: '/domain',
         // Optional
         elemBefore: () => <SvgIcon><MdOutlineDomain /></SvgIcon>
+      },
+      {
+        title: 'Template',
+        itemId: '/template',
+        // Optional
+        elemBefore: () => <SvgIcon><GrTemplate /></SvgIcon>
       },
       {
         title: 'Settings',

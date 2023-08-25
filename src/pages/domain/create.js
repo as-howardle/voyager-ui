@@ -145,7 +145,7 @@ const Page = (props) => {
               <Button variant='contained' color='error' onClick={handleBack} sx={{ mr: 2 }}>
                 Back
               </Button>
-              <LoadingButton variant='contained' sx={{ mr: 2 }} onClick={handleCreateDomainSetting} loading={loading}>
+              <LoadingButton variant='contained' sx={{ mr: 2 }} onClick={handleCreateDomainSetting} loading={loading} color='success'>
                 <span>Create</span>
               </LoadingButton>
             </Stack>
