@@ -8,7 +8,7 @@ const Page = () => (
   <>
     <Head>
       <title>
-        Janus
+        Voyager
       </title>
     </Head>
     <Box
@@ -19,7 +19,7 @@ const Page = () => (
       }}
     >
       <Container maxWidth='xl'>
-        <h1>Welcome to Janus!</h1>
+        <h1>Welcome to Voyager!</h1>
       </Container>
     </Box>
   </>

@@ -6,6 +6,7 @@ const UserStore = {
   },
 
   getToken: () => {
+    console.log(localStorage);
     if (localStorage.getItem('token')) {
       return JSON.parse(localStorage.getItem('token')).value;
     }

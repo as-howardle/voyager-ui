@@ -1,5 +1,6 @@
 import Select, { createFilter } from 'react-select';
 import MenuList from './select';
+import { Label } from './label';
 
 const customStyle = {
   placeholder: (defaultStyles) => {
@@ -20,14 +21,10 @@ const customStyle = {
 }
 
 export const CustomSelect = (props) => {
-  const { id, label, options, value, onChange, placeHolder, required, isMulti, isLoading } = props;
+  const { id, label, options, value, onChange, required, isMulti, isLoading } = props;
   return (
     <>
-      {label && <label htmlFor={id} style={{
-        fontSize: '.85rem',
-        fontWeight: 'bold',
-        lineHeight: 3
-      }}>{label} {required && <b style={{ color: 'red' }}>*</b>}</label>}
+      <Label label={label} required={required}/>
       <Select
         inputId={id}
         styles={customStyle}
@@ -36,7 +33,6 @@ export const CustomSelect = (props) => {
         filterOption={createFilter({ ignoreAccents: false })}
         value={value}
         onChange={(e) => onChange(e)}
-        placeholder={placeHolder}
         isClearable={true}
         required={required}
         maxMenuHeight={150}

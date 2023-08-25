@@ -4,19 +4,53 @@ import PaperAirplaneIcon from '@heroicons/react/24/solid/PaperAirplaneIcon';
 import { Box, Drawer, SvgIcon, useMediaQuery } from '@mui/material';
 import NextLink from 'next/link';
 import Router, { useRouter } from 'next/router';
-import PropTypes from 'prop-types';
-import { FaFly, FaListUl, FaSyringe, FaTools, FaUsers } from 'react-icons/fa';
-import { HiTable } from 'react-icons/hi';
-import { MdDomain, MdOutlineAssignmentTurnedIn, MdVerifiedUser } from 'react-icons/md';
-import { TbTruckDelivery } from 'react-icons/tb';
+import PropTypes, { array } from 'prop-types';
 import { Navigation } from 'react-minimal-side-navigation';
 import { Logo } from 'src/components/logo';
+import { MdOutlineDomain } from "react-icons/md";
 import { Scrollbar } from 'src/components/scrollbar';
+import { useAuth } from './../../hooks/use-auth';
+import { FiUsers } from 'react-icons/fi';
+import { useMemo } from 'react';
+
 
 export const SideNav = (props) => {
   const router = useRouter();
+  const auth = useAuth();
+
   const { open, onClose } = props;
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
+
+  const items = useMemo(() => {
+    const arr = [
+      {
+        title: 'Overview',
+        itemId: '/',
+        // Optional
+        elemBefore: () => <SvgIcon><ChartBarIcon /></SvgIcon>
+      },
+      {
+        title: 'Domain',
+        itemId: '/domain',
+        // Optional
+        elemBefore: () => <SvgIcon><MdOutlineDomain /></SvgIcon>
+      },
+      {
+        title: 'Settings',
+        itemId: '/settings',
+        elemBefore: () => <SvgIcon><CogIcon /></SvgIcon>
+      }
+    ];
+    if (auth.user && auth.user.isAdmin === 1) {
+      arr.splice(2, 0, {
+        title: 'Manage Users',
+        itemId: '/user',
+        // Optional
+        elemBefore: () => <SvgIcon><FiUsers /></SvgIcon>
+      });
+    }
+    return arr;
+  }, [auth])
 
   if (lgUp) {
     return (
@@ -77,81 +111,7 @@ export const SideNav = (props) => {
                   });
                 }
               }}
-              items={[
-                {
-                  title: 'Overview',
-                  itemId: '/',
-                  // Optional
-                  elemBefore: () => <SvgIcon><ChartBarIcon /></SvgIcon>
-                },
-                {
-                  title: 'MTA',
-                  itemId: 'mta-parent',
-                  elemBefore: () => <SvgIcon><PaperAirplaneIcon /></SvgIcon>,
-                  subNav: [
-                    {
-                      title: 'Transport',
-                      itemId: '/mta/transport',
-                      // Optional
-                      elemBefore: () => <SvgIcon><TbTruckDelivery /></SvgIcon>
-                    },
-                    {
-                      title: 'Definition',
-                      itemId: '/mta/definition',
-                      elemBefore: () => <SvgIcon><HiTable /></SvgIcon>
-                    },
-                    {
-                      title: 'Assignation',
-                      itemId: '/mta/assignation',
-                      elemBefore: () => <SvgIcon><MdOutlineAssignmentTurnedIn /></SvgIcon>
-                    }
-                  ]
-                },
-                {
-                  title: 'Delivery',
-                  itemId: 'deliverability-parent',
-                  elemBefore: () => <SvgIcon><FaFly /></SvgIcon>,
-                  subNav: [
-                    {
-                      title: 'Config',
-                      itemId: '/deliverability/config',
-                      // Optional
-                      elemBefore: () => <SvgIcon><FaTools /></SvgIcon>
-                    },
-                    {
-                      title: 'Domain',
-                      itemId: '/deliverability/domain',
-                      // Optional
-                      elemBefore: () => <SvgIcon><MdDomain /></SvgIcon>
-                    }
-                  ]
-                },
-                {
-                  title: 'Publisher',
-                  itemId: '/publisher',
-                  elemBefore: () => <SvgIcon><FaUsers /></SvgIcon>
-                },
-                {
-                  title: 'List Definition',
-                  itemId: '/list_definition',
-                  elemBefore: () => <SvgIcon><FaListUl /></SvgIcon>
-                },
-                {
-                  title: 'Set up new domain',
-                  itemId: '/setup_new_domain',
-                  elemBefore: () => <SvgIcon><FaSyringe /></SvgIcon>
-                },
-                {
-                  title: 'Verify',
-                  itemId: '/verify_email',
-                  elemBefore: () => <SvgIcon><MdVerifiedUser /></SvgIcon>
-                },
-                {
-                  title: 'Settings',
-                  itemId: '/settings',
-                  elemBefore: () => <SvgIcon><CogIcon /></SvgIcon>
-                }
-              ]}
+              items={items}
             />
           </Box>
         </Scrollbar>

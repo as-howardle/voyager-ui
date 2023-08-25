@@ -106,23 +106,21 @@ export const AuthProvider = (props) => {
     []
   );
 
-  const signIn = async (username, password) => {
+  const signIn = async (email, password) => {
     try {
-      const { data } = await AuthAPI.signIn(username, password);
+      const { data } = await AuthAPI.signIn(email, password);
       const now = new Date();
       const token = {
         value: data.token,
-        expiry: now.getTime() + (1000 * 3600 * 24)
+        expiry: now.getTime() + (1000 * 3600 * 24 * 7)
       };
       UserStore.setToken(token);
       const user = {
-        id: data.user.id,
+        id: data.id,
         avatar: '/assets/avatars/avatar-anika-visser.png',
-        name: data.user.username,
-        email: data.user.email,
-        username: data.user.username,
-        securityGroups: [data.user.security_groups],
-        isAdmin: data.user.is_admin
+        name: data.fullname,
+        email: data.email,
+        isAdmin: data.is_admin
       };
       UserStore.setUser(user);
 
@@ -132,7 +130,7 @@ export const AuthProvider = (props) => {
       });
     } catch (error) {
       const { response } = error;
-      throw new Error(response.data.error);
+      throw new Error(response.data.message);
     }
   };
 
@@ -167,7 +165,7 @@ export const AuthProvider = (props) => {
     } catch (error) {
       dispatch({
         type: HANDLERS.CHANGE_PASSWORD_FAIL,
-        payload: error.response.data.error
+        payload: error.response.data.message
       });
 
     }
